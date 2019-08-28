@@ -16,7 +16,6 @@ var k = schedule.scheduleJob("0 * * * * *", function(){
                     if (member.voiceChannel.parentID == "586170548678295583" == false && !member.bot && member.voiceChannel.members.size < 2 == false){
                        //await database.set(`member.xp.${member.id}.balance`, await database.get(`member.xp.${member.id}.balance`) + 1)
                         db.add(`member.xp.${member.id}.balance`, 1)
-                        console.log(member.user.username + " gets an XP => " + db.get(`member.xp.${member.id}.balance`))
                        if (db.get(`member.xp.${member.id}.balance`) > 59){
                         db.set(`member.xp.${member.id}.balance`, 0)
                        //await database.set(`member.xp.${member.id}.balance`, 0)
