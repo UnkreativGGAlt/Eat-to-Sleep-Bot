@@ -86,5 +86,18 @@ let prefix = config.prefix;
       servers[message.guild.id].dispatcher.setVolume(args[0]);
       message.channel.send(new RichEmbed().setDescription(`Lautstärke auf ${args[0]} gesetzt`).setFooter("Der Standartwert beim joinen ist 0.5"))      
     }
+    if (alias == "q" || alias == "queue"){
+      if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
+        message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
+        return;
+      }
+      var server = servers[message.guild.id]
+      if (server.queue[0]){
+        var queue = ""
+        server.queue.forEach(element => {
+         queue += "```" + element + "```"
+        })
+      message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length})`).setDescription(`${queue}`))      
+    }}
 
 })
