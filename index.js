@@ -74,4 +74,4 @@ require("./webserver/webmain")
 
 
 
-bot.login(config.token)
+bot.login(config.tokens.discord)

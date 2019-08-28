@@ -85,7 +85,7 @@ client.on("message", message => {
  
             var opts = {
               maxResults: 1,
-              key: 'AIzaSyBTITlgGRPtXPzKGn9ba5fJTYCurVZmit8'
+              key: config.tokens.youtube
             };
             search(args.join(" "), opts, function(err, results) {
               if(err) return console.log(err);
