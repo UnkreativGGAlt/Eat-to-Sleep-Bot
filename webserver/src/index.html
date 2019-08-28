@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test Shop Page</title>
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/lux/bootstrap.css" /></head>
+
+<header>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<a class="navbar-brand" href="#">Eat, Sleep, Gaming, Repeat Store</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+	  
+		
+		</div>
+	  </nav>
+</header>
+
+
+<body>
+
+		<div class="row mt-5">
+				<div class="col-md-10 m-auto">
+				  
+					
+						<div style="margin: auto" id="info">
+								Hello
+							</div>
+							<a id="login" class="btn btn-info" style="display: none;" href="https://discordapp.com/api/oauth2/authorize?client_id=585521607875756042&redirect_uri=http%3A%2F%2F128.0.120.194%3A5000&response_type=token&scope=identify%20email%20guilds">Login mit Discord</a>
+							<img id="userimage" style="display: none;">
+
+				
+			  </div>
+		
+			  
+
+
+	
+    <script>
+		window.onload = () => {
+			const fragment = new URLSearchParams(window.location.hash.slice(1));
+
+			if (fragment.has("access_token")) {
+				const accessToken = fragment.get("access_token");
+				const tokenType = fragment.get("token_type");
+
+				fetch('https://discordapp.com/api/users/@me', {
+					headers: {
+						authorization: `${tokenType} ${accessToken}`
+					}
+				})
+					.then(res => res.json())
+					.then(response => {
+						const { username, discriminator, avatar, id } = response;
+						document.getElementById('info').innerText += ` ${username}#${discriminator}`;
+						document.getElementById('userimage').src = `https://cdn.discordapp.com/avatars/${id}/${avatar}.png`;
+						//document.getElementById('userimage').src = `https://cdn.discordapp.com/avatars/330380702505762817/388d9018b84e8e96e083eca7f160ea6b.png`;
+						document.getElementById('userimage').style.display = 'block';
+					})
+					.catch(console.error);
+
+			}
+			else {
+				document.getElementById('login').style.display = 'block';
+			}
+		}
+	</script>
+</body>
+</html>
