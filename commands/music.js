@@ -50,9 +50,39 @@ let prefix = config.prefix;
          loop: false
        }
      }
-     var server = servers[message.guild.id]
-     server.queue.push(args[0])
-     message.react("✅")
+
+
+       var server = servers[message.guild.id]
+       if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
+        server.queue.push(args[0])
+        message.react("✅")
+       }
+       else{
+        var search = require('youtube-search');
+ 
+        var opts = {
+          maxResults: 1,
+          key: config.tokens.youtube
+        };
+         
+        search(args.join(" "), opts, function(err, results) {
+          if(err) return console.log(err);
+        
+          server.queue.push(results[0].link)
+          message.channel.send(
+            new RichEmbed()
+            .setColor(colour.rot)
+            .setTitle("Zur Queue von " + message.guild.name + " hinzugefügt")
+            .addField("Video Titel", results[0].title, true)
+            .addField("Channel Name", results[0].channelTitle, true)
+            .addField("Video Link", `[Klick mich](${results[0].link})`)
+          )
+          
+        });
+       }
+
+     
+     
 
      if(!message.guild.voiceConnection){
        message.member.voiceChannel.join().then(connection => {
