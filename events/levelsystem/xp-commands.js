@@ -102,7 +102,7 @@ else {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
     
     
-	ctx.font = applyText(canvas, message.member.displayName + "#" + message.member.user.discriminator)
+	ctx.font = applyText(canvas, user.username + "#" + user.discriminator)
 	ctx.fillStyle = '#ffffff';
     ctx.fillText(user.username + "#"  + user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
     //ctx.strokeText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8)
@@ -130,7 +130,7 @@ else {
 	const avatar = await Canvas.loadImage(user.displayAvatarURL);
 	ctx.drawImage(avatar, 25, 25, 200, 200);
     
-    const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${message.author.username}.png`);
+    const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${user.username}.png`);
     message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
 if(message.deletable){message.delete()}}, 1200000))
 }

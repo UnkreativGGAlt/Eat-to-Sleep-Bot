@@ -4,7 +4,7 @@ const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 
 const Discord = require("discord.js");
 const { RichEmbed } = require('discord.js')
-//var db = require("quick.db")
+var db = require("quick.db")
 
 const client = new Discord.Client();
 const bot = client;

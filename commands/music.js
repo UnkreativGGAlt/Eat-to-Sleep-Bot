@@ -56,6 +56,13 @@ let prefix = config.prefix;
        if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
         server.queue.push(args[0])
         message.react("✅")
+
+        if(!message.guild.voiceConnection){
+          message.member.voiceChannel.join().then(connection => {
+            play(connection, message)
+          })
+        }
+
        }
        else{
         var search = require('youtube-search');
@@ -77,18 +84,17 @@ let prefix = config.prefix;
             .addField("Channel Name", results[0].channelTitle, true)
             .addField("Video Link", `[Klick mich](${results[0].link})`)
           )
+
+          if(!message.guild.voiceConnection){
+            message.member.voiceChannel.join().then(connection => {
+              play(connection, message)
+            })
+          }
           
         });
        }
 
-     
-     
-
-     if(!message.guild.voiceConnection){
-       message.member.voiceChannel.join().then(connection => {
-         play(connection, message)
-       })
-     }
+    
 
 
     }
@@ -117,17 +123,32 @@ let prefix = config.prefix;
       message.channel.send(new RichEmbed().setDescription(`Lautstärke auf ${args[0]} gesetzt`).setFooter("Der Standartwert beim joinen ist 0.5"))      
     }
     if (alias == "q" || alias == "queue"){
+      var search = require('youtube-search');
+
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
         message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
         return;
       }
-      var server = servers[message.guild.id]
-      if (server.queue[0]){
+ 
+        var opts = {
+          maxResults: 1,
+          key: config.tokens.youtube
+        };
+        
+          var server = servers[message.guild.id]
+        if (server.queue[0]){
         var queue = ""
         server.queue.forEach(element => {
-         queue += "```" + element + "```"
+         search(element, opts, function(err, results) {
+          queue += "```" + results[0].title + "```"
+         })
         })
-      message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length})`).setDescription(`${queue}`))      
-    }}
+     setTimeout(() => { message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length})`).setDescription(`${queue}`))    }, 3000)  
+    
+      }
+        
+
+      
+      }
 
 })

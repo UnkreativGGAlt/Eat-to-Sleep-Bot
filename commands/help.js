@@ -27,7 +27,7 @@ if (message.content.startsWith(prefix)){
             .addField(`🔵${config.prefix}skip`,"Überspringt einen Song in der Queue\nbsp: ` " + config.prefix + "skip`" + `\nDieser Command wurde ${db.get(`bot.commands.skip.howoftenuse`)} mal benutzt`, true)
             .addField(`🔵${config.prefix}lautstärke(${config.prefix}ls)`,"Stellt die Lautstärke des Bots ein. Normal lautstärke ist 0.5\nbsp: ` " + config.prefix + "ls {0.5}`" + `\nDieser Command wurde ${db.get(`bot.commands.skip.howoftenuse`)} mal benutzt`, true)
             .addField(`🔵${config.prefix}stop`,"Stoppt einen Song der vom Bot in einem Voicechannel abgespielt wird\nbsp: ` " + config.prefix + "{(dc/stop)}`" + `\nDieser Command wurde ${db.get(`bot.commands.dc.howoftenuse`)} mal benutzt`, true)
-            .addField(`🔵${config.prefix}respawn`,"Du möchtest ein neues Leben auf diesem Server beginnen?" + config.prefix + "respawn`", true)
+            .addField(`🔵${config.prefix}respawn`,"Du möchtest ein neues Leben auf diesem Server beginnen?\nbsp: `" + config.prefix + "respawn`", true)
             
             .addField(`🔘${config.prefix}voicekick`,"Kickt jemanden im selben Talk aus dem Voicechannel\nbsp: ` " + config.prefix + "voicekick {@user#1234}`" + `\nDieser Command wurde ${db.get(`bot.commands.voicekick.howoftenuse`)} mal benutzt`, true)
         
