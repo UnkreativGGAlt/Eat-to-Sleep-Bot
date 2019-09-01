@@ -175,7 +175,7 @@ client.on("ready", () => {
             
 var current_hour = date.getHours();
 var current_minutes = date.getMinutes();
-var timeanddate1 = new RichEmbed().setDescription("zuletzt aktualisiert: " + addZero(current_hour) + ":" + addZero(current_minutes) + " Uhr" + reason + "\n[Data received from Splatoon2.ink](https://splatoon2.ink/data/)")
+var timeanddate1 = new RichEmbed().setDescription("zuletzt aktualisiert: " + addZero(current_hour) + ":" + addZero(current_minutes) + " Uhr" + reason + "\n[Data received from Splatoon2.ink](https://splatoon2.ink/)")
 client.channels.get("587721175996825610").fetchMessage("589502842562412546").then(message => message.edit(timeanddate1))
 
 

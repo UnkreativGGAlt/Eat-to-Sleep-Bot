@@ -104,7 +104,7 @@ else {
     
 	ctx.font = applyText(canvas, message.member.displayName + "#" + message.member.user.discriminator)
 	ctx.fillStyle = '#ffffff';
-    ctx.fillText(user.username + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
+    ctx.fillText(user.username + "#"  + user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
     //ctx.strokeText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8)
 
     ctx.font = '35px sans-serif';
