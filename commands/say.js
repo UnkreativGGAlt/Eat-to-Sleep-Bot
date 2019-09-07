@@ -20,8 +20,8 @@ client.on("message", message => {
 
     if (message.content.startsWith(prefix)){
         
-        
-        if (alias == "say"){
+          if (!message.guild.voiceConnection){  
+      if (alias == "say"){
 
           if (!args[0]){
             message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Du musst einen Satz angeben"))
@@ -93,7 +93,7 @@ client.on("message", message => {
             
 db.add(`bot.commands.play.howoftenuse`, 1)
         }
-          
+      }
               
               
                 
