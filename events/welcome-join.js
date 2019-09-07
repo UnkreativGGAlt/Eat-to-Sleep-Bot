@@ -67,7 +67,7 @@ client.on("guildMemberAdd", (member) => {
         })
     }
 
-    if (newmember.user.bot){
+    if (member.user.bot){
         db.set(`member.xp.${member.id}.balance`, -9999999999999999999999999999999999)
       db.set(`member.level.${member.id}.balance`, -9999999999999999999999999999999999)
       newmember.addRole(member.guild.roles.get("587375374967767054"))

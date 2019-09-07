@@ -3,29 +3,37 @@ const { RichEmbed } = require('discord.js')
 const colour = require("../colours.json")
 const fs      = require("fs");
 var schedule = require('node-schedule');
+var db = require("quick.db")
+
 
 const ytdl = require('ytdl-core');
 const clientS = require('soundoftext-js');
 
 var servers = {}
 
+//Play and Queue
 function play(connection, message){
-  var server = servers[message.guild.id]
+  server = servers[message.guild.id]
   server.dispatcher = connection.playArbitraryInput(ytdl(
     server.queue[0],
     { filter: 'audioonly', quality: "highestaudio" }));
     server.dispatcher.setVolume(0.5);
-
-    server.queue.shift();
+    server.nowplaying = server.queue[0]
+    server.queue.shift()
 
     server.dispatcher.on("end", () => {
+      if (server.loop == true){
+        server.queue.unshift(server.nowplaying)
+      }
       if (server.queue[0]){ play(connection, message)}
-      else {connection.disconnect()}
+      else {connection.disconnect()
+        servers[message.guild.id].loop = false}
       
   })
 
 }
 
+//Commands and Trigger
 client.on("message", (message) => {
 
 let prefix = config.prefix;
@@ -103,6 +111,7 @@ let prefix = config.prefix;
         message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
         return;
       }
+      servers[message.guild.id].loop = false
       servers[message.guild.id].dispatcher.end()
       message.channel.send(new RichEmbed().setDescription("Aktuellen Song übersprungen"))      
     }
@@ -112,7 +121,8 @@ let prefix = config.prefix;
         return;
       }
       message.guild.voiceConnection.disconnect();
-      message.channel.send(new RichEmbed().setDescription("Wiedergabe beendet"))      
+      message.channel.send(new RichEmbed().setDescription("Wiedergabe beendet"))
+      servers[message.guild.id].loop = false      
     }
     if (alias == "ls" && args[0]){
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
@@ -150,5 +160,24 @@ let prefix = config.prefix;
 
       
       }
+    if (alias == "loop"){
+
+      if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
+        message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
+        return;
+      }
+
+      server = servers[message.guild.id]
+      if (server.loop == false){
+        server.loop = true
+        message.channel.send(new RichEmbed().setDescription("🔂loop aktiviert"))
+      }
+
+      else if (server.loop == true){
+        server.loop = false
+        message.channel.send(new RichEmbed().setDescription("▶loop deaktiviert"))
+      }
+        
+    }
 
 })

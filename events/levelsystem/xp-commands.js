@@ -18,7 +18,7 @@ client.on("message", async message => {
     
 
     if (message.content.startsWith(prefix)){
-if (alias.startsWith("rank")){
+if (alias == "rank"){
     
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
@@ -86,7 +86,13 @@ if(message.deletable){message.delete()}}, 1200000))
 }
 
 else {
-    var user = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
+    var userid = args[0].replace("<@", "").replace(">", "").replace("!", "")
+    if (!client.users.find(x => x.id == userid)){
+        message.reply("Sorry. Aber ich habe diesen User nicht gefunden")
+    }
+    else{
+
+    var user = client.users.get(userid)
     let rank = db.get(`member.level.${user.id}.balance`);
     let xp = db.get(`member.xp.${user.id}.balance`);
 
@@ -101,6 +107,7 @@ else {
 	//ctx.strokeStyle = '#000000';
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
     
+    ctx.fillRect(25, 25);
     
 	ctx.font = applyText(canvas, user.username + "#" + user.discriminator)
 	ctx.fillStyle = '#ffffff';
@@ -134,12 +141,13 @@ else {
     message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
 if(message.deletable){message.delete()}}, 1200000))
 }
+}
 db.add(`bot.commands.rank.howoftenuse`, 1)    
     
     
 
 }
-        if (alias.startsWith("setrank")){
+        if (alias == "setrank"){
             if (client.guilds.get(message.channel.guild.id).members.get(message.author.id).hasPermission("BAN_MEMBERS")){
             var operation = args[2]
             var what = args[1]
@@ -171,6 +179,42 @@ db.add(`bot.commands.rank.howoftenuse`, 1)
         }
         else (message.reply("Du hast keine Berechtigung dafür"))
         db.add(`bot.commands.setrank.howoftenuse`, 1)    
+    }
+    
+    if (alias == "payrank"){
+        if (args[0] && client.users.find(x => x.id == args[0].replace("<@", "").replace(">", "").replace("!", ""))){
+            const oldm = message.author
+            const newm = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
+            const howmuch = parseInt(args[1])
+
+            if(db.get(`member.level.${oldm.id}.balance`) < howmuch){
+            message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").addField("Dein Guthaben reicht leider nicht aus", "Sorry. Wir konnten den Nutzer leider nicht die angegebene Summe gröser als dein aktuelles Saldo"))                
+            return;
+            }
+            
+            message.channel.send(
+                new RichEmbed().setTitle("Überweisungs wird ausgeführt...").setDescription("Die Überweisung wird in Kürze ausgeführt, nachdem sie vom Banksystem verifiziert wurde")
+                ).then(m => {
+                    if(howmuch < 1){
+                        m.edit(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").addField("Diese Aktion wurde von der Bank abgebrochen", "Der Grund dafür ist unbekannt"))                
+                        return;
+                    }
+
+                    db.set(`member.level.${oldm.id}.balance`, db.get(`member.level.${oldm.id}.balance`) - howmuch)
+                    db.add(`member.level.${newm.id}.balance`, howmuch)
+
+                   setTimeout(() => {m.edit(new RichEmbed().setColor(colour.blau).setTitle("Überweisungs wurde ausgeführt").setDescription("Die Überweisung war erfolgreich und wurde ausgeführt"))}, 5000)
+                }
+            )
+
+                    
+
+
+        }
+        else {
+            message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").addField("Member nicht gefunden", "Sorry. Wir konnten den Nutzer nicht finden auf dem wir das Geld überweißen sollen. Also haben wir es einfach abgezogen lol. Das war natürlich ein Spaß Kappa, Kappa"))
+        }
+        db.add(`bot.commands.payrank.howoftenuse`, 1)
     }
     
 }   
