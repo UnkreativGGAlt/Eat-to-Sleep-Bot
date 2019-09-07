@@ -23,7 +23,7 @@ var k = schedule.scheduleJob("15 * * * * *", function(){
                     m => {
 
                         member.addRole(member.guild.roles.get("619947670496215051"))
-
+                        db.set(`member.medials.100`, true)
 
 
                         
