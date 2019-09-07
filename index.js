@@ -67,6 +67,7 @@ require("./events/warn")
 //Levelsystem
 require("./events/levelsystem/collectxp")
 require("./events/levelsystem/xp-commands")
+require("./events/levelsystem/xp-rewards")
 
 //Webserver
 require("./webserver/webmain")
