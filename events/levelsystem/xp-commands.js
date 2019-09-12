@@ -35,113 +35,112 @@ if (alias == "rank"){
         // Return the result to use in the actual canvas
         return ctx.font;
     };
+    
     if (!args[0]){
-    let rank = db.get(`member.level.${message.author.id}.balance`);
-    let xp = db.get(`member.xp.${message.author.id}.balance`);
-
-    const canvas = Canvas.createCanvas(700, 250);
-    const ctx = canvas.getContext('2d');
+        let rank = db.get(`member.level.${message.author.id}.balance`);
+        let xp = db.get(`member.xp.${message.author.id}.balance`);
+    
+        const canvas = Canvas.createCanvas(700, 250);
+        const ctx = canvas.getContext('2d');
+        
+        
+        const background = await Canvas.loadImage("https://picsum.photos/705/255.jpg");
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
     
     
-	const background = await Canvas.loadImage("https://picsum.photos/705/255.jpg");
-	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-
+        ctx.fillStyle = "#2C2F33"
+        ctx.fillRect(canvas.width / 2.6, canvas.height / 4, 400, 160)
+        
+        
+        
+        
+        ctx.font = applyText(canvas, message.member.displayName + "#" + message.member.user.discriminator)
+        ctx.fillStyle = '#7289DA';
+        ctx.fillText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
+        //ctx.strokeText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8)
     
-	//ctx.strokeStyle = '#000000';
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '35px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
+        //ctx.strokeText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
+        
+        ctx.font = '28px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
+       //ctx.strokeText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
+        
+        ctx.font = '28px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
+        //ctx.strokeText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
     
+        ctx.beginPath();
+        ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
     
-	ctx.font = applyText(canvas, message.member.displayName + "#" + message.member.user.discriminator)
-	ctx.fillStyle = '#ffffff';
-    ctx.fillText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
-    //ctx.strokeText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8)
-
-    ctx.font = '35px sans-serif';
-	ctx.fillStyle = '#ffffff';
-    ctx.fillText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
-    //ctx.strokeText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
-    
-    ctx.font = '28px sans-serif';
-	ctx.fillStyle = '#ffffff';
-    ctx.fillText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
-   //ctx.strokeText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
-    
-    ctx.font = '28px sans-serif';
-	ctx.fillStyle = '#ffffff';
-	ctx.fillText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
-	//ctx.strokeText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
-
-	ctx.beginPath();
-	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-	ctx.closePath();
-	ctx.clip();
-
-	const avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-	ctx.drawImage(avatar, 25, 25, 200, 200);
-    
-    const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${message.author.username}.png`);
-    message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
-if(message.deletable){message.delete()}}, 1200000))
-    
-}
-
-else {
-    var userid = args[0].replace("<@", "").replace(">", "").replace("!", "")
-    if (!client.users.find(x => x.id == userid)){
-        message.reply("Sorry. Aber ich habe diesen User nicht gefunden")
+        const avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+        ctx.drawImage(avatar, 25, 25, 200, 200);
+        
+        const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${message.author.username}.png`);
+        message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
+    if(message.deletable){message.delete()}}, 1200000))
+        
     }
-    else{
 
-    var user = client.users.get(userid)
-    let rank = db.get(`member.level.${user.id}.balance`);
-    let xp = db.get(`member.xp.${user.id}.balance`);
+    else {
+        var user = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
+        let rank = db.get(`member.level.${user.id}.balance`);
+        let xp = db.get(`member.xp.${user.id}.balance`);
+    
+        const canvas = Canvas.createCanvas(700, 250);
+        const ctx = canvas.getContext('2d');
+        
+        
+        const background = await Canvas.loadImage("https://picsum.photos/705/255.jpg");
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    
+        
+        //ctx.strokeStyle = '#000000';
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-    const canvas = Canvas.createCanvas(700, 250);
-    const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#2C2F33"
+        ctx.fillRect(canvas.width / 2.6, canvas.height / 4, 400, 160)
+        
+        ctx.font = applyText(canvas, user.username + "#" + user.discriminator)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(user.username + "#"  + user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
+        //ctx.strokeText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8)
     
+        ctx.font = '35px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
+        //ctx.strokeText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
+        
+        ctx.font = '28px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
+       //ctx.strokeText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
+        
+        ctx.font = '28px sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
+        //ctx.strokeText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
     
-	const background = await Canvas.loadImage("https://picsum.photos/705/255.jpg");
-	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-
+        ctx.beginPath();
+        ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
     
-	//ctx.strokeStyle = '#000000';
-    ctx.strokeRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.fillRect(25, 25);
-    
-	ctx.font = applyText(canvas, user.username + "#" + user.discriminator)
-	ctx.fillStyle = '#ffffff';
-    ctx.fillText(user.username + "#"  + user.discriminator, canvas.width / 2.5, canvas.height / 1.8);
-    //ctx.strokeText(message.member.displayName + "#" + message.member.user.discriminator, canvas.width / 2.5, canvas.height / 1.8)
-
-    ctx.font = '35px sans-serif';
-	ctx.fillStyle = '#ffffff';
-    ctx.fillText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
-    //ctx.strokeText('Rankcard from:', canvas.width / 2.5, canvas.height / 2.6);
-    
-    ctx.font = '28px sans-serif';
-	ctx.fillStyle = '#ffffff';
-    ctx.fillText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
-   //ctx.strokeText(`Level: ${rank}`, canvas.width / 2.5, canvas.height / 1.4);
-    
-    ctx.font = '28px sans-serif';
-	ctx.fillStyle = '#ffffff';
-	ctx.fillText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
-	//ctx.strokeText(`xp: ${xp}`, canvas.width / 2.5, canvas.height / 1.2);
-
-	ctx.beginPath();
-	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-	ctx.closePath();
-	ctx.clip();
-
-	const avatar = await Canvas.loadImage(user.displayAvatarURL);
-	ctx.drawImage(avatar, 25, 25, 200, 200);
-    
-    const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${user.username}.png`);
-    message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
-if(message.deletable){message.delete()}}, 1200000))
-}
-}
+        const avatar = await Canvas.loadImage(user.displayAvatarURL);
+        ctx.drawImage(avatar, 25, 25, 200, 200);
+        
+        const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${user.username}.png`);
+        message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
+    if(message.deletable){message.delete()}}, 1200000))
+    }
 db.add(`bot.commands.rank.howoftenuse`, 1)    
     
     
