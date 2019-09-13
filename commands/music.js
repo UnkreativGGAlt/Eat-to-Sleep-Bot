@@ -14,24 +14,20 @@ var servers = {}
 //Play and Queue
 function play(connection, message){
   server = servers[message.guild.id]
-
-  if (server.queue[0].type.key = "yt"){
   server.dispatcher = connection.playArbitraryInput(ytdl(
-    server.queue[0].link,
+    server.queue[0],
     { filter: 'audioonly', quality: "highestaudio" }));
     server.dispatcher.setVolume(server.ls);
     server.nowplaying = server.queue[0]
     server.queue.shift()
-  }
-    
-    
+
     server.dispatcher.on("end", () => {
       if (server.loop == true){
         server.queue.unshift(server.nowplaying)
       }
       if (server.queue[0]){ play(connection, message)}
       else {connection.disconnect()
-        servers[message.guild.id].loop = false}
+      delete servers[message.guild.id]}
       
   })
 
@@ -67,19 +63,8 @@ let prefix = config.prefix;
 
        var server = servers[message.guild.id]
        if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
-       
-        ytdl.getInfo(videoID, (err, info) => {
-          if (err) throw err;
-          let format = ytdl.chooseFormat(info.formats, { quality: '134' });
-          if (format) {
-            
-       server.queue.push(
-         {"type": {"key": "yt", name: "YouTube Link"},
-          "link": args[0],
-          "name": format.name})
+        server.queue.push(args[0])
         message.react("✅")
-      }
-    });
 
         if(!message.guild.voiceConnection){
           message.member.voiceChannel.join().then(connection => {
@@ -88,23 +73,6 @@ let prefix = config.prefix;
         }
 
        }
-
-      else if (args[0] == "queen"){
-        server.queue.push("https://www.youtube.com/watch?v=ODaPVD9aq2g") //Marina
-        server.queue.push("https://www.youtube.com/watch?v=ztpINutLlBg") //Katja
-        server.queue.push("https://www.youtube.com/watch?v=gl1aHhXnN1k") //Ariana
-        server.queue.push("https://www.youtube.com/watch?v=z-N2Y2NC0BM") //Sherin      
-        server.queue.push("https://www.youtube.com/watch?v=i0gZaBCR9EI&t=2s") //Kirby
-        message.react("👑")
-
-        if(!message.guild.voiceConnection){
-          message.member.voiceChannel.join().then(connection => {
-           setTimeout(() => { play(connection, message) }, 1000)
-          })
-        }
-
-       }
-
        else{
         var search = require('youtube-search');
  
@@ -115,11 +83,6 @@ let prefix = config.prefix;
          
         search(args.join(" "), opts, function(err, results) {
           if(err) return console.log(err);
-
-          server.queue.push(
-            {"type": {"key": "yt", name: "YouTube Search"},
-             "link": results[0].link,
-             "name": results[0].title})
         
           server.queue.push(results[0].link)
           message.channel.send(
@@ -160,7 +123,7 @@ let prefix = config.prefix;
       }
       message.guild.voiceConnection.disconnect();
       message.channel.send(new RichEmbed().setDescription("Wiedergabe beendet"))
-      servers[message.guild.id].loop = false      
+      delete servers[message.guild.id]      
     }
     if (alias == "ls" && args[0]){
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
@@ -168,7 +131,7 @@ let prefix = config.prefix;
         return;
       }
       servers[message.guild.id].dispatcher.setVolume(args[0]);
-      servers[message.guild.id].ls = args[0]
+      servers[message.guild.id].ls = parseInt( args[0] )
       message.channel.send(new RichEmbed().setDescription(`Lautstärke auf ${args[0]} gesetzt`).setFooter("Der Standartwert beim joinen ist 0.5"))      
     }
     if (alias == "q" || alias == "queue"){
