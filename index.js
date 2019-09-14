@@ -17,7 +17,7 @@ bot.aliases = new Discord.Collection();
 
 //Database
 //const {db} = 
-require("./DATABASE")
+//require("./DATABASE")
 //exports.db = db;
 
 // client.on("ready", () => {
@@ -73,7 +73,7 @@ require("./DATABASE")
 // require("./events/levelsystem/xp-rewards")
 
 // //Webserver
-// require("./webserver/webmain")
+ require("./webserver/bin/www")
 
 
 

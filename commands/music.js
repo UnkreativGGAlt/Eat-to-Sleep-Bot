@@ -14,6 +14,7 @@ var servers = {}
 //Play and Queue
 function play(connection, message){
   server = servers[message.guild.id]
+  console.log(server)
   server.dispatcher = connection.playArbitraryInput(ytdl(
     server.queue[0],
     { filter: 'audioonly', quality: "highestaudio" }));
@@ -22,6 +23,7 @@ function play(connection, message){
     server.queue.shift()
 
     server.dispatcher.on("end", () => {
+      if (server.pause == true){return}
       if (server.loop == true){
         server.queue.unshift(server.nowplaying)
       }
@@ -135,27 +137,26 @@ let prefix = config.prefix;
       message.channel.send(new RichEmbed().setDescription(`Lautstärke auf ${args[0]} gesetzt`).setFooter("Der Standartwert beim joinen ist 0.5"))      
     }
     if (alias == "q" || alias == "queue"){
-      var search = require('youtube-search');
 
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
         message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
         return;
       }
- 
-        var opts = {
-          maxResults: 1,
-          key: config.tokens.youtube
-        };
         
           var server = servers[message.guild.id]
         if (server.queue[0]){
         var queue = ""
-        server.queue.forEach(element => {
-         search(element, opts, function(err, results) {
-          queue += "```" + results[0].title + "```"
+        ytdl.getInfo(server.nowplaying, (err, info) => {
+          queue += `▶ **[${info.title}](${info.video_url})**\n`
+        }) 
+        
+       setTimeout(() => { server.queue.forEach(element => {
+         ytdl.getInfo(element, (err, info) => {
+           queue += `*⃣ [${info.title}](${info.video_url})\n`
          })
         })
-     setTimeout(() => { message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length})`).setDescription(`${queue}`))    }, 3000)  
+      }, 500)
+     setTimeout(() => { message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length + 1})`).setDescription(`${queue}`))    }, 3000)  
     
       }
         
@@ -181,5 +182,6 @@ let prefix = config.prefix;
       }
         
     }
+    
 
 })

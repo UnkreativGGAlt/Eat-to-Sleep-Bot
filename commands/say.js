@@ -108,10 +108,3 @@ db.add(`bot.commands.play.howoftenuse`, 1)
     
 })
 
-client.on("voiceStateUpdate", (oldm, newm) => {
-  if (oldm.guild.voiceConnection){
-    if (oldm.guild.voiceConnection.channel.members.size == 1){
-      oldm.guild.voiceConnection.disconnect();
-    }
-  }
-})
