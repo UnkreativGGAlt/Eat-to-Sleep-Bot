@@ -2,21 +2,20 @@ const { client, config} = require('../index')
 const { RichEmbed } = require('discord.js')
 const colour = require("../colours.json")
 const fs      = require("fs");
-var schedule = require('node-schedule');
-var db = require("quick.db")
 
 
 const ytdl = require('ytdl-core');
 const clientS = require('soundoftext-js');
 
 var servers = {}
+var mainlink = "http://128.0.120.194:3000"
+
 
 //Play and Queue
 function play(connection, message){
   server = servers[message.guild.id]
-  console.log(server)
   server.dispatcher = connection.playArbitraryInput(ytdl(
-    server.queue[0],
+    server.queue[0].url,
     { filter: 'audioonly', quality: "highestaudio" }));
     server.dispatcher.setVolume(server.ls);
     server.nowplaying = server.queue[0]
@@ -38,7 +37,8 @@ function play(connection, message){
 //Commands and Trigger
 client.on("message", (message) => {
 
-let prefix = config.prefix;
+    //let prefix = config.prefix;
+    let prefix = config.prefix;
     let messageArray = message.content.split(" ")
     let alias = messageArray[0].replace(prefix, "");
     let args = messageArray.slice(1);
@@ -62,10 +62,10 @@ let prefix = config.prefix;
        }
      }
 
-
+      
        var server = servers[message.guild.id]
        if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
-        server.queue.push(args[0])
+       server.queue.push({"url": args[0], "id": Math.round(Math.random() * 10000000000000000)})
         message.react("✅")
 
         if(!message.guild.voiceConnection){
@@ -85,8 +85,7 @@ let prefix = config.prefix;
          
         search(args.join(" "), opts, function(err, results) {
           if(err) return console.log(err);
-        
-          server.queue.push(results[0].link)
+          server.queue.push({"url": results[0].link, "id": Math.round(Math.random() * 10000000000000000)})
           message.channel.send(
             new RichEmbed()
             .setColor(colour.rot)
@@ -144,21 +143,21 @@ let prefix = config.prefix;
       }
         
           var server = servers[message.guild.id]
-        if (server.queue[0]){
+       
         var queue = ""
-        ytdl.getInfo(server.nowplaying, (err, info) => {
+        ytdl.getInfo(server.nowplaying.url, (err, info) => {
           queue += `▶ **[${info.title}](${info.video_url})**\n`
         }) 
         
        setTimeout(() => { server.queue.forEach(element => {
-         ytdl.getInfo(element, (err, info) => {
-           queue += `*⃣ [${info.title}](${info.video_url})\n`
+         ytdl.getInfo(element.url, (err, info) => {
+           queue += `[*⃣ ](${mainlink + `/queue/delete?guild=${message.guild.id}&channel=${message.channel.id}&message=${message.id}&song=${element.id}`})[${info.title}](${info.video_url})\n`
          })
         })
       }, 500)
      setTimeout(() => { message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length + 1})`).setDescription(`${queue}`))    }, 3000)  
     
-      }
+      
         
 
       
@@ -185,3 +184,75 @@ let prefix = config.prefix;
     
 
 })
+
+//Webserver for Queue delete
+var express = require('express');
+const OAuthClientDiscord = require("disco-oauth")
+var router = express.Router();
+
+let OAuthClient = new OAuthClientDiscord("585521607875756042", "s4aitv5PbZf7696b0kx0z2-6qR7goToA")
+OAuthClient.setScopes(["identify", "email", "guilds"])
+OAuthClient.setRedirect(`http://128.0.120.194:3000/queue/login`)
+
+router.get("/queue/delete", async (req, res) => {
+  let key = req.cookies.get("key")
+  if (key){
+    try {
+     let guilds = await OAuthClient.getAuthorizedUserGuilds(key)
+     if(!guilds.find(g => g.id === "585511241628516352")){
+      res.render("message", {title: "Du befindest dich aktuell nicht auf dem Server von Eat, Sleep, Nintendo Repeat"})
+      return}
+
+      let messageid = req.query.message;
+      let guildid = req.query.guild;
+      let channelid = req.query.channel;
+      let songid = req.query.song;
+
+        let Userid = await OAuthClient.getAuthorizedUser(key).id
+        let Useravatar = await OAuthClient.getAuthorizedUser(key).avatar
+      
+        client.channels.get(channelid).send(
+          new RichEmbed().setColor(colour.rot)
+          .setAuthor(`Ein Song wurde aus der Queue entfernt`, Useravatar)
+          .setDescription(`Song ID: ${songid}`)
+        )
+        var filtered = servers[guildid].queue.filter(function(el) { return el.id != songid; }); 
+            servers[guildid].queue = filtered
+            res.render("message", {title: "Der Song wurde aus der Queue genommen"})
+     
+          
+      
+
+  
+      
+
+
+      
+      
+     
+
+  } catch(e){
+    console.log(e)
+  res.redirect("/queue/login")
+  }
+}
+else {
+  res.redirect("/queue/login")
+}
+  
+})
+
+router.get("/queue/login/", async (req, res) => {
+  let code = req.query.code;
+  if (code == undefined == false){
+   let userkey = await OAuthClient.getAccess(code).catch(console.error);
+   res.cookies.set("key", userkey)
+
+   res.render("message", {title: "Du bist nun eingeloggt und kannst jetzt Songs aus der Queue nehmen. Bitte schließe diesen Tab"})
+  }
+  else{
+    res.redirect(OAuthClient.getAuthCodeLink())
+  }
+})
+
+module.exports = router;

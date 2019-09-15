@@ -5,8 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cookies = require("cookies")
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require("../commands/music");
 
 var app = express();
 
@@ -22,7 +21,6 @@ app.use(cookies.express(["some", "random", "keys"]))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 
 
@@ -34,7 +32,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(err)
+  res.send(err)
 });
 
 app.use(function(req, res, next){
