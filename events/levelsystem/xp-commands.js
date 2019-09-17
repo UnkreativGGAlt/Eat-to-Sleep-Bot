@@ -181,6 +181,12 @@ db.add(`bot.commands.rank.howoftenuse`, 1)
     }
     
     if (alias == "payrank"){
+        if (!args[0] || !args[1]){
+            message.channel.send(
+                new RichEmbed().setColor(colour.rot).setTitle("Ehhh")
+                .setDescription("Du hast da was falsch gemacht. Lass mich dir helfen```" + config.prefix + "payrank @user#1234 5```Dieser Command würde dem User 5 Level von deinem Konto auf seins übergeben")
+            )
+    return;}
         if (args[0] && client.users.find(x => x.id == args[0].replace("<@", "").replace(">", "").replace("!", ""))){
             const oldm = message.author
             const newm = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))

@@ -26,7 +26,7 @@ function play(connection, message){
       if (server.loop == true){
         server.queue.unshift(server.nowplaying)
       }
-      if (server.queue[0]){ play(connection, message)}
+      if (server && server.queue && server.queue[0]){ play(connection, message)}
       else {connection.disconnect()
       delete servers[message.guild.id]}
       
@@ -64,7 +64,38 @@ client.on("message", (message) => {
 
       
        var server = servers[message.guild.id]
-       if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
+       //Playlist
+       if (args[0].startsWith("https://www.youtube.com/playlist?list")){
+        const ytlist = require('youtube-playlist');
+
+        ytlist(args[0], ['id', 'name', 'url']).then(res => {
+          console.log(res.data.playlist);
+          
+          message.channel.send(new RichEmbed().setTitle("Youtube Playlist").setURL(args[0])
+           .setDescription("Ich habe diese Videos zur Queue hinzugefügt:")).then(m => {
+
+          res.data.playlist.forEach(video => {
+       server.queue.push({"url": video.url, "id": video.id})
+                m.edit(new RichEmbed().setTitle("Youtube Playlist").setURL(args[0])
+                .setDescription(m.embeds[0].description + "```" + video.name + "```"))
+                m.embeds[0].description  =  m.embeds[0].description + "```" + video.name + "```"
+          })
+          
+           
+          
+
+          if(!message.guild.voiceConnection){
+            message.member.voiceChannel.join().then(connection => {
+              play(connection, message)
+            })
+          }
+        });
+
+      })
+
+       }
+       //Normal Video Link
+      else if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
        server.queue.push({"url": args[0], "id": Math.round(Math.random() * 10000000000000000)})
         message.react("✅")
 
@@ -75,6 +106,7 @@ client.on("message", (message) => {
         }
 
        }
+       //Video Search
        else{
         var search = require('youtube-search');
  
@@ -155,7 +187,14 @@ client.on("message", (message) => {
          })
         })
       }, 500)
-     setTimeout(() => { message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length + 1})`).setDescription(`${queue}`))    }, 3000)  
+  
+    
+    
+     setTimeout(() => { 
+       try{
+      message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length + 1})`).setDescription(`${queue}`))    
+    }
+  catch(e) {message.channel.send("Die Queue kann nicht gesendet werden da sie zu lang ist")}}, 3000)  
     
       
         
