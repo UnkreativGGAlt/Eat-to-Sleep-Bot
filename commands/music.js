@@ -8,12 +8,14 @@ const ytdl = require('ytdl-core');
 const clientS = require('soundoftext-js');
 
 var servers = {}
-var mainlink = "http://128.0.120.194:3000"
 
 
 //Play and Queue
 function play(connection, message){
+  
   server = servers[message.guild.id]
+  if (server.queue){
+
   server.dispatcher = connection.playArbitraryInput(ytdl(
     server.queue[0].url,
     { filter: 'audioonly', quality: "highestaudio" }));
@@ -27,11 +29,15 @@ function play(connection, message){
         server.queue.unshift(server.nowplaying)
       }
       if (server && server.queue && server.queue[0]){ play(connection, message)}
-      else {connection.disconnect()
+      else {
       delete servers[message.guild.id]}
       
   })
 
+}
+else {
+  connection.disconnect()
+}
 }
 
 //Commands and Trigger
@@ -183,7 +189,7 @@ client.on("message", (message) => {
         
        setTimeout(() => { server.queue.forEach(element => {
          ytdl.getInfo(element.url, (err, info) => {
-           queue += `[*⃣ ](${mainlink + `/queue/delete?guild=${message.guild.id}&channel=${message.channel.id}&message=${message.id}&song=${element.id}`})[${info.title}](${info.video_url})\n`
+           queue += `*⃣ [${info.title}](${info.video_url})\n`
          })
         })
       }, 500)
@@ -224,74 +230,3 @@ client.on("message", (message) => {
 
 })
 
-//Webserver for Queue delete
-var express = require('express');
-const OAuthClientDiscord = require("disco-oauth")
-var router = express.Router();
-
-let OAuthClient = new OAuthClientDiscord("585521607875756042", "s4aitv5PbZf7696b0kx0z2-6qR7goToA")
-OAuthClient.setScopes(["identify", "email", "guilds"])
-OAuthClient.setRedirect(`http://128.0.120.194:3000/queue/login`)
-
-router.get("/queue/delete", async (req, res) => {
-  let key = req.cookies.get("key")
-  if (key){
-    try {
-     let guilds = await OAuthClient.getAuthorizedUserGuilds(key)
-     if(!guilds.find(g => g.id === "585511241628516352")){
-      res.render("message", {title: "Du befindest dich aktuell nicht auf dem Server von Eat, Sleep, Nintendo Repeat"})
-      return}
-
-      let messageid = req.query.message;
-      let guildid = req.query.guild;
-      let channelid = req.query.channel;
-      let songid = req.query.song;
-
-        let Userid = await OAuthClient.getAuthorizedUser(key).id
-        let Useravatar = await OAuthClient.getAuthorizedUser(key).avatar
-      
-        client.channels.get(channelid).send(
-          new RichEmbed().setColor(colour.rot)
-          .setAuthor(`Ein Song wurde aus der Queue entfernt`, Useravatar)
-          .setDescription(`Song ID: ${songid}`)
-        )
-        var filtered = servers[guildid].queue.filter(function(el) { return el.id != songid; }); 
-            servers[guildid].queue = filtered
-            res.render("message", {title: "Der Song wurde aus der Queue genommen"})
-     
-          
-      
-
-  
-      
-
-
-      
-      
-     
-
-  } catch(e){
-    console.log(e)
-  res.redirect("/queue/login")
-  }
-}
-else {
-  res.redirect("/queue/login")
-}
-  
-})
-
-router.get("/queue/login/", async (req, res) => {
-  let code = req.query.code;
-  if (code == undefined == false){
-   let userkey = await OAuthClient.getAccess(code).catch(console.error);
-   res.cookies.set("key", userkey)
-
-   res.render("message", {title: "Du bist nun eingeloggt und kannst jetzt Songs aus der Queue nehmen. Bitte schließe diesen Tab"})
-  }
-  else{
-    res.redirect(OAuthClient.getAuthCodeLink())
-  }
-})
-
-module.exports = router;
