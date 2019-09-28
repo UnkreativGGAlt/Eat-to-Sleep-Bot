@@ -22,8 +22,8 @@ client.on("message", message => {
             
             
                 
-              if (badmembers[message.author.id] == 1) {
-                badmembers[message.author.id] = 2
+              if (badmembers[badmemberid] == 1) {
+                badmembers[badmemberid] = 2
                 message.channel.send(new RichEmbed().setColor(colour.gelb).setTitle("Warnung gespeichert").setDescription(`Der Member <@${badmemberid}> hat eine Verwarnung wegen **${warngrund}** bekommen. Dies ist seine zweite Verwarnung!`))
                 message.guild.channels.get("597165525319155749").send(new RichEmbed().setColor(colour.gelb).setTitle("Eine Verwarnung wurde erstellt")
                 .addField("Verwarnter Member" ,`<@${badmemberid}>`, true)
@@ -36,8 +36,8 @@ client.on("message", message => {
 
              }
 
-             else if (badmembers[message.author.id] > 1) {
-                badmembers[message.author.id] = 3
+             else if (badmembers[badmemberid] > 1) {
+                badmembers[badmemberid] = 3
                 message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Warnung gespeichert").setDescription(`Der Member <@${badmemberid}> hat eine Verwarnung wegen **${warngrund}** bekommen. Dies ist seine dritte Verwarnung!\nIch werde diesen nutzer nun vom Server entfernen`))
                 message.guild.channels.get("597165525319155749").send(new RichEmbed().setColor(colour.gelb).setTitle("Eine Verwarnung wurde erstellt")
                 .addField("Verwarnter Member" ,`<@${badmemberid}>`, true)
@@ -54,7 +54,7 @@ client.on("message", message => {
              }
 
             else{
-                badmembers[message.author.id] = 1
+                badmembers[badmemberid] = 1
                 message.channel.send(new RichEmbed().setColor(colour.gelb).setTitle("Warnung gespeichert").setDescription(`Der Member <@${badmemberid}> hat eine Verwarnung wegen **${warngrund}** bekommen`))
                 message.guild.channels.get("597165525319155749").send(new RichEmbed().setColor(colour.gelb).setTitle("Eine Verwarnung wurde erstellt")
                 .addField("Verwarnter Member" ,`<@${badmemberid}>`, true)

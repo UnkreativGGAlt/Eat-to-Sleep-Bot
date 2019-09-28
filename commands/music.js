@@ -14,30 +14,46 @@ var servers = {}
 function play(connection, message){
   
   server = servers[message.guild.id]
-  if (server.queue){
-
+  
+if (!server || !server.queue){return}
   server.dispatcher = connection.playArbitraryInput(ytdl(
-    server.queue[0].url,
+    server.queue[0],
     { filter: 'audioonly', quality: "highestaudio" }));
     server.dispatcher.setVolume(server.ls);
     server.nowplaying = server.queue[0]
     server.queue.shift()
 
     server.dispatcher.on("end", () => {
-      if (server.pause == true){return}
-      if (server.loop == true){
-        server.queue.unshift(server.nowplaying)
-      }
-      if (server && server.queue && server.queue[0]){ play(connection, message)}
+        //If Loop is on, Adding last Song again to Queue
+      if (server.loop == true){server.queue.unshift(server.nowplaying)}
+      //If something is in the Queue, start Play funktion again
+      if (server.queue[0]){ 
+        
+        play(connection, message)}
+
       else {
-      delete servers[message.guild.id]}
+        //If queue is empty, disconnect from Channel and set loop to false and lautstärke to 0.5
+        connection.disconnect()
+        servers[message.guild.id].loop = false
+        servers[message.guild.id].ls = 0.5
+      }
       
   })
 
-}
-else {
-  connection.disconnect()
-}
+  server.dispatcher.on("error", (err) => {
+    console.log("--music dispatcher error--")
+    console.log(err)
+    console.log("--error ende--")
+  })
+
+
+server.dispatcher.on("debug", (info) => {
+    console.log("--music dispatcher info--")
+    console.log(info)
+    console.log("--info ende--")
+  })
+
+
 }
 
 //Commands and Trigger
@@ -75,16 +91,12 @@ client.on("message", (message) => {
         const ytlist = require('youtube-playlist');
 
         ytlist(args[0], ['id', 'name', 'url']).then(res => {
-          console.log(res.data.playlist);
           
           message.channel.send(new RichEmbed().setTitle("Youtube Playlist").setURL(args[0])
-           .setDescription("Ich habe diese Videos zur Queue hinzugefügt:")).then(m => {
+           .setDescription("Ich habe **" + res.data.playlist.length + "** Videos zur Queue hinzugefügt")).then(m => {
 
           res.data.playlist.forEach(video => {
-       server.queue.push({"url": video.url, "id": video.id})
-                m.edit(new RichEmbed().setTitle("Youtube Playlist").setURL(args[0])
-                .setDescription(m.embeds[0].description + "```" + video.name + "```"))
-                m.embeds[0].description  =  m.embeds[0].description + "```" + video.name + "```"
+       server.queue.push(video.url)
           })
           
            
@@ -102,7 +114,7 @@ client.on("message", (message) => {
        }
        //Normal Video Link
       else if (args[0].startsWith("https://www.youtube.com/watch?v") || args[0].startsWith("https://youtu.be/") || args[0].startsWith("http://www.youtube.com/v/")){
-       server.queue.push({"url": args[0], "id": Math.round(Math.random() * 10000000000000000)})
+       server.queue.push(args[0])
         message.react("✅")
 
         if(!message.guild.voiceConnection){
@@ -114,38 +126,56 @@ client.on("message", (message) => {
        }
        //Video Search
        else{
-        var search = require('youtube-search');
- 
-        var opts = {
-          maxResults: 1,
-          key: config.tokens.youtube
-        };
-         
-        search(args.join(" "), opts, function(err, results) {
-          if(err) return console.log(err);
-          server.queue.push({"url": results[0].link, "id": Math.round(Math.random() * 10000000000000000)})
-          message.channel.send(
-            new RichEmbed()
-            .setColor(colour.rot)
-            .setTitle("Zur Queue von " + message.guild.name + " hinzugefügt")
-            .addField("Video Titel", results[0].title, true)
-            .addField("Channel Name", results[0].channelTitle, true)
-            .addField("Video Link", `[Klick mich](${results[0].link})`)
-          )
+        var request = require("request")
+        request(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${config.tokens.youtube}&q=${args.join(" ")}&type=video`, function (error, response, body) {
+        body = JSON.parse(body)
+        if (!body["error"]){
+          var Link, Titel, Thlink, Channelname, Channellink
+          Link = "https://www.youtube.com/watch?v=" + body["items"][0]["id"]["videoId"]
+          Titel = body["items"][0]["snippet"]["title"]
+          Thlink = body["items"][0]["snippet"]["thumbnails"]["medium"]["url"]
+          Channelname = body["items"][0]["snippet"]["channelTitle"]
+          Channellink = "https://www.youtube.com/channel/" + body["items"][0]["snippet"]["channelId"]
+          
+          var embed = new RichEmbed()
+          .setTitle(`Zur Queue von ${message.guild.name} hinzugefügt`)
+          .setColor(colour.rot)
+          .addField("Video Titel", `[${Titel}](${Link})`)
+          .addField("Channel", `[${Channelname}](${Channellink})`)
+          .setThumbnail(Thlink)
+
+          message.channel.send(embed)
+          servers[message.guild.id]["queue"].push(Link)
 
           if(!message.guild.voiceConnection){
             message.member.voiceChannel.join().then(connection => {
               play(connection, message)
             })
           }
-          
+
+
+        }
+        
+        
+        
+        else{
+          var embed = new RichEmbed().setColor(colour.rot).setTitle(`Youtube Search API Fehler (--  ${body["error"]["message"]}  --)`)
+          body["error"]["errors"].forEach(x => {
+            embed.addField(x["reason"], x["message"])
+          })
+          message.channel.send(embed)
+        }
+ 
         });
+        
        }
 
     
 
 
     }
+
+
     if (alias == "skip"){
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
         message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
@@ -155,15 +185,19 @@ client.on("message", (message) => {
       servers[message.guild.id].dispatcher.end()
       message.channel.send(new RichEmbed().setDescription("Aktuellen Song übersprungen"))      
     }
+
+
     if (alias == "dc"){
-      if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
-        message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
+      if (!message.guild.voiceConnection){
+        message.channel.send(new RichEmbed().setDescription("Laut meiner Database befinde ich mich aktuell nicht in einem Voicechannel. Falls doch ist der Bot wohl abgestürzt und neugestartet"))
         return;
       }
       message.guild.voiceConnection.disconnect();
       message.channel.send(new RichEmbed().setDescription("Wiedergabe beendet"))
       delete servers[message.guild.id]      
     }
+
+
     if (alias == "ls" && args[0]){
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
         message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
@@ -173,40 +207,15 @@ client.on("message", (message) => {
       servers[message.guild.id].ls = parseInt( args[0] )
       message.channel.send(new RichEmbed().setDescription(`Lautstärke auf ${args[0]} gesetzt`).setFooter("Der Standartwert beim joinen ist 0.5"))      
     }
+
+
     if (alias == "q" || alias == "queue"){
 
-      if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
-        message.channel.send(new RichEmbed().setDescription("Auf diesem Server wird gerade kein Song gespielt"))
-        return;
-      }
-        
-          var server = servers[message.guild.id]
-       
-        var queue = ""
-        ytdl.getInfo(server.nowplaying.url, (err, info) => {
-          queue += `▶ **[${info.title}](${info.video_url})**\n`
-        }) 
-        
-       setTimeout(() => { server.queue.forEach(element => {
-         ytdl.getInfo(element.url, (err, info) => {
-           queue += `*⃣ [${info.title}](${info.video_url})\n`
-         })
-        })
-      }, 500)
-  
-    
-    
-     setTimeout(() => { 
-       try{
-      message.channel.send(new RichEmbed().setTitle("Server Queue für " + message.guild.name + ` (${server.queue.length + 1})`).setDescription(`${queue}`))    
-    }
-  catch(e) {message.channel.send("Die Queue kann nicht gesendet werden da sie zu lang ist")}}, 3000)  
-    
+      message.reply("Aufgrund eines Bugs ist dieser Command aktuell nicht verfügbar")
       
-        
+      }
 
-      
-      }
+
     if (alias == "loop"){
 
       if (!servers[message.guild.id] || !servers[message.guild.id].dispatcher || !message.guild.voiceConnection){
@@ -229,4 +238,14 @@ client.on("message", (message) => {
     
 
 })
+
+//dc when channel is emty
+client.on("voiceStateUpdate", (oldm, newm) => {
+  if (oldm.guild.voiceConnection){
+    if (oldm.guild.voiceConnection.channel.members.size == 1){
+      oldm.guild.voiceConnection.disconnect();
+    }
+  }
+})
+
 

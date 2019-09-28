@@ -19,7 +19,7 @@ client.on("message", message => {
 })
 
 client.on("guildMemberAdd", (member) => {
-    if (!member.user.bot){
+    if (!member.user.bot && member.guild.id == "585511241628516352"){
         member.guild.createChannel(member.user.username, "text").then(channel => {
 
             channel.replacePermissionOverwrites({
