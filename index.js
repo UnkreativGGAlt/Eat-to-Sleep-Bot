@@ -17,7 +17,7 @@ exports.config = config;
 
 //Database connection
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://eat-sleep:KirbyMagGurken.com@45.81.234.241:27017/eat-sleep?",{ useUnifiedTopology: true, useNewUrlParser: true }, () => {
+mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: true }, () => {
     console.log("Database connection active!")
     mongoose.set('useFindAndModify', false);
 })
