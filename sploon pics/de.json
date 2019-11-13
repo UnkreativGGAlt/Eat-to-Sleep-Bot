@@ -1,6 +1,0 @@
-{"stages":{"0":{"name":"Korallenviertel"},"1":{"name":"Molluskelbude"},"2":{"name":"Seeigel-Rockbühne"},"3":{"name":"Störwerft"},"4":{"name":"Perlmutt-Akademie"},"5":{"name":"Buckelwal-Piste"},"6":{"name":"Manta Maria"},"7":{"name":"Heilbutt-Hafen"},"8":{"name":"Muränentürme"},"9":{"name":"Grätenkanal"},"10":{"name":"Tümmlerkuppel"},"11":{"name":"Punkasius-Skatepark"},"12":{"name":"Abyssal-Museum"},"13":{"name":"Cetacea-Markt"},"14":{"name":"Kofferfisch-Lager"},"15":{"name":"Arowana-Center"},"16":{"name":"Camp Schützenfisch"},"17":{"name":"Steinköhler-Grube"},"18":{"name":"Backfisch-Stadion"},"19":{"name":"Hotel Neothun"},"20":{"name":"Flunder-Funpark"},"21":{"name":"Anchobit Games HQ"},"22":{"name":"Grundel-Pavillon"},"9999":{"name":"Wandelzone"}}
-
-,"game_modes":{"gachi":{"name":"Rangkampf"},"league":{"name":"Ligakampf"},"regular":{"name":"Standardkampf"}}
-
-,"rules":{"splat_zones":{"name":"Herrschaft","multiline_name":"Herrschaft"},"rainmaker":{"name":"Operation Goldfisch","multiline_name":"Operation\nGoldfisch"},"tower_control":{"name":"Turm-Kommando","multiline_name":"Turm-\nKommando"},"turf_war":{"name":"Revierkampf","multiline_name":"Revier-\nkampf"},"clam_blitz":{"name":"Muschelchaos","multiline_name":"Muschel-\nchaos"}}}
-

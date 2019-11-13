@@ -3,6 +3,7 @@ const hbs = require('express-handlebars')
 const bodyParser = require("body-parser");
 const path = require('path')
 const upload = require("express-fileupload")
+var cookies = require("cookies")
 
 
 class WebSocket {
@@ -24,6 +25,8 @@ class WebSocket {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
         this.app.use(upload())
+        this.app.use(cookies.express(["some", "random", "keys"]))
+
 
         this.registerRoots()
 
@@ -36,15 +39,6 @@ class WebSocket {
 
 
     registerRoots() {
-        this.app.get('/', (req, res) => {
-            
-            res.render('index', { 
-                title: "SECRET INTERFACE", 
-                error: "Error"
-                
-                
-            })
-        })
 
         this.app.get('/download', (req, res) => {
             try {
@@ -75,7 +69,7 @@ class WebSocket {
                         })
                     }
                     else{
-                        var link = "http://128.0.120.194:6677/download?filename=" + filename
+                        var link = "http://server.dustin-dm.de:6677/download?filename=" + filename
                         res.render("upload2", {
                             title: "Hochgeladen",
                             link: link

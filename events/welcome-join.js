@@ -2,23 +2,26 @@ const { client, config} = require('../index.js')
 const { RichEmbed } = require('discord.js')
 const Main = require('../index.js')
 var fs = require(`fs`);
-var db = require("quick.db")
+
+const MEMBER = require("../models/MEMBER")
 
 var Member = {}
 exports.member = Member
 
-client.on("message", message => {
+client.on("message",async message => {
     if (message.content == "_respawn"){
         message.member.roles.forEach(role => {
             message.member.removeRole(role)
         })
-        client.emit("guildMemberAdd", message.member)
-    message.delete()
+        await MEMBER.findOneAndDelete({"info.id": message.member.id}, () => {
+            client.emit("guildMemberAdd", message.member)
+            message.delete()
+        })
     }
     
 })
 
-client.on("guildMemberAdd", (member) => {
+client.on("guildMemberAdd", async (member) => {
     if (!member.user.bot && member.guild.id == "585511241628516352"){
         member.guild.createChannel(member.user.username, "text").then(channel => {
 
@@ -62,16 +65,19 @@ client.on("guildMemberAdd", (member) => {
             Member[member.id] = {"channel": channel, "acceptet": false, "memberid": member.id}
             exports.member = Member
             
-            db.set(`member.xp.${member.id}.balance`, 0)
-            db.set(`member.level.${member.id}.balance`, 0)
+            
         })
     }
-
-    if (member.user.bot){
-        db.set(`member.xp.${member.id}.balance`, -9999999999999999999999999999999999)
-      db.set(`member.level.${member.id}.balance`, -9999999999999999999999999999999999)
-      newmember.addRole(member.guild.roles.get("587375374967767054"))
+    
+    var memberdb = await MEMBER.find({"info.id": member.id})
+    if (!memberdb[0]){
+          var newmember = new MEMBER({
+             info:{
+                 id: member.id
+             }
+        })
+        console.log(newmember)
+        newmember.save()
     }
-
 
 })

@@ -3,6 +3,8 @@ const { RichEmbed } = require('discord.js')
 const Main = require('../index.js')
 const fs      = require("fs");
 
+var request = require("request")
+
 var schedule = require('node-schedule');
 var fetch = require('node-fetch');
 var format = require('date-format');
@@ -150,15 +152,18 @@ client.on("ready", () => {
             .addField("Belohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seid: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
             .setThumbnail("https://splatoon2.ink/assets/splatnet" + SalmonrunGear["Picturelink"])
             
-            }//Wenn gerade ein Salmonrun ist
-            else if (Unixnow < Salmonrunstart){
-                Salmonrun = new RichEmbed().setTitle("Nächster Salmonrun")
-            .setColor("#34495e")
+            }
+           else if (Unixnow < Salmonrunstart){
+
+            Salmonrun = new RichEmbed().setTitle("Nächster Salmonrun")
+            .setColor("#00000")
             .addField("Zeiten", `Start: ${unixtotimeconverter(Salmonrunstart)}\nEnde: ${unixtotimeconverter(Salmonrunend)}`, true)
             .addField("Map", `${getGermanName(SalmonrunMap)}`, true)
             .addField("Waffen", `${getemote(weapons["1id"])} ${weapons["1"]}\n${getemote(weapons["2id"])} ${weapons["2"]}\n${getemote(weapons["3id"])} ${weapons["3"]}\n${getemote(weapons["4id"])} ${weapons["4"]}\n`, true)
-            .addField("Hauptbelohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seid: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
-            .setThumbnail("https://github.com/misenhower/splatoon2.ink/blob/ab5c5bf159bd6b0f0bbf8e87af9b0d5bf8c349ef/src/img/salmon-run-mini.png?raw=true")
+            .addField("Belohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seid: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
+            .setThumbnail("https://splatoon2.ink/assets/splatnet" + SalmonrunGear["Picturelink"])
+            
+            
             }
 
 

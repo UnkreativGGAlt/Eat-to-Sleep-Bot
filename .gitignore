@@ -1,4 +1,10 @@
 
 config.json
 
+.gitignore
+
+.dockerignore
+
+Dockerfile
+
 /node_modules/

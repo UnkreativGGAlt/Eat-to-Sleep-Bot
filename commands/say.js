@@ -1,29 +1,16 @@
-const { client, config} = require('../index')
-const { RichEmbed } = require('discord.js')
-const colour = require("../colours.json")
-const fs      = require("fs");
-var schedule = require('node-schedule');
-var db = require("quick.db")
+module.exports = {
+	name: 'say',
+	description: 'Joint in den Voice Channel und sagt was du schreibst',
+	execute(message, args) {
 
-const clientS = require('soundoftext-js');
+        const { client, config} = require('../index')
+        const { RichEmbed } = require('discord.js')
+        const colour = require("../colours.json")
 
-var servers = {};
-
-
-client.on("message", message => {
-    if(message.author.bot || message.channel.type === "dm") return;
-
-    let prefix = config.prefix;
-    let messageArray = message.content.split(" ")
-    let alias = messageArray[0].replace(prefix, "");
-    let args = messageArray.slice(1);
-
-    if (message.content.startsWith(prefix)){
+        const clientS = require('soundoftext-js');
         
-          if (!message.guild.voiceConnection){  
-      if (alias == "say"){
-
-          if (!args[0]){
+        if (!message.guild.voiceConnection){
+        if (!args[0]){
             message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Du musst einen Satz angeben"))
             return;
           }
@@ -47,7 +34,6 @@ client.on("message", message => {
         connection.disconnect()
         m.edit(new RichEmbed().setColor(colour.grün).setDescription("✅Erfolgreich denn Text-Sound abgespielt"))
         setTimeout(() => {
-            servers[message.guild.id] = true
             m.delete()
             message.delete()
         }, 30000)
@@ -87,24 +73,7 @@ client.on("message", message => {
 
             
         })
+    }
 
-
-
-            
-db.add(`bot.commands.play.howoftenuse`, 1)
-        }
-      }
-              
-              
-                
-        
-
-                
-                
-                }
-                
-
-            //next command here
-    
-})
-
+	},
+};

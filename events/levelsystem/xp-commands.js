@@ -3,9 +3,11 @@ const { RichEmbed } = require('discord.js')
 const colour = require("../../colours.json")
 const fs      = require("fs");
 var schedule = require('node-schedule');
-var db = require('quick.db')
 const Canvas = require('canvas');
 const Discord = require('discord.js');
+
+const MEMBER = require("../../models/MEMBER")
+
 
 client.on("message", async message => {
 
@@ -18,7 +20,7 @@ client.on("message", async message => {
     
 
     if (message.content.startsWith(prefix)){
-if (alias == "rank"){
+    if (alias == "rank"){
     
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
@@ -33,12 +35,16 @@ if (alias == "rank"){
         } while (ctx.measureText(text).width > canvas.width - 300);
     
         // Return the result to use in the actual canvas
+        if (parseInt(ctx.font.replace("px sans-serif")) > 50){ctx.font = "50px sans-serif"}
+        console.log(ctx.font)
         return ctx.font;
     };
     
     if (!args[0]){
-        let rank = db.get(`member.level.${message.author.id}.balance`);
-        let xp = db.get(`member.xp.${message.author.id}.balance`);
+        var memberdb = await MEMBER.find({"info.id": message.author.id})
+
+        let rank = memberdb[0].ranks.rank
+        let xp = memberdb[0].ranks.xp
     
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -92,8 +98,10 @@ if (alias == "rank"){
 
     else {
         var user = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
-        let rank = db.get(`member.level.${user.id}.balance`);
-        let xp = db.get(`member.xp.${user.id}.balance`);
+        var memberdb = await MEMBER.find({"info.id": user.id})
+
+        let rank = memberdb[0].ranks.rank
+        let xp = memberdb[0].ranks.xp
     
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
@@ -141,7 +149,6 @@ if (alias == "rank"){
         message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}
     if(message.deletable){message.delete()}}, 1200000))
     }
-db.add(`bot.commands.rank.howoftenuse`, 1)    
     
     
 
@@ -156,17 +163,25 @@ db.add(`bot.commands.rank.howoftenuse`, 1)
 
             if (message.channel.guild.members.find(x => x.id === userid)){
                 if(operation == "+" || operation == "-"){
-                    var userxp = db.get(`member.xp.${userid}.balance`)
-                    var userlevel = db.get(`member.level.${userid}.balance`)
+                    var member = await MEMBER.find({"info.id": userid})
+
+                    let rank = member[0].ranks.rank
+                    let xp = member[0].ranks.xp
+
 
                     if (what == "xp" || what == "level" || what == "rank"){
                         if (what == "rank"){what = "level"}
-                        var newone = parseInt(db.get(`member.${what}.${userid}.balance`))
-                        if (operation == "+"){newone = newone + zahl}
-                        if (operation == "-"){newone = newone - zahl}
-                        db.set(`member.${what}.${userid}.balance`, newone)
+                        if (what == "level"){
+                            if (operation == "+"){rank += zahl}
+                            if (operation == "-"){rank -= zahl}
+                        }
+                        if (what == "xp"){
+                            if (operation == "+"){xp += zahl}
+                            if (operation == "-"){xp -= zahl}
+                        }
+                        await MEMBER.findOneAndUpdate({"info.id": userid}, {"ranks.xp": xp, "ranks.rank": rank}, (err, res) => {if (err){console.log(err)}})
 
-                        message.reply("Ich habe erfolgreich denn " + what + " Wert von " + client.users.get(userid).username + " auf " + newone + " gesetzt.")
+                        message.reply("Ich habe erfolgreich denn ranking Wert von " + client.users.get(userid).username + " auf " + rank + ":" + xp + " gesetzt.")
 
                     }
                     else {message.reply("Du kannst nur denn Wert von XP und Level bestimmen")}
@@ -177,10 +192,10 @@ db.add(`bot.commands.rank.howoftenuse`, 1)
             else {message.reply("Kann User nicht finden")}
         }
         else (message.reply("Du hast keine Berechtigung dafür"))
-        db.add(`bot.commands.setrank.howoftenuse`, 1)    
     }
     
     if (alias == "payrank"){
+        
         if (!args[0] || !args[1]){
             message.channel.send(
                 new RichEmbed().setColor(colour.rot).setTitle("Ehhh")
@@ -188,12 +203,23 @@ db.add(`bot.commands.rank.howoftenuse`, 1)
             )
     return;}
         if (args[0] && client.users.find(x => x.id == args[0].replace("<@", "").replace(">", "").replace("!", ""))){
+            
             const oldm = message.author
             const newm = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
             const howmuch = parseInt(args[1])
 
-            if(db.get(`member.level.${oldm.id}.balance`) < howmuch){
-            message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").addField("Dein Guthaben reicht leider nicht aus", "Sorry. Wir konnten den Nutzer leider nicht die angegebene Summe gröser als dein aktuelles Saldo"))                
+            var member = await MEMBER.find({"info.id": oldm.id})
+
+                    let rank = member[0].ranks.rank
+                    let xp = member[0].ranks.xp
+
+                    var nmember = await MEMBER.find({"info.id": newm.id})
+
+                    let nrank = nmember[0].ranks.rank
+                    let nxp = nmember[0].ranks.xp
+
+            if(rank < howmuch){
+            message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").addField("Dein Guthaben reicht leider nicht aus", "Sorry. Wir konnten den Nutzer leider nicht die angegebene Summe überweisen da du nicht genügend Level hast"))                
             return;
             }
             
@@ -205,22 +231,28 @@ db.add(`bot.commands.rank.howoftenuse`, 1)
                         return;
                     }
 
-                    db.set(`member.level.${oldm.id}.balance`, db.get(`member.level.${oldm.id}.balance`) - howmuch)
-                    db.add(`member.level.${newm.id}.balance`, howmuch)
+                    rank = rank - howmuch
+                    nrank = nrank + howmuch
+                   async function die() {
+
+                    await MEMBER.findOneAndUpdate({"info.id": oldm.id}, {"ranks.rank": rank}, (err, res) => {if (err){console.log(err)}})
+                    await MEMBER.findOneAndUpdate({"info.id": newm.id}, {"ranks.rank": nrank}, (err, res) => {if (err){console.log(err)}})
+                }
+                die()
 
                    setTimeout(() => {m.edit(new RichEmbed().setColor(colour.blau).setTitle("Überweisungs wurde ausgeführt").setDescription("Die Überweisung war erfolgreich und wurde ausgeführt"))}, 5000)
                 }
             )
 
                     
-
+            
 
         }
         else {
             message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").addField("Member nicht gefunden", "Sorry. Wir konnten den Nutzer nicht finden auf dem wir das Geld überweißen sollen. Also haben wir es einfach abgezogen lol. Das war natürlich ein Spaß Kappa, Kappa"))
         }
-        db.add(`bot.commands.payrank.howoftenuse`, 1)
     }
+
     
 }   
     
