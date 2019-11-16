@@ -11,24 +11,15 @@ var WS = require("../../webserver/webmain").WS
 //Safe names and Profile Pictures from all Members to DB
 
 var k = schedule.scheduleJob("0 * * *",async function(){
-  var mongodb = await MEMBER.find({})
-  mongodb.forEach( async m => {
-      if (client.users.find(x => x.id === m.info.id)){
-       var name =  client.users.find(x => x.id === m.info.id).tag
-       var pb =  client.users.find(x => x.id === m.info.id).avatarURL
-
-      await MEMBER.findOneAndUpdate({"info.id": m.info.id}, {"info.name": name, "info.picture": pb})
-      }
-  })
+  
 })
 
 
 
 
 WS.app.get("/rankinglist", async (req, res) => {
-  // db.Member.find({country_id : 10}).sort({score : -1}).limit(1)
+
   var memberdb2 = await MEMBER.find({}).sort({"ranks.rank": -1})
-  console.log(memberdb2)
   var rank = 1
   memberdb2.forEach(e => {
 

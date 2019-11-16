@@ -8,6 +8,8 @@ const ytdl = require('ytdl-core');
 const clientS = require('soundoftext-js');
 
 var servers = {}
+var Songinfo = []
+
 
 
 //Play and Queue
@@ -100,6 +102,7 @@ client.on("message", (message) => {
           body["items"].forEach(Video => {
             var Link = "https://www.youtube.com/watch?v=" + Video["snippet"]["resourceId"]["videoId"]
             server.queue.push(Link)
+            Songinfo.push({link: Link, name: Video["snippet"]["title"]})
           })
           message.channel.send(new RichEmbed()
           .setTitle("Youtube Playlist erkannt")
@@ -167,6 +170,8 @@ client.on("message", (message) => {
 
           message.channel.send(embed)
           servers[message.guild.id]["queue"].push(Link)
+          Songinfo.push({link: Link, name: Titel})
+
 
           if(!message.guild.voiceConnection){
             message.member.voiceChannel.join().then(connection => {
@@ -232,10 +237,12 @@ client.on("message", (message) => {
 
     if (alias == "q" || alias == "queue"){
       var request = require("request")
-      var Text = ""
+      var Text = "**Now Playing:** " + Songinfo.find(x => x.link === servers[message.guild.id].nowplaying).name
       servers[message.guild.id]["queue"].forEach(Link => {
+        if(Songinfo.find(x => x.link === Link) && Songinfo.find(x => x.link === Link).name){
+          Text = Text + "\n- " + Songinfo.find(x => x.link === Link).name
+        }
 
-        Text += Link + "\n"
       
       })
       setTimeout(() => {message.channel.send(new RichEmbed().setDescription(Text))}, 2000)
