@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="server.dustin-dm.de:6677/bot-pb" height="300" />
+    <img src="http://server.dustin-dm.de:6677/bot-pb" height="300" />
     <h1>Eat and Repeat#0077</h1>
     <strong>
         Ein Discord Bot geschrieben Javascript
