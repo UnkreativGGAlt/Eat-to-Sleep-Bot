@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'eval',
-	description: 'Führt denn angegebenen Code aus',
+	description: 'Führt den angegebenen Code aus',
+    usage: `eval [Code]` ,
 	execute(message, args) {
 
         const { client, config} = require('../index')

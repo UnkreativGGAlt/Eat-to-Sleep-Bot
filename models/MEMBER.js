@@ -3,7 +3,9 @@ const mongoose = require("mongoose")
 const MemberSchema = mongoose.Schema({
     info:{
         id: String,
-        invitedby: String
+        invitedby: String,
+        name: String,
+        picture: String
     },
 
     ranks:{

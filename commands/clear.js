@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'clear',
 	description: 'Löscht bis zu 100 Nachichten in Chat',
+    usage: `clear [Zahl von 1-100]` ,
 	execute(message, args) {
 
         const { client, config} = require('../index')

@@ -1,7 +1,8 @@
 module.exports = {
 	name: 'voicekick',
 	description: 'Kickt pro Stunde einen Member aus deinem Voicechannel',
-	execute(message, args) {
+    usage: `voicekick [@member#1234]` ,
+	execute (message, args) {
 
         const { client, config} = require('../index')
         const { RichEmbed } = require('discord.js')
@@ -10,7 +11,7 @@ module.exports = {
         
     
 			message.delete()
-			var userid = args[0].replace("<@", "").replace(">", "")
+			var userid = message.mentions.members.first().id || args[0].replace("<@", "").replace(">", "") || args[0]
 			var kickmember = message.guild.members.find(x => x.id === userid)
 			if (message.guild.members.find(x => x.id === message.author.id) && message.guild.members.get(message.author.id).roles.find(x => x.id === "585511640745771049")){
 				kickmember.setVoiceChannel(null)

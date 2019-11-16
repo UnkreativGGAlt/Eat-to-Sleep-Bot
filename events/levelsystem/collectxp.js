@@ -24,9 +24,8 @@ var k = schedule.scheduleJob("0 * * * * *", function(){
                        if (xp > 59){
                         rank += 1
                         xp = 0
-                        var newname = member.user.tag
                        }
-                       await MEMBER.findOneAndUpdate({"info.id": member.id}, {"ranks.xp": xp, "ranks.rank": rank, "infos.name": newname}, (err, res) => {if (err){console.log(err)}})
+                       await MEMBER.findOneAndUpdate({"info.id": member.id}, {"ranks.xp": xp, "ranks.rank": rank}, (err, res) => {if (err){console.log(err)}})
                     }
 
                     

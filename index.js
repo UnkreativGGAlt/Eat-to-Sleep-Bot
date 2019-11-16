@@ -25,7 +25,7 @@ mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: t
 
 
 client.on("ready", () => {
-    client.user.setActivity(`Codet by ${client.users.get("330380702505762817").tag}`, {type: "PLAYING"});
+    client.user.setActivity(`Im back`, {type: "PLAYING"});
 console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
 setInterval(function(){
 
@@ -35,13 +35,14 @@ setInterval(function(){
     if (Check.startsWith("true")){
 let statuses = [
     `Codet by ${client.users.get("330380702505762817").tag}`,
-    client.guilds.get("585511241628516352").roles.get("585511864931188856").members.size + " Members on the Server",
-    client.guilds.get("585511241628516352").roles.get("587375374967767054").members.size + " Bots on the Server",
-    client.guilds.get("585511241628516352").roles.size + " Roles on the Server",
-    client.guilds.get("585511241628516352").emojis.size + " Emotes on the Server",
+    client.guilds.get("585511241628516352").roles.get("585511864931188856").members.size + " Members on " + client.guilds.get("585511241628516352").name,
+    client.guilds.get("585511241628516352").roles.get("587375374967767054").members.size + " Bots on " + client.guilds.get("585511241628516352").name,
+    client.guilds.get("585511241628516352").roles.size + " Roles on " + client.guilds.get("585511241628516352").name,
+    client.guilds.get("585511241628516352").emojis.size + " Emotes on " + client.guilds.get("585511241628516352").name,
     "Botversion: " + config.version,
     "Bot Ping: " + Math.round(client.ping),
-    `${config.prefix}help`,
+    `Need some Help? ${config.prefix}help`,
+    `Written with Discord.js v.${Discord.version} in Javascript`
 ]
 
 let status = statuses[Math.floor(Math.random() * statuses.length)];
@@ -86,8 +87,7 @@ client.on("message", (message) => {
 
 require("./events/music")
 
-require("./events/welcome-join")
-require("./events/welcome-check")
+require("./events/welcome")
 require("./events/warn")
 require("./events/splatoon-stages")
 

@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'say',
 	description: 'Joint in den Voice Channel und sagt was du schreibst',
+  usage: `say [Einen oder mehrere Sätze]` ,
 	execute(message, args) {
 
         const { client, config} = require('../index')
