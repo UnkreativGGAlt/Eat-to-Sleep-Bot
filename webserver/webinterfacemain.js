@@ -52,6 +52,9 @@ class WebSocket {
                 })
             }
         })
+        this.app.get("/bot-pb", (req, res) => {
+            res.redirect(this.client.user.displayAvatarURL)
+        })
 
         this.app.get('/upload', (req, res) => {
             res.render("upload", {title: "_DM Host File System"})

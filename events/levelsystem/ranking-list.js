@@ -9,11 +9,17 @@ const MEMBER = require("../../models/MEMBER")
 var WS = require("../../webserver/webmain").WS
 
 //Safe names and Profile Pictures from all Members to DB
-
 var k = schedule.scheduleJob("0 * * *",async function(){
-  
-})
+  var mongodb = await MEMBER.find({})
+  mongodb.forEach( async m => {
+      if (client.users.find(x => x.id === m.info.id)){
+       var name =  client.users.find(x => x.id === m.info.id).tag
+       var pb =  client.users.find(x => x.id === m.info.id).avatarURL
 
+      await MEMBER.findOneAndUpdate({"info.id": m.info.id}, {"info.name": name, "info.picture": pb})
+      }
+  })
+})
 
 
 

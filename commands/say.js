@@ -29,7 +29,7 @@ module.exports = {
   .then(async soundUrl => {
       
 
-    var dispatcher = connection.playArbitraryInput(soundUrl);
+    var dispatcher = connection.playStream(soundUrl);
     m.edit(new RichEmbed().setColor(colour.blau).setDescription("▶Spiele Sound im Channel ab"))    
     dispatcher.on("end", () => {
         connection.disconnect()
