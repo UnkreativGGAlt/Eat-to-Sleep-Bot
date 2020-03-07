@@ -11,15 +11,18 @@ const MEMBER = require("../../models/MEMBER")
 var k = schedule.scheduleJob("0 * * * * *",async function(){ 
 
 
-    var memberdb = await MEMBER.find({})
     client.guilds.forEach(guild => {
         guild.members.forEach(async member => {
-               var memberfromdb = memberdb.find(x => x.info.id === member.id)
+            if (member.user.bot){return;}
+               var memberfromdb = await MEMBER.findOne({"info.id": member.id})
                 
                     if (member.voiceChannel && member.voiceChannel.parentID == "586170548678295583" == false && !member.bot && member.voiceChannel.members.size < 2 == false){
                       var xp = memberfromdb.ranks.xp
                       var rank = memberfromdb.ranks.rank
                       xp = xp + 1
+                      if (member.voiceChannel.parent.name.startsWith("Monday Mario Kart")){
+                          xp = xp + 1
+                      }
                        
                        if (xp > 59){
                         rank += 1

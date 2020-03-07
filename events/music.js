@@ -38,12 +38,16 @@ async function execute(message, serverQueue) {
 	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
 		return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Ich habe nicht genug Rechte um in deinen Voicechannel zu joinen! Das ist also nicht dein Fehler, sondern der Fehler der Server Owner"));
 	}
-	const songInfo = await ytdl.getInfo(args[1]);
-	const song = {
-		title: songInfo.title,
-    url: songInfo.video_url,
-    author: songInfo.author
-	};
+	
+	try {
+		const songInfo = await ytdl.getInfo(args[1]);
+		song = {
+			title: songInfo.title,
+		url: songInfo.video_url,
+		author: songInfo.author
+		};
+	
+	
 
 	if (!serverQueue) {
 		const queueContruct = {
@@ -72,7 +76,11 @@ async function execute(message, serverQueue) {
 		serverQueue.songs.push(song);
 		return message.channel.send(new RichEmbed().setColor(colour.blau).setDescription(`Der Song \"[${song.title}](${song.url})\" von \"[${song.author.name}](${song.author.channel_url})\" wurde zur Queue hinzugefügt`));
 	}
-
+	}
+	catch (error) {
+		message.channel.send("Error " + error)
+		return;
+	}
 }
 
 function skip(message, serverQueue) {

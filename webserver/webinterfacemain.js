@@ -1,8 +1,9 @@
 const express = require('express')
-const hbs = require('express-handlebars')
+
 const bodyParser = require("body-parser");
 const path = require('path')
 const upload = require("express-fileupload")
+var expressLayouts = require('express-ejs-layouts');
 var cookies = require("cookies")
 
 
@@ -14,13 +15,9 @@ class WebSocket {
         this.client = client
         this.app = express()
 
-        this.app.engine('hbs', hbs({
-            extname: 'hbs',                     
-            defaultLayout: 'layout',            
-            layoutsDir: __dirname + '/layouts'  
-        }))
         this.app.set('views', path.join(__dirname, 'views'))
-        this.app.set('view engine', 'hbs')
+        this.app.set('view engine', 'ejs');
+        this.app.use(expressLayouts)
         this.app.use(express.static(path.join(__dirname, 'public')))
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
@@ -40,55 +37,19 @@ class WebSocket {
 
     registerRoots() {
 
-        this.app.get('/download', (req, res) => {
-            try {
-            const file = `${__dirname}/public/${req.query.filename}`;
-            res.download(file); // Set disposition and send it.
-            }
-            catch(e){
-                res.render("error", {
-                    title: "FEHLER",
-                    error: e
-                })
-            }
-        })
         this.app.get("/bot-pb", (req, res) => {
             res.redirect(this.client.user.displayAvatarURL)
         })
 
-        this.app.get('/upload', (req, res) => {
-            res.render("upload", {title: "_DM Host File System"})
+        this.app.get("/online", (req,res) => {
+            res.render("index")
         })
-        this.app.post("/upload", (req, res) => {
-            if (req.files){
-                var file = req.files.filename,
-                filename = file.name;
-                file.mv(__dirname + "/public/" + filename, function(err){
-                    if (err){
-                        console.log(err)
-                        res.render("error", {
-                            title: "FEHLER",
-                            error: err
-                        })
-                    }
-                    else{
-                        var link = "http://server.dustin-dm.de:6677/download?filename=" + filename
-                        res.render("upload2", {
-                            title: "Hochgeladen",
-                            link: link
-                        })
-                        
-                    }
-                })
-                
-            }
-            else{
-                res.render("error", {
-                    title: "FEHLER",
-                    error: "user tried to upload an empty file(2345346)"
-                })
-            }
+
+        this.app.get("/server-pb", (req, res) => {
+            res.redirect(this.client.guilds.get("585511241628516352").iconURL)
         })
+
+      
     
     
     }

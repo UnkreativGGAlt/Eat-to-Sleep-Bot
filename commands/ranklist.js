@@ -10,7 +10,7 @@ module.exports = {
 
         
 
-        message.channel.send("http://server.dustin-dm.de:6677/rankinglist")
+        message.channel.send("Aktuell nicht verfügbar")
 
 	},
 };

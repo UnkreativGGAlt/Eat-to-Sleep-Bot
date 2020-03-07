@@ -85,20 +85,24 @@ client.on("message", (message) => {
 
 
 
-require("./events/music")
+//require("./events/music")
 
 require("./events/welcome")
 require("./events/warn")
 require("./events/splatoon-stages")
 require("./events/React-to-older-Messages")
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 //Levelsystem
  require("./events/levelsystem/collectxp")
  require("./events/levelsystem/xp-commands")
 //require("./events/levelsystem/xp-rewards")
-require("./events/levelsystem/ranking-list")
 
+//
+require("./events/Monday Mario Kart/channel-menagement")
 
 
 //Webserver
