@@ -3,7 +3,9 @@ config.json
 
 .gitignore
 
-.dockerignore
+dockerignore
+
+updatedocker.sh
 
 Dockerfile
 
