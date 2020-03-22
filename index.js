@@ -15,6 +15,8 @@ client.commands = new Discord.Collection();
 exports.client = client;
 exports.config = config;
 
+
+
 //Database connection
 const mongoose = require("mongoose")
 mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: true }, () => {
@@ -24,6 +26,7 @@ mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: t
 
 
 client.on("ready", () => {
+  
     client.user.setActivity(`Im back`, {type: "PLAYING"});
 console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
 setInterval(function(){
@@ -65,7 +68,11 @@ for (const file of commandFiles) {
 }
 
 client.on("message", (message) => {
-
+    if (message.content.replace("!", "").includes("<@330380702505762817>")){
+        message.channel.send("Dustin hat sich für einige Zeit aus Discord zurück gezogen. Sollte irgendwas sein: Schreib einfach ne Whatsapp oder ne Email: Dustin@Dustin-DM.de")
+        .then(m => setTimeout(() => {m.delete()}, 20000))
+    }
+   
     let prefix = config.prefix;
     let messageArray = message.content.split(" ")
     let alias = messageArray[0].replace(prefix, "");
@@ -90,12 +97,9 @@ client.on("message", (message) => {
 require("./events/welcome")
 require("./events/warn")
 require("./events/splatoon-stages")
+require("./events/Fortnite-Shop")
 require("./events/React-to-older-Messages")
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 //Levelsystem
  require("./events/levelsystem/collectxp")
  require("./events/levelsystem/xp-commands")
@@ -103,6 +107,7 @@ require("./events/React-to-older-Messages")
 
 //
 require("./events/Monday Mario Kart/channel-menagement")
+require("./events/Can-i-use-your-voice")
 
 
 //Webserver

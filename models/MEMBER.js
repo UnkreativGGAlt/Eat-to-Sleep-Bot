@@ -12,7 +12,10 @@ const MemberSchema = mongoose.Schema({
         rank: { type: Number, default: 0 },
         xp: { type: Number, default: 0 },
     },
-    warns: { type: Array, default: [] }
+    warns: { type: Array, default: [] },
+    more: {
+        ytvoice: {type: Boolean, default: false}
+    }
 })
 
 module.exports = mongoose.model("Member", MemberSchema)

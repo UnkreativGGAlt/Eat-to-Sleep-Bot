@@ -144,6 +144,9 @@ client.on("message", async message => {
     
         const avatar = await Canvas.loadImage(user.displayAvatarURL);
         ctx.drawImage(avatar, 25, 25, 200, 200);
+
+        ctx.fillStyle = 'rgba(255,0,0, 0.5)';
+        ctx.fillRect(0,0,100,100);
         
         const attachment = new Discord.Attachment(canvas.toBuffer(), `Rankcard from ${user.username}.png`);
         message.channel.send(attachment).then(m => setTimeout(() => {if(m.deletable){m.delete}

@@ -2,7 +2,6 @@ const express = require('express')
 
 const bodyParser = require("body-parser");
 const path = require('path')
-const upload = require("express-fileupload")
 var expressLayouts = require('express-ejs-layouts');
 var cookies = require("cookies")
 
@@ -21,7 +20,6 @@ class WebSocket {
         this.app.use(express.static(path.join(__dirname, 'public')))
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
-        this.app.use(upload())
         this.app.use(cookies.express(["some", "random", "keys"]))
 
 

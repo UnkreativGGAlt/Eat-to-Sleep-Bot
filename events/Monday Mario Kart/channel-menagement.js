@@ -28,10 +28,12 @@ var openchannels = schedule.scheduleJob("30 18 * * 1", function(){
         .setThumbnail("https://www.mariowiki.com/images/thumb/7/71/Crazy8MK8.png/1200px-Crazy8MK8.png")
         .setTitle("Monday Mario Kart").setDescription("Das heutige Monday Mario Kart auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
         .addField("Infos:", "Start: 18:30 Uhr\nEnde: 19:30 Uhr\nTurnier Code: 2442-6453-9691")
-        .addField("Eure Teilnahme Geschenke:", "2* XP Boost in MMK Talks\nMMK Rolle"))})
+        .addField("Eure Teilnahme Geschenke:", "2* XP Boost in MMK Talks")
+        .addField("Der Stream:", "Das heutige MMK wird auf Youtube gestreamt. Alle Talks die mit 🔴 gekenzeichnet sind werden für den Stream benutzt! Eure Stimmen werden in solchen Talks aufgenommen. Verhaltet euch ganz natürlich. Solltet ihr etwas sagen was ihr in der Stream Aufnahme die man später auf Youtube sehen kann nicht drin haben wollt werde ich dies selbsverständlich raus schneiden. ICH NEHME EURER RECHT FÜR EURE STIMME SEHR ERNST. Ihr könnt selbstverständlich auch ohne Streaming Talk am MMK teilnehmen^^")
+        )})
 
-        categorie.guild.createChannel("MMK Talk 1", "voice").then(c => c.setParent(categorie))
-        categorie.guild.createChannel("MMK Talk 2", "voice").then(c => c.setParent(categorie))
+        categorie.guild.createChannel("MMK Talk 1 ⚫", "voice").then(c => c.setParent(categorie))
+        categorie.guild.createChannel("MMK Talk 2 ⚫", "voice").then(c => c.setParent(categorie))
 
 
        
@@ -43,14 +45,21 @@ var openchannels = schedule.scheduleJob("30 18 * * 1", function(){
 
 
    var closechannels = schedule.scheduleJob("30 19 * * 1", function(){
+
+    if ( client.guilds.get(server).channels.find(x => x.name === "MMK Talk 1").members != null){
    
       client.guilds.get(server).channels.find(x => x.name === "MMK Talk 1").members.forEach(m => {
         m.setVoiceChannel("597106290787090467")
       })
+    }
+
+    if ( client.guilds.get(server).channels.find(x => x.name === "MMK Talk 2").members != null){
 
       client.guilds.get(server).channels.find(x => x.name === "MMK Talk 2").members.forEach(m => {
         m.setVoiceChannel("597106290787090467")
       })
+
+    }
 
       setTimeout(() => {
         client.guilds.get(server).channels.find(x => x.name === "MMK Talk 1").delete()
