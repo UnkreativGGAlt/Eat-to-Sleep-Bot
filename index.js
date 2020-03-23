@@ -93,7 +93,7 @@ client.on("message", (message) => {
 require("./events/welcome")
 require("./events/warn")
 require("./events/splatoon-stages")
-require("./events/Fortnite-Shop")
+//require("./events/Fortnite-Shop")
 require("./events/React-to-older-Messages")
 
 //Levelsystem
