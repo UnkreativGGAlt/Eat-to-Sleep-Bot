@@ -68,10 +68,6 @@ for (const file of commandFiles) {
 }
 
 client.on("message", (message) => {
-    if (message.content.replace("!", "").includes("<@330380702505762817>")){
-        message.channel.send("Dustin hat sich für einige Zeit aus Discord zurück gezogen. Sollte irgendwas sein: Schreib einfach ne Whatsapp oder ne Email: Dustin@Dustin-DM.de")
-        .then(m => setTimeout(() => {m.delete()}, 20000))
-    }
    
     let prefix = config.prefix;
     let messageArray = message.content.split(" ")
