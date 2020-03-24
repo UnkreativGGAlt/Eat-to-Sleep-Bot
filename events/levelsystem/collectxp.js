@@ -20,7 +20,7 @@ var k = schedule.scheduleJob("0 * * * * *",async function(){
                       var xp = memberfromdb.ranks.xp
                       var rank = memberfromdb.ranks.rank
                       xp = xp + 1
-                      if (member.voiceChannel.parent.name.startsWith("Monday Mario Kart")){
+                      if (member.voiceChannel.parent.name.startsWith("Monday Mario Kart" || "Minecraft Talk")){
                           xp = xp + 1
                       }
                        
