@@ -28,7 +28,7 @@ mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: t
 client.on("ready", () => {
   
     client.user.setActivity(`Im back`, {type: "PLAYING"});
-console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m\nKleiner Github Test ^^`)
+console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
 setInterval(function(){
 
     fs.readFile("./data/gamechange.txt", function(err, buf) {
