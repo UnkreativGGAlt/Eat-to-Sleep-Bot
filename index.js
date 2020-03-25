@@ -102,7 +102,8 @@ require("./events/React-to-older-Messages")
 //require("./events/levelsystem/xp-rewards")
 
 //
-require("./events/Monday Mario Kart/channel-menagement")
+require("./events/channel-management/Monday Mario Kart")
+require("./events/channel-management/Minecraft-Mittwoch")
 require("./events/Can-i-use-your-voice")
 
 
