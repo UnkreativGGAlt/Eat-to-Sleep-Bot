@@ -1,11 +1,10 @@
 
 config.json
 
-.gitignore
-
 dockerignore
 
 updatedocker.sh
+
 
 Dockerfile
 
@@ -13,3 +12,4 @@ README.md
 
 /node_modules/
 
+LICENSE
