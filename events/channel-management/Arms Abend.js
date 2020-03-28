@@ -37,7 +37,7 @@ var openchannels = schedule.scheduleJob("0 0 18 * * */6", function(){
    });
 
 
-   var closechannels = schedule.scheduleJob("0 0 20 * * */6", function(){
+   var closechannels = schedule.scheduleJob("0 5 19 * * */6", function(){
 
     if ( client.guilds.get(server).channels.find(x => x.name === "Arms Talk 1").members != null){
    
