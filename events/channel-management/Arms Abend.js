@@ -18,12 +18,15 @@ var server = "585511241628516352"
 
 
 //0 0 18 * * */6 <--- Jeden Sonntag 18:00 Uhr
-var openchannels = schedule.scheduleJob("0 0 18 * * */6", function(){
-    client.guilds.get(server).createChannel("Arms Abend", "category", client.guilds.get(server).channels.get("585523787408212079").permissionOverwrites).then(categorie =>{
+var openchannels = schedule.scheduleJob("0 0 17 * * */6", function(){
+    client.guilds.get(server).createChannel("Arms TURNIER", "category", client.guilds.get(server).channels.get("585523787408212079").permissionOverwrites).then(categorie =>{
         categorie.setPosition(0)
-        categorie.guild.createChannel("Arms Abend", "text").then(c => {
+        categorie.guild.createChannel("Turnierhat", "text").then(c => {
             c.setParent(categorie)
             })
+            categorie.guild.createChannel("Turnier News", "text").then(c => {
+              c.setParent(categorie)
+              })
 
         categorie.guild.createChannel("Arms Talk 1", "voice").then(c => c.setParent(categorie))
         categorie.guild.createChannel("Arms Talk 2", "voice").then(c => c.setParent(categorie))
@@ -35,36 +38,8 @@ var openchannels = schedule.scheduleJob("0 0 18 * * */6", function(){
   
    
    });
-
-
-   var closechannels = schedule.scheduleJob("0 5 19 * * */6", function(){
-
-    if ( client.guilds.get(server).channels.find(x => x.name === "Arms Talk 1").members != null){
-   
-      client.guilds.get(server).channels.find(x => x.name === "Arms Talk 1").members.forEach(m => {
-        m.setVoiceChannel("597106290787090467")
-      })
-    }
-
-    if ( client.guilds.get(server).channels.find(x => x.name === "Arms Talk 2").members != null){
-
-      client.guilds.get(server).channels.find(x => x.name === "Arms Talk 2").members.forEach(m => {
-        m.setVoiceChannel("597106290787090467")
-      })
-
-    }
-
-      setTimeout(() => {
-        client.guilds.get(server).channels.find(x => x.name === "Arms Talk 2").delete()
-        client.guilds.get(server).channels.find(x => x.name === "Arms Talk 1").delete()
-        client.guilds.get(server).channels.find(x => x.name === "Arms").delete()
-        client.guilds.get(server).channels.find(x => x.name === "Arms Abend").delete()
-      }, 3000);
-
-
-   }
     
-    )
+    
 
    
    ;
