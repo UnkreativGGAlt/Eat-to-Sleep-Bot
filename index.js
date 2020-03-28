@@ -105,6 +105,7 @@ require("./events/React-to-older-Messages")
 //
 require("./events/channel-management/Monday Mario Kart")
 require("./events/channel-management/Minecraft-Mittwoch")
+require("./events/channel-management/Arms Abend")
 require("./events/Can-i-use-your-voice")
 
 

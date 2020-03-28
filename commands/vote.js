@@ -67,9 +67,16 @@ module.exports = {
             
             }
 
+            async function removevote(){
+           var checkvotes = await VOTEDB.find({channel: message.channel.id, open: true, creator: message.author.id})
+           if (checkvotes < 1) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("In diesem channel sind aktuell keine offenen Votes die du schließen könntest"))
+           
+        }
+
 
 
             if (args[0].startsWith("start") || args[0].startsWith("create")) {createvote()}
+            if (args[0].startsWith("end") || args[0].startsWith("remove")) {removevote ()}
         }
         else {
             message.channel.send("Du hast leider nicht die Berrechtigungen um Abstimmungen zu erstellen")
