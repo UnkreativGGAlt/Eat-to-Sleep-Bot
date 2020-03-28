@@ -45,7 +45,8 @@ let statuses = [
     "Bot Ping: " + Math.round(client.ping),
     `Need some Help? ${config.prefix}help`,
     `Written with Discord.js v.${Discord.version} in Javascript`,
-    `Check my health: status.dustin-dm.de`
+    `Check my health: status.dustin-dm.de`,
+    `Check out my Github! https://bit.ly/2vN6ufA`
 ]
 
 let status = statuses[Math.floor(Math.random() * statuses.length)];
