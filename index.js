@@ -75,6 +75,7 @@ client.on("message", (message) => {
     let alias = messageArray[0].replace(prefix, "");
     let args = messageArray.slice(1);
     
+    if (message.content.startsWith(prefix) == false) return;
     if (!client.commands.has(alias)) return;
 
     try {
@@ -96,6 +97,7 @@ require("./events/warn")
 require("./events/splatoon-stages")
 require("./events/Fortnite-Shop")
 require("./events/React-to-older-Messages")
+require("./events/vote")
 
 //Levelsystem
  require("./events/levelsystem/collectxp")
@@ -105,10 +107,10 @@ require("./events/React-to-older-Messages")
 //
 require("./events/channel-management/Monday Mario Kart")
 require("./events/channel-management/Minecraft-Mittwoch")
-require("./events/channel-management/Arms Abend")
 require("./events/Can-i-use-your-voice")
 
 
 //Webserver
 require("./webserver/webmain")
+
 client.login(config.tokens.discord)

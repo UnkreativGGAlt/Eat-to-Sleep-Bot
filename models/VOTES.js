@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const schema = mongoose.Schema({
     q: String,
     a: Array,
-    voted: Array,
+    voted: {type: Array, default: []},
     creator: String,
     channel: String,
     message: String,

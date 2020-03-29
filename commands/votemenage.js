@@ -35,7 +35,7 @@ module.exports = {
             
             awnsers.forEach(a => {
                 const number = awnsers.indexOf(a).toString().replace("1", ":two:").replace("2", ":three:").replace("3", ":four:").replace("4", ":five:").replace("5", ":six:").replace("6", ":seven:").replace("7", ":eight:").replace("8", ":nine:").replace("0", ":one:")
-                embed.setDescription(embed.description + `${number} ${a}: \`0 %\`\n\n`)
+                embed.setDescription(embed.description + `${number} ${a}: \`0 Stimmen\`\n\n`)
             })
 
              var msg = message.channel.send(new RichEmbed().setColor(colour.blau).setDescription("Vote wird erstellt... Bitte warten"))
@@ -71,6 +71,22 @@ module.exports = {
            var checkvotes = await VOTEDB.find({channel: message.channel.id, open: true, creator: message.author.id})
            if (checkvotes < 1) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("In diesem channel sind aktuell keine offenen Votes die du schließen könntest"))
            
+           var votes = await VOTEDB.findOneAndUpdate({channel: message.channel.id, open: true, creator: message.author.id}, {open: false})
+
+
+            const embed = new RichEmbed().setTitle("**📊Abstimmungs Ergebniss:** " + votes.q)
+            .setDescription("")
+            .setColor("RANDOM")
+            .setFooter("Bitte nicht mehr abstimmen!")
+            
+            votes.a.forEach(a => {
+                const number = votes.a.indexOf(a).toString().replace("1", ":two:").replace("2", ":three:").replace("3", ":four:").replace("4", ":five:").replace("5", ":six:").replace("6", ":seven:").replace("7", ":eight:").replace("8", ":nine:").replace("0", ":one:")
+                embed.setDescription(embed.description + `${number} ${a.awnser}: \`${a.count} Stimmen\`\n\n`)
+            })
+            
+            message.channel.send(embed)
+           
+
         }
 
 
