@@ -22,23 +22,30 @@ client.on("messageReactionAdd", (Reaction, User) => {
         //console.log(json[0].participant.name)
         if (json.find(p => p.participant.name === User.tag)) {User.send("Hey. Schön das du dich mehrmals für das Arms Turnier anmelden willst. Aber du bist schon angemeldet ^^*")}
         else {
-        //Create new User
-        var newteilnehmer = fetch(mostneedcall + `/tournaments/${config.tokens["challonge-id"]}/participants.json`, {
-            method: 'POST',
-            body: {"participant": {"name": "dustindf"}},
-            
-        })
-        .then(res => res.json());
-            newteilnehmer.then(async function (json2) {
-                console.log(json2)
-                User.send(new RichEmbed().setTitle("Deine Anmeldung beim Arms Turnier war Erfolgreich")
-                .setDescription("Du bist nun Erfolgreich für das Amrs Turnier am 04.04.2020 um 17:00 Uhr angemeldet! Bitte denke an den Check In. Er beginnt eine Stunde vor dem Turnier. Du musst dann einfach nur in einem Channel schreiben das du beim Turnier da bist. Das ist alles.")
-                .setColor(colour.grün))
-            })
+        ////Register new Member
 
-
-        
-        }
-    })
+        const request = require("request");
+        request.post(mostneedcall + `/tournaments/${config.tokens["challonge-id"]}/participants.json`, {
+            json: {
+              participant: {name: User.tag}
+            }
+          }, (error, res, body) => {
+            if (error) {
+              console.error(error)
+              return User.send("Du konntest nicht zu dem Turnier angemeldet werden. Dies ist aber nicht deine schuld. Bitte kontaktiere einen Admin oder versuche es später erneut")
+            }
+            else {
+                Reaction.message.guild.members.get(User.id).addRole("619947670496215051")
+                User.send(new RichEmbed().setColor(colour.grün)
+                .setTitle("Du wurdest erfolgreich zum Turnier angeneldet!")
+                .setColor(colour.gelb)
+                .setThumbnail("https://cdn.worldvectorlogo.com/logos/arms-nintendo-switch.svg")
+                .setDescription("Du bist nun ein offizieller Teilnehmer vom Arms Abend Turnier (4.4.2020). Der Check in findet eine Stunde vor dem Turnier statt (16:00 Uhr). Mit dem Check in bestätigst du nochmal deine Teilnahme und lässt uns wissen das du wirklich da bist. 17:00 Uhr geht dann das Turnier los. Wir spielen jeder gegen jeden. Pro Runde bekommt ihr für einen Sieg einen Punkt. Wer am Ende die meisten Punkte hat, gewinnt das Turnier!")
+                .addField("Tunier Page:", "https://challonge.com/de/1nvuxzwb", true)
+                )
+            }
+          })
+      
+    }})
 
 })
