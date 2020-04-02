@@ -99,6 +99,9 @@ require("./events/Fortnite-Shop")
 require("./events/React-to-older-Messages")
 require("./events/vote")
 
+//Amrs Turnier
+require("./events/Arms Turnier/register")
+
 //Levelsystem
  require("./events/levelsystem/collectxp")
  require("./events/levelsystem/xp-commands")
