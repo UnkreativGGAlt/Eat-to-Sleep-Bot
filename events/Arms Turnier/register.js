@@ -36,7 +36,7 @@ client.on("messageReactionAdd", (Reaction, User) => {
               return User.send("Du konntest nicht zu dem Turnier angemeldet werden. Dies ist aber nicht deine schuld. Bitte kontaktiere einen Admin oder versuche es später erneut")
             }
             else {
-                Reaction.message.guild.members.get(User.id).addRole("619947670496215051")
+                Reaction.message.guild.members.get(User.id).addRole("695385992487764079")
                 User.send(new RichEmbed().setColor(colour.grün)
                 .setTitle("Du wurdest erfolgreich zum Turnier angeneldet!")
     
