@@ -10,9 +10,10 @@ var server = "585511241628516352"
 
 client.on("messageReactionAdd", (Reaction, User) => {
     var mostneedcall = `https://Dustin_DM:${config.tokens.challonge}@api.challonge.com/v1`
-    Reaction.remove(User)
 
     if (Reaction.message.id != "695315279005220945") return;
+    if (Reaction.emoji != "✅") return;
+    Reaction.remove(User)
 
     var teilnehmer = fetch(mostneedcall + `/tournaments/${config.tokens["challonge-id"]}/participants.json`, {
         method: 'get',
@@ -38,10 +39,11 @@ client.on("messageReactionAdd", (Reaction, User) => {
                 Reaction.message.guild.members.get(User.id).addRole("619947670496215051")
                 User.send(new RichEmbed().setColor(colour.grün)
                 .setTitle("Du wurdest erfolgreich zum Turnier angeneldet!")
+    
                 .setColor(colour.gelb)
                 .setThumbnail("https://cdn.worldvectorlogo.com/logos/arms-nintendo-switch.svg")
                 .setDescription("Du bist nun ein offizieller Teilnehmer vom Arms Abend Turnier (4.4.2020). Der Check in findet eine Stunde vor dem Turnier statt (16:00 Uhr). Mit dem Check in bestätigst du nochmal deine Teilnahme und lässt uns wissen das du wirklich da bist. 17:00 Uhr geht dann das Turnier los. Wir spielen jeder gegen jeden. Pro Runde bekommt ihr für einen Sieg einen Punkt. Wer am Ende die meisten Punkte hat, gewinnt das Turnier!")
-                .addField("Tunier Page:", "https://challonge.com/de/1nvuxzwb", true)
+                .addField("Tunier Page:", "https://challonge.com/de/1nvuxzwb")
                 )
             }
           })
