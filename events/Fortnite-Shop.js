@@ -85,34 +85,18 @@ client.on("ready", () => {
 
         })
 
-         
+        client.channels.get("685948724030996583").setTopic("Hier werden alle heutigen Items des Fortnite Item Shops gezeigt. Diese Infos werden 01:00 in der 30ten Sekunde aktualisiert. Votes und Items die Direkt mit Echtgeld bezahlt werden können nicht angezeigt werden. Alle Infos stammen von Fortnite-API.com" +
+
+        "\n\nDeveloper Note: " + new Date().getDate())
+        }
+        
+        if (client.channels.get("685948724030996583").topic.endsWith(new Date().getDate()) == false) {
+        refrechdata()
         }
 
-   
-//         var date = new Date();
-            
-// var current_hour = date.getHours();
-// var current_minutes = date.getMinutes();
-// var timeanddate1 = new RichEmbed().setDescription("zuletzt aktualisiert: " + addZero(current_hour) + ":" + addZero(current_minutes) + " Uhr" + "\n[Data received from Fortnite-API.com](https://fortnite-api.com/)")
-// client.channels.get(channelid).fetchMessage(timemessage).then(message => message.edit(timeanddate1))
+var j = schedule.scheduleJob("30 1 1 * * *", function(){
 
-
-
-        refrechdata()
-
-var j = schedule.scheduleJob("30 0 1 * * *", function(){
-
- refrechdata()  //führt denn gesameten oben gezeigten Code aus == Refresht die Map daten in denn Masseges
-
-//  var date1 = new Date();            // Info Message
-//  var current_hour1 = date1.getHours();
-//  var current_minutes1 = date1.getMinutes();
-//  timeanddate1 = new RichEmbed().setDescription("zuletzt aktualisiert: " + addZero(current_hour1) + ":" + addZero(current_minutes1) + " Uhr" + "\n[Data received from Fortnite-API.com](https://fortnite-api.com/)")
-//  client.channels.get(channelid).fetchMessage(timemessage).then(message => message.edit(timeanddate1))
- 
- 
-
-
+ refrechdata()
 
 
 });
