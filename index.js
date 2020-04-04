@@ -101,6 +101,7 @@ require("./events/vote")
 
 //Amrs Turnier
 require("./events/Arms Turnier/register")
+require("./events/Arms Turnier/check-in")
 
 //Levelsystem
  require("./events/levelsystem/collectxp")
