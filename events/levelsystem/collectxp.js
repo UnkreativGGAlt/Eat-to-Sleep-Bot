@@ -16,7 +16,7 @@ var k = schedule.scheduleJob("0 * * * * *",async function(){
             if (member.user.bot){return;}
                var memberfromdb = await MEMBER.findOne({"info.id": member.id})
                 
-                    if (member.voiceChannel && member.voiceChannel.parentID == "586170548678295583" == false && !member.bot && member.voiceChannel.members.size < 2 == false){
+                    if (member.voiceChannel && member.voiceChannel.parentID == "679473163465261056" == false && !member.bot && member.voiceChannel.members.size < 2 == false){
                       var xp = memberfromdb.ranks.xp
                       var rank = memberfromdb.ranks.rank
                       xp = xp + 1
