@@ -94,7 +94,7 @@ client.on("ready", () => {
         refrechdata()
         }
 
-var j = schedule.scheduleJob("30 1 1 * * *", function(){
+var j = schedule.scheduleJob("* * 2 * * *", function(){
 
  refrechdata()
 
