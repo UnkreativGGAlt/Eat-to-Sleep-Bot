@@ -95,10 +95,6 @@ client.on("message", (message) => {
 require("./events/welcome")
 require("./events/warn")
 require("./events/splatoon-stages")
-<<<<<<< HEAD
-=======
-//require("./events/Fortnite-Shop")
->>>>>>> 1e4236bd165d00ea35662cfd2e992b6d49863d1c
 require("./events/React-to-older-Messages")
 require("./events/vote")
 
