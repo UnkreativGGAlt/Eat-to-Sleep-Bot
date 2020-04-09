@@ -98,9 +98,9 @@ require("./events/splatoon-stages")
 require("./events/React-to-older-Messages")
 require("./events/vote")
 
-//Amrs Turnier
-require("./events/Arms Turnier/register")
-require("./events/Arms Turnier/check-in")
+//Turnier
+require("./events/SS Turnier/register")
+require("./events/SS Turnier/check-in")
 
 //Levelsystem
  require("./events/levelsystem/collectxp")
