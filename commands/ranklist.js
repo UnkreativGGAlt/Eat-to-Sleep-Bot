@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'ranklist',
-        description: 'Schickt dir einen Link zum ansehen der Ranking List',
+        description: 'Sendet die eine Liste der besten 10 Member von der Rangliste',
         usage: `ranklist`,
 	execute(message, args) {
 
