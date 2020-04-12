@@ -30,6 +30,7 @@ client.on("guildMemberAdd",async (user) => {
 }
     //Rejoined Member
     else {
+        MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": undefined})
         user.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<@${user.id}` + "> ist gerade Eat, Sleep, Nintendo, Repeat beigetreten\n**Willkommen zurück^^**")
             .setColor("RANDOM")
             .setThumbnail(user.user.displayAvatarURL))
@@ -78,4 +79,5 @@ client.on("guildMemberRemove", (user) => {
     client.guilds.get(user.guild.id).
     channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`${user.user.tag} hat gerade ${user.guild.name} verlassen`).setColor("RANDOM").setThumbnail(user.user.displayAvatarURL))
     
+    MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": Date.now()})
 })
