@@ -30,7 +30,9 @@ client.on("guildMemberAdd",async (user) => {
 }
     //Rejoined Member
     else {
-        MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": undefined})
+        async function dosomethingforyourmonay(){
+       await MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": undefined})}
+        dosomethingforyourmonay()
         user.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<@${user.id}` + "> ist gerade Eat, Sleep, Nintendo, Repeat beigetreten\n**Willkommen zurück^^**")
             .setColor("RANDOM")
             .setThumbnail(user.user.displayAvatarURL))
@@ -73,11 +75,11 @@ client.on("messageReactionAdd",async (Reaction, User) => {
 })
 
 
-client.on("guildMemberRemove", (user) => {
+client.on("guildMemberRemove", async (user) => {
     if (user.roles.has("585511864931188856") == false){return;}
     if (user.guild.id != "585511241628516352"){return;}
     client.guilds.get(user.guild.id).
     channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`${user.user.tag} hat gerade ${user.guild.name} verlassen`).setColor("RANDOM").setThumbnail(user.user.displayAvatarURL))
     
-    MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": Date.now()})
+    await MEMBER.findOneAndUpdate({"info.id": user.user.id}, {"expire": Date.now()})
 })
