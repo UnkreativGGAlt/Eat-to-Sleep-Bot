@@ -95,7 +95,7 @@ module.exports = {
             if (args[0].startsWith("end") || args[0].startsWith("remove")) {removevote ()}
         }
         else {
-            message.channel.send("Du hast leider nicht die Berrechtigungen um Abstimmungen zu erstellen")
+            message.channel.send("Du hast leider nicht die Berechtigung um Abstimmungen zu erstellen")
         }
 
 	},

@@ -25,7 +25,17 @@ mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: t
 })
 
 
-client.on("ready", () => {
+client.on("ready", async () => {
+    //Check for old Members
+    var MEMBER = require("./models/MEMBER")
+    var memberdata = await MEMBER.find()
+    memberdata.forEach(async m => {
+        if (m.expire){}
+        else if (client.guilds.get("585511241628516352").members.find(mm => m.info.id === mm.id)){}
+        else {await MEMBER.findOneAndUpdate({"info.id": m.info.id}, {"expire": Date.now()}).then()
+        channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`${m.info.name} hat uns heimlich verlassen als ich nicht hingeschaut habe\n\`Puh... Das wird mir bestimmt vom Gehalt abgezogen\``).setColor("RANDOM").setThumbnail(m.picture))
+    }
+    })
   
     client.user.setActivity(`Im back`, {type: "PLAYING"});
 console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
@@ -97,6 +107,7 @@ require("./events/warn")
 require("./events/splatoon-stages")
 require("./events/React-to-older-Messages")
 require("./events/vote")
+require("./events/invitetracker")
 
 //Turnier
 require("./events/SS Turnier/register")
@@ -105,7 +116,6 @@ require("./events/SS Turnier/check-in")
 //Levelsystem
  require("./events/levelsystem/collectxp")
  require("./events/levelsystem/xp-commands")
-//require("./events/levelsystem/xp-rewards")
 
 //
 require("./events/channel-management/Monday Mario Kart")
