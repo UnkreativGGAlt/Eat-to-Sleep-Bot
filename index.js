@@ -16,7 +16,6 @@ exports.client = client;
 exports.config = config;
 
 
-
 //Database connection
 const mongoose = require("mongoose")
 mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: true }, () => {
@@ -118,8 +117,7 @@ require("./events/SS Turnier/check-in")
  require("./events/levelsystem/xp-commands")
 
 //
-require("./events/channel-management/Monday Mario Kart")
-require("./events/channel-management/Minecraft-Mittwoch")
+require("./events/channel-management/CM-config")
 require("./events/Can-i-use-your-voice")
 
 
