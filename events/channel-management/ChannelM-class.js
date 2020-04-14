@@ -1,6 +1,6 @@
 class EventChannel {
 
-    constructor(start, end, eventname, talkname, chatname, embeddata, permcopie, redirect) {
+    constructor(start, end, eventname, talkname, chatname, embeddata, permcopie, redirect, xpboost) {
         var server = "585511241628516352"
 
         const { client, config} = require("../../index")
@@ -8,6 +8,8 @@ class EventChannel {
         const colour = require("../../colours.json")
         const fs      = require("fs");
         var schedule = require('node-schedule');
+        
+        var xpboostchecker = null
 
         var openchannels = schedule.scheduleJob(start, function(){
             client.guilds.get(server).createChannel(eventname, "category", client.guilds.get(server).channels.get(permcopie).permissionOverwrites).then(async categorie =>{
@@ -29,11 +31,23 @@ class EventChannel {
                
             }
             )
+            if (xpboost == true){
+              const MEMBERDB = require("../../models/MEMBER")
+              xpboostchecker = setInterval(async () => {
+                console.log("Who wants some free xp?")
+                client.channels.find(t => t.name === talkname + " 1").members.array().forEach( async m => {
+                  var dbdata = await MEMBERDB.findOne({"info.id": m.id})
+                  console.log(`Giving ${m.user.tag} xp | ${dbdata.ranks.xp} => ${dbdata.ranks.xp + 1}`)
+                  await MEMBERDB.findOneAndUpdate({"info.id": m.id}, {"ranks.xp": dbdata.ranks.xp + 1}, (err, res) => {if (err){console.log(err)}})
+                })
+              }, 60000)
+            }
           
            
            });
 
         var closechannels = schedule.scheduleJob(end, async function(){
+          clearInterval(xpboostchecker)
             var checkoutchannel = await client.guilds.get(server).createChannel("📤" + talkname + " moveout", "voice").then(async c => await c.setParent(redirect))
 
             if ( client.guilds.get(server).channels.find(x => x.name === talkname + " 1").members != null){
