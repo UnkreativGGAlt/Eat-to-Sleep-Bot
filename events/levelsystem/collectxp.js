@@ -8,33 +8,26 @@ const { rewards } = require("./xp-rewards")
 const MEMBER = require("../../models/MEMBER")
 
 
-var k = schedule.scheduleJob("0 * * * * *",async function(){ 
-
-
-    client.guilds.forEach(guild => {
-        guild.members.forEach(async member => {
+var k = schedule.scheduleJob("0 * * * * *",async function(){
+    client.channels.filter(channel => channel.type === "voice").forEach(channel => {
+        var illegalvoicechannels = ["597044120384700419", "586178611644596225"]
+        if (illegalvoicechannels.filter(f => f === channel.id).length == 1) return; //member is in an channel where he cant collect xp
+        if (channel.members.array().length < 2) return; //member alone in voicechannel
+        var bots_in_talk = channel.members.filter(m => m.user.bot == true).array().length
+        if (bots_in_talk > channel.members.array().length - bots_in_talk || bots_in_talk == channel.members.array().length - bots_in_talk) return console.log(`\x1b[31m #${channel.name} failed. Member is alone with BOT`); //member is alone with an bot
+        
+        channel.members.array().forEach(async member => {
             if (member.user.bot){return;}
-               var memberfromdb = await MEMBER.findOne({"info.id": member.id})
-                
-                    if (member.voiceChannel && member.voiceChannel.parentID == "679473163465261056" == false && !member.bot && member.voiceChannel.members.size < 2 == false){
-                      var xp = memberfromdb.ranks.xp
-                      var rank = memberfromdb.ranks.rank
-                      xp = xp + 1
-                       
-                       if (xp > 59){
-                        rank += 1
-                        xp = 0
-                        rewards(memberfromdb, member, rank)
-                       }
-                       await MEMBER.findOneAndUpdate({"info.id": member.id}, {"ranks.xp": xp, "ranks.rank": rank}, (err, res) => {if (err){console.log(err)}})
-                    }
+            var memberdbdata = await MEMBER.findOne({"info.id": member.id})
+            var data = {rank: memberdbdata.ranks.rank, xp: memberdbdata.ranks.xp + 1}
+            if  (data.xp > 59){data.xp = 0, data.rank += 1}
 
-                    
-                    
-                
-            
+            await MEMBER.findOneAndUpdate({"info.id": member.id}, {"ranks.xp": data.xp, "ranks.rank": data.rank}, (err, res) => {if (err){console.log(err)}})
+
         })
+
     })
+
 
 })
 

@@ -34,10 +34,12 @@ class EventChannel {
             if (xpboost == true){
               const MEMBERDB = require("../../models/MEMBER")
               xpboostchecker = setInterval(async () => {
-                console.log("Who wants some free xp?")
                 client.channels.find(t => t.name === talkname + " 1").members.array().forEach( async m => {
                   var dbdata = await MEMBERDB.findOne({"info.id": m.id})
-                  console.log(`Giving ${m.user.tag} xp | ${dbdata.ranks.xp} => ${dbdata.ranks.xp + 1}`)
+                  await MEMBERDB.findOneAndUpdate({"info.id": m.id}, {"ranks.xp": dbdata.ranks.xp + 1}, (err, res) => {if (err){console.log(err)}})
+                })
+                client.channels.find(t => t.name === talkname + " 2").members.array().forEach( async m => {
+                  var dbdata = await MEMBERDB.findOne({"info.id": m.id})
                   await MEMBERDB.findOneAndUpdate({"info.id": m.id}, {"ranks.xp": dbdata.ranks.xp + 1}, (err, res) => {if (err){console.log(err)}})
                 })
               }, 60000)
