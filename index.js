@@ -84,8 +84,10 @@ client.on("message", (message) => {
     let alias = messageArray[0].replace(prefix, "");
     let args = messageArray.slice(1);
     
-    if (message.content.startsWith(prefix) == false) return;
+    if (message.author.bot) return;
+    if (message.content.startsWith(prefix) == false) return require("./events/levelsystem/collectxp").messagexp(message);
     if (!client.commands.has(alias)) return;
+    
 
     try {
         client.commands.get(alias).execute(message, args);
