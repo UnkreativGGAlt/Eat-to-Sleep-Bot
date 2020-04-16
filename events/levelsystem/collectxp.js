@@ -14,10 +14,12 @@ var k = schedule.scheduleJob("0 * * * * *",async function(){
         if (illegalvoicechannels.filter(f => f === channel.id).length == 1) return; //member is in an channel where he cant collect xp
         if (channel.members.array().length < 2) return; //member alone in voicechannel
         var bots_in_talk = channel.members.filter(m => m.user.bot == true).array().length
-        if (bots_in_talk > channel.members.array().length - bots_in_talk || bots_in_talk == channel.members.array().length - bots_in_talk) return console.log(`\x1b[31m #${channel.name} failed. Member is alone with BOT`); //member is alone with an bot
+        //if (bots_in_talk > channel.members.array().length - bots_in_talk || bots_in_talk == channel.members.array().length - bots_in_talk) return console.log(`\x1b[31m #${channel.name} failed. Member is alone with BOT`); //member is alone with an bot
         
         channel.members.array().forEach(async member => {
-            if (member.user.bot){return;}
+            if (member.user.bot) return;
+             if (member.selfMute || member.serverMute) return;
+             if (member.selfDeaf || member.serverDeaf) return;
             var memberdbdata = await MEMBER.findOne({"info.id": member.id})
             var data = {rank: memberdbdata.ranks.rank, xp: memberdbdata.ranks.xp + 1}
             if  (data.xp > 59){data.xp = 0, data.rank += 1}
