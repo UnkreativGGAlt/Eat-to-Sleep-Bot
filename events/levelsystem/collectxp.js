@@ -10,6 +10,7 @@ const MEMBER = require("../../models/MEMBER")
 client.cooldown = []
 exports.messagexp = async function messagexp(message) {
     if (client.cooldown.find(x => x == message.member.id)) return;
+    if (message.member.user.presence.status == "offline") return;
     client.cooldown.push(message.member.id)
     var random_xp = Math.floor(Math.random() * 6) + 1
  
