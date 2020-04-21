@@ -28,6 +28,7 @@ exports.messagexp = async function messagexp(message) {
 
 
 var voicexp = schedule.scheduleJob("0 * * * * *",async function(){
+    console.log("console channel check")
     client.channels.filter(channel => channel.type === "voice").forEach(channel => {
         var illegalvoicechannels = ["597044120384700419", "586178611644596225"]
         if (illegalvoicechannels.filter(f => f === channel.id).length == 1) return; //member is in an channel where he cant collect xp
@@ -35,10 +36,12 @@ var voicexp = schedule.scheduleJob("0 * * * * *",async function(){
         var bots_in_talk = channel.members.filter(m => m.user.bot == true).array().length
         if (bots_in_talk > channel.members.array().length - bots_in_talk || bots_in_talk == channel.members.array().length - bots_in_talk) return; //member is alone with an bot
         
+        console.log("console member check")
         channel.members.array().forEach(async member => {
             if (member.user.bot) return;
              if (member.selfMute || member.serverMute) return;
              if (member.selfDeaf || member.serverDeaf) return;
+             if (member.user.presence.status == "offline") return;
             var memberdbdata = await MEMBER.findOne({"info.id": member.id})
             var data = {rank: memberdbdata.ranks.rank, xp: memberdbdata.ranks.xp + 1}
             if  (data.xp > 59){data.xp = 0, data.rank += 1}
