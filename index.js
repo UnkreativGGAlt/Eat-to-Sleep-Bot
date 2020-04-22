@@ -85,6 +85,7 @@ client.on("message", (message) => {
     let args = messageArray.slice(1);
     
     if (message.author.bot) return;
+    if (message.channel.type == "dm") return;
     if (message.content.startsWith(prefix) == false) return require("./events/levelsystem/collectxp").messagexp(message);
     if (!client.commands.has(alias)) return;
     
