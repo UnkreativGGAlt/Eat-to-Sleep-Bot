@@ -50,7 +50,6 @@ let statuses = [
     client.guilds.get("585511241628516352").roles.get("587375374967767054").members.size + " Bots on " + client.guilds.get("585511241628516352").name,
     client.guilds.get("585511241628516352").roles.size + " Roles on " + client.guilds.get("585511241628516352").name,
     client.guilds.get("585511241628516352").emojis.size + " Emotes on " + client.guilds.get("585511241628516352").name,
-    "Botversion: " + config.version,
     "Bot Ping: " + Math.round(client.ping),
     `Need some Help? ${config.prefix}help`,
     `Written with Discord.js v.${Discord.version} in Javascript`,
@@ -121,7 +120,7 @@ require("./events/SS Turnier/check-in")
 
 //
 require("./events/channel-management/CM-config")
-require("./events/Can-i-use-your-voice")
+require("./events/usemyvoice")
 
 
 //Webserver
