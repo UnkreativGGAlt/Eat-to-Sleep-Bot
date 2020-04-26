@@ -1,7 +1,7 @@
 class EventChannel {
 
     constructor(start, end, eventname, talkname, chatname, embeddata, permcopie, redirect, xpboost) {
-        var server = "585511241628516352"
+        var server = "604747271862485012"
 
         const { client, config} = require("../../index")
         const { RichEmbed } = require('discord.js')
@@ -49,37 +49,26 @@ class EventChannel {
            });
 
         var closechannels = schedule.scheduleJob(end, async function(){
-          clearInterval(xpboostchecker)
+          if (xpboost == true){clearInterval(xpboostchecker)}
             var checkoutchannel = await client.guilds.get(server).createChannel("📤" + talkname + " moveout", "voice").then(async c => await c.setParent(redirect))
 
-            if ( client.guilds.get(server).channels.find(x => x.name === talkname + " 1").members != null){
-           
-              client.guilds.get(server).channels.find(x => x.name === talkname + " 1").members.forEach(m => {
-                m.setVoiceChannel(checkoutchannel)
+            client.guilds.get(server).channels.find(x => x.name === eventname).children.forEach(c => {
+              if(c.type == "text") return c.delete();
+
+              const childrenpromises = c.members.array().map(async m => {
+                  await m.setVoiceChannel(checkoutchannel)
               })
-            }
-        
-            if ( client.guilds.get(server).channels.find(x => x.name === talkname + " 2").members != null){
-        
-              client.guilds.get(server).channels.find(x => x.name === talkname + " 2").members.forEach(m => {
-                m.setVoiceChannel(checkoutchannel)
+              Promise.all(childrenpromises).then(() => {
+                c.delete()
               })
-        
-            }
-        
-              setTimeout(async () => {
-                client.guilds.get(server).channels.find(x => x.name === eventname).children.forEach(async c => {
-                    await c.delete()
-                })
-                    await client.guilds.get(server).channels.find(x => x.name === eventname).delete()
-              }, 3000);
+            })
 
               var checkmoveout = setInterval(async () => {
                   var moveoutsize = client.channels.get(checkoutchannel.id).members.array().length
                   if (moveoutsize != 0) return;
                  await checkoutchannel.delete()
                  clearInterval(checkmoveout)
-              }, 10000)
+              }, 5000)
         
         
            })
