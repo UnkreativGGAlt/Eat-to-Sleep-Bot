@@ -44,20 +44,3 @@ new RichEmbed()
 "585523787408212079",
 true
 )
-
-var test = new channelMclass(
-        "30 20 19 * * 7", //start time
-        "45 20 19 * * 7", //end time
-        "Monday Mario Kart", //Event Name
-        "Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
-        "Mario Kart Infos", //Text Channel Name
-        new RichEmbed() //Embed wish will be send in the Text Channel 
-        .setColor("#0984e3")
-        .setThumbnail("https://www.mariowiki.com/images/thumb/7/71/Crazy8MK8.png/1200px-Crazy8MK8.png")
-        .setTitle("Monday Mario Kart").setDescription("Das heutige Monday Mario Kart auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
-        .addField("Infos:", "Start: 18:30 Uhr\nEnde: 19:30 Uhr\nTurnier Code: 2442-6453-9691")
-        .addField("Eure Teilnahme Geschenke:", "2* XP Boost in MMK Talks"),
-        "699621462671097857", //Copie Permission from this Categorie ID
-        "699621462671097857",  //Send Members back to this Categorie ID
-        false, //xp x 2 > true or false
-        )

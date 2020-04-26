@@ -1,7 +1,7 @@
 class EventChannel {
 
     constructor(start, end, eventname, talkname, chatname, embeddata, permcopie, redirect, xpboost) {
-        var server = "604747271862485012"
+        var server = "585511241628516352"
 
         const { client, config} = require("../../index")
         const { RichEmbed } = require('discord.js')
