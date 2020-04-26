@@ -15,7 +15,7 @@ client.on("guildMemberAdd",async (user) => {
     if (MemberfromDB.length == 0){
     user.guild.createChannel(user.displayName, "text", [
 		{id: user.guild.defaultRole.id,deny: ['VIEW_CHANNEL'],},
-		{id: user.id,allow: ['VIEW_CHANNEL'],},
+		{id: user.id, allow: ['VIEW_CHANNEL'], deny: ["SEND_MESSAGES"],},
     ],).then(async channel => {
         channel.setParent("585860916512423967")
             //fetch rules
