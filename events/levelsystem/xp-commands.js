@@ -49,12 +49,6 @@ client.on("message", async message => {
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
         
-        
-        const background = await Canvas.loadImage("https://picsum.photos/705/255.jpg");
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    
-        ctx.strokeRect(0, 0, canvas.width, canvas.height);
-    
     
         ctx.fillStyle = "#2C2F33"
         ctx.fillRect(canvas.width / 2.6, canvas.height / 4, 400, 160)
@@ -106,13 +100,10 @@ client.on("message", async message => {
         const canvas = Canvas.createCanvas(700, 250);
         const ctx = canvas.getContext('2d');
         
-        
-        const background = await Canvas.loadImage("https://picsum.photos/705/255.jpg");
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     
         
         //ctx.strokeStyle = '#000000';
-        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        //ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = "#2C2F33"
         ctx.fillRect(canvas.width / 2.6, canvas.height / 4, 400, 160)
