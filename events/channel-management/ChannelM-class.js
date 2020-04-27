@@ -62,6 +62,7 @@ class EventChannel {
                 c.delete()
               })
             })
+            client.guilds.get(server).channels.find(x => x.name === eventname).delete()
 
               var checkmoveout = setInterval(async () => {
                   var moveoutsize = client.channels.get(checkoutchannel.id).members.array().length
