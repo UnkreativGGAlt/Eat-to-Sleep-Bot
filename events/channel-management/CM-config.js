@@ -29,15 +29,15 @@ true, //xp x 2 > true or false
 )
 
 var Minecraft_Mittwoch = new channelMclass(
-"00 19 * * 3",
-"00 20 * * 3",
+"30 18 * * 3",
+"30 19 * * 3",
 "Minecraft Mittwoch",
 "Talk",
 "Minecraft Chat",
 new RichEmbed()
         .setColor("#badc58")
         .setThumbnail("https://gamepedia.cursecdn.com/minecraft_de_gamepedia/7/7c/Grasblock.png")
-        .setTitle("Minecraft Mittwoch").setDescription("Das heutige Minecraft Mittwocht auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
+        .setTitle("Minecraft Mittwoch").setDescription("Der heutige Minecraft Mittwocht auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
         .addField("Infos:", "Start: 18:30 Uhr\nEnde: 19:30 Uhr")
         .addField("Eure Teilnahme Geschenke:", "2* XP Boost in allen Minecraft Talks"),
 "585523787408212079",
