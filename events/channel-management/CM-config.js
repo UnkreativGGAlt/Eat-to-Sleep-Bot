@@ -38,7 +38,7 @@ new RichEmbed()
         .setColor("#badc58")
         .setThumbnail("https://gamepedia.cursecdn.com/minecraft_de_gamepedia/7/7c/Grasblock.png")
         .setTitle("Minecraft Mittwoch").setDescription("Das heutige Minecraft Mittwocht auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
-        .addField("Infos:", "Start: 19:00 Uhr\nEnde: 20:00 Uhr")
+        .addField("Infos:", "Start: 18:30 Uhr\nEnde: 19:30 Uhr")
         .addField("Eure Teilnahme Geschenke:", "2* XP Boost in allen Minecraft Talks"),
 "585523787408212079",
 "585523787408212079",
@@ -56,7 +56,7 @@ var Awfull_Donnerstag = new channelMclass(
         .setThumbnail("https://cdn1.epicgames.com/epic/offer/Drawful2_Logo-1180x1035-ac2814fad78ad10f96a37ffc6ca4cf9d.png?h=854&resize=1&w=640")
         .setTitle("Drawful Donnerstag").setDescription("Der heutige Drawful Donnerstag auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
         .addField("Infos:", "Start: 18:00 Uhr\nEnde: 19:30 Uhr\n")
-        .addField("Erklärung zum Spiel:", "Drawful 2 ist ein Game in dem man nur einen Internet Browser z.b auf dem Handy oder einen PC, und einen Host (Discord Video Stream) braucht. In Drawful zeichnet jeder ein Objekt was eig ziemlich schwer zu Zeichnen ist. Alle anderen müssen dann versuchen zu beschreiben das das Objekt darstellen soll. Und bekommen dem entsprechend Punkte. Klingt erstmal langweilig ist aber meistens ziemlich Lustig und sorgt für Lachkrämpfe. Ich hoffe das gibt euch eine Idee was Drawful ist ^^")
+        .addField("Erklärung zum Spiel:", "Drawful 2 ist ein Game in dem man nur einen Internet Browser z.b auf dem Handy oder einen PC, und einen Host (Discord Video Stream) braucht. In Drawful zeichnet jeder ein Objekt was eig. ziemlich schwer zu zeichnen ist. Alle anderen müssen dann versuchen zu beschreiben was das Objekt darstellen soll und bekommen dem entsprechend Punkte. Klingt erstmal langweilig ist aber meistens ziemlich lustig und sorgt für Lachkrämpfe. Ich hoffe das gibt euch eine Idee was Drawful ist ^^")
         .addField("Was brauchst du:", "Ein Handy oder einen PC sowie eine Internet Verbindung")
         .addField("Eure Teilnahme Geschenke:", "2* XP Boost in MMK Talks"),
         "585523787408212079", //Copie Permission from this Categorie ID
