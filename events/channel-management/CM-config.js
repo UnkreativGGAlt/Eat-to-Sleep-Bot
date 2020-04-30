@@ -47,7 +47,7 @@ true
 
 var Awfull_Donnerstag = new channelMclass(
         "00 18 * * 4", //start time
-        "30 19 * * 1", //end time
+        "30 19 * * 4", //end time
         "Drawful Donnerstag", //Event Name
         "Awful Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
         "Awful Drawful Chat", //Text Channel Name
