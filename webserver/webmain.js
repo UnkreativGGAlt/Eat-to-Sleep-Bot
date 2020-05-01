@@ -19,5 +19,9 @@ WS.app.get("/ueben", (req, res) => {
     res.render("test.ejs")
 })
 
+WS.app.get("/stream", (req, res) => {
+    res.render("stream")
+})
+
 
 exports.WS = WS

@@ -106,6 +106,7 @@ client.on("message", (message) => {
 require("./events/welcome")
 require("./events/warn")
 require("./events/splatoon-stages")
+require("./events/splatfest")
 require("./events/React-to-older-Messages")
 require("./events/vote")
 require("./events/invitetracker")
