@@ -16,6 +16,7 @@
     "date-format": "^2.0.0",
     "disco-oauth": "^3.0.2",
     "discord.js": "^11.5.1",
+    "ejs": "^3.1.2",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-handlebars": "^3.1.0",
