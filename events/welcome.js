@@ -76,8 +76,12 @@ client.on("messageReactionAdd",async (Reaction, User) => {
 
 
 client.on("guildMemberRemove", async (user) => {
-    if (user.roles.has("585511864931188856") == false){return;}
-    if (user.guild.id != "585511241628516352"){return;}
+    if (user.roles.has("585511864931188856") == false){
+        if (await welcomechannel.find().length != 1) return;
+        var channelid = await welcomechannel.findOne({"MemberID" : user.id}).ChannelID
+        if (client.channels.find(channelid)){client.channels.find(channelid).delete()}
+    }
+    if (user.guild.id != "585511241628516352") return;
     client.guilds.get(user.guild.id).
     channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`${user.user.tag} hat gerade ${user.guild.name} verlassen`).setColor("RANDOM").setThumbnail(user.user.displayAvatarURL))
     
