@@ -3,11 +3,7 @@ module.exports = {
 	description: 'Gibt dir eine übersicht der aktuellen Ränge von dir oder einem anderen Mitglied',
     usage: `rank [@user#1234]` ,
 	execute(message, args) {
-        var user = message.author.id
-        if (args[0]){
-            if (client.guilds.get("585511241628516352").members.find(x => x.id === args[0].replace("<@", "").replace(">", "").replace("!", ""))){
-            user = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
-        }}
+       
 
         const { client, config} = require('../index')
         const { RichEmbed } = require('discord.js')
@@ -15,6 +11,12 @@ module.exports = {
         const Discord = require('discord.js');
 
         const puppeteer = require('puppeteer');
+
+        var user = message.author.id
+        if (args[0]){
+            if (client.guilds.get("585511241628516352").members.find(x => x.id === args[0].replace("<@", "").replace(">", "").replace("!", ""))){
+            user = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", "")).id
+        }}
 
         const viewport = {
             width: 700,
