@@ -16,7 +16,7 @@ class WebSocket {
 
         this.app.set('views', path.join(__dirname, 'views'))
         this.app.set('view engine', 'ejs');
-        this.app.use(expressLayouts)
+        //this.app.use(expressLayouts)
         this.app.use(express.static(path.join(__dirname, 'public')))
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());

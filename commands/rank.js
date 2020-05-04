@@ -1,8 +1,13 @@
 module.exports = {
-	name: 'rank2',
-	description: 'Dev Stuff',
-    usage: `rank2` ,
+	name: 'rank',
+	description: 'Gibt dir eine übersicht der aktuellen Ränge von dir oder einem anderen Mitglied',
+    usage: `rank [@user#1234]` ,
 	execute(message, args) {
+        var user = message.author.id
+        if (args[0]){
+            if (client.guilds.get("585511241628516352").members.find(x => x.id === args[0].replace("<@", "").replace(">", "").replace("!", ""))){
+            user = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
+        }}
 
         const { client, config} = require('../index')
         const { RichEmbed } = require('discord.js')
@@ -22,7 +27,7 @@ module.exports = {
             const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
             const page = await browser.newPage();
             page.setViewport(viewport)
-            await page.goto("http://localhost:6677/rankcard/" + message.author.id, {
+            await page.goto("http://localhost:6677/rankcard/" + user, {
                 waitUntil: 'networkidle0', // Wait until the network is idle
             });
             var screenshot = await page.screenshot();

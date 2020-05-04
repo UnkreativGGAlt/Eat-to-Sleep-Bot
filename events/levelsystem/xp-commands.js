@@ -20,7 +20,7 @@ client.on("message", async message => {
     
 
     if (message.content.startsWith(prefix)){
-    if (alias == "rank"){
+    if (alias == "oldrank"){
     
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
