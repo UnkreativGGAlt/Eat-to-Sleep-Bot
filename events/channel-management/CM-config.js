@@ -29,8 +29,8 @@ true, //xp x 2 > true or false
 )
 
 var Minecraft_Mittwoch = new channelMclass(
-"30 18 * * 3",
-"30 19 * * 3",
+"00 19 * * 3",
+"00 20 * * 3",
 "Minecraft Mittwoch",
 "Talk",
 "Minecraft Chat",
