@@ -33,7 +33,7 @@ module.exports = {
                 waitUntil: 'networkidle0', // Wait until the network is idle
             });
             var screenshot = await page.screenshot();
-            const attachment = new Discord.Attachment(screenshot, `Huh.png`);
+            const attachment = new Discord.Attachment(screenshot, `Rankcard von ${message.author.tag}.png`);
             message.channel.send(attachment)
           
             await browser.close();
