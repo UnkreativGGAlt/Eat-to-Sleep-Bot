@@ -15,6 +15,8 @@ exports.messagexp = async function messagexp(message) {
     var random_xp = Math.floor(Math.random() * 6) + 1
  
             var memberdbdata = await MEMBER.findOne({"info.id": message.member.id})
+            if (memberdbdata){}
+            else {return;}
             var data = {rank: memberdbdata.ranks.rank, xp: memberdbdata.ranks.xp + random_xp}
             if  (data.xp > 59){data.xp = 0, data.rank += 1, await message.react("🔺")}
 
