@@ -109,6 +109,7 @@ require("./events/splatoon-stages")
 require("./events/splatfest")
 require("./events/React-to-older-Messages")
 require("./events/vote")
+require("./events/Serverboosterlistener")
 require("./events/invitetracker")
 
 //Turnier
