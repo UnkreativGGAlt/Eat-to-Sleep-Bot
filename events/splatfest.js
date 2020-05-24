@@ -14,9 +14,23 @@ var splatfestend = new Date( json.eu.festivals[0].times.end * 1000)
 var splatfestresult = new Date( json.eu.festivals[0].times.result * 1000)
 var schedule = require('node-schedule');
 
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  
+  function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+  }
 
 var traslatehelp = fetch('https://splatoon2.ink/data/locale/de.json').then(res => res.json());
 traslatehelp.then(function (jsonlang) {
+
+        //update Splatfest Role
+        if (splatfestend > new Date()){
+            client.guilds.get("585511241628516352").roles.get("714098535385137152").setName(`${jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_long}`)
+            client.guilds.get("585511241628516352").roles.get("714098613399191643").setName(`${jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_long}`)
+            }
 
 var Splatfest = new channelMclass(
     splatfeststart, //start time
@@ -77,7 +91,9 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
 
      })
 
-    }, 30000)})
+    }, 30000)
+
+    client.on("ready", () => {
 
     //Check Splatfest Votes
     if (splatfestend > new Date()){
@@ -96,11 +112,15 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
         var postresults2 = schedule.scheduleJob(splatfestresult, function(){clearInterval(friendlistcheck)
             client.guilds.get("585511241628516352").members.forEach(m => {
                 m.removeRoles(["714098535385137152", "714098613399191643"])
-            }
-            )
+            })
+            client.guilds.get("585511241628516352").roles.get("714098535385137152").setName(`Splatfest Team A`)
+            client.guilds.get("585511241628516352").roles.get("714098613399191643").setName(`Splatfest Team B`)
+            
         })
     }
 
 
+    })
+})
 
 })
