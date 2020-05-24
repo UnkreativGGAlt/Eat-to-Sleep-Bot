@@ -28,6 +28,7 @@ traslatehelp.then(function (jsonlang) {
 
         //update Splatfest Role
         if (splatfestend > new Date()){
+
             client.guilds.get("585511241628516352").roles.get("714098535385137152").setName(`${jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_long}`)
             client.guilds.get("585511241628516352").roles.get("714098613399191643").setName(`${jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_long}`)
             }
@@ -93,11 +94,13 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
 
     }, 30000)
 
-    client.on("ready", () => {
+    //client.on("ready", () => {
 
     //Check Splatfest Votes
     if (splatfestend > new Date()){
-       var friendlistcheck = setInterval(() => {
+        var check = true
+        var hfgh = schedule.scheduleJob("*/5 * * * *",async function(){
+            if (check == false) return;
         fetch(`https://app.splatoon2.nintendo.net/api/festivals/${json.eu.festivals[0].festival_id}/votes`, {headers: {"cookie": `iksm_session=${config.tokens.nintendo}; lang=de-DE;`}}).then(res => res.json())
         .then(json => {
             json.nickname_and_icons.forEach(async player => {
@@ -108,8 +111,9 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
                 if (json.votes.bravo.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098613399191643")
             })
         })
-        }, 300000)
-        var postresults2 = schedule.scheduleJob(splatfestresult, function(){clearInterval(friendlistcheck)
+        })
+        var postresults2 = schedule.scheduleJob(splatfestresult, function(){
+            check = false
             client.guilds.get("585511241628516352").members.forEach(m => {
                 m.removeRoles(["714098535385137152", "714098613399191643"])
             })
@@ -120,7 +124,7 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
     }
 
 
-    })
+   // })
 })
 
 })
