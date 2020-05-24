@@ -97,7 +97,7 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
     //client.on("ready", () => {
 
     //Check Splatfest Votes
-    if (splatfestend > new Date()){
+    if (splatfestresult > new Date()){
         var check = true
         var hfgh = schedule.scheduleJob("*/5 * * * *",async function(){
             if (check == false) return;
