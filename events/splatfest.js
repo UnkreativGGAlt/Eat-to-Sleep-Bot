@@ -4,6 +4,8 @@ const { client, config,} = require("../index")
 var format = require('date-format');
 const { RichEmbed } = require('discord.js')
 
+const MEMBER = require("../models/MEMBER")
+
 
 var apiData = fetch('https://splatoon2.ink/data/festivals.json').then(res => res.json());
 apiData.then(function (json) {
@@ -26,7 +28,7 @@ var Splatfest = new channelMclass(
     .setColor("RANDOM")
     .setImage("https://splatoon2.ink/assets/splatnet" + json.eu.festivals[0].images.panel)
     .setThumbnail("https://cdn.wikimg.net/en/splatoonwiki/images/thumb/9/9a/S2_Splatfest_Logo.svg/233px-S2_Splatfest_Logo.svg.png")
-    .setTitle("Its Corn.. ähh Splatfest Time!")
+    .setTitle("Its Splatfest Time!")
     .setDescription(`<:5010:604756017221468190>Ein neues Splatfest hat begonnen! Das Thema lautet\n**${jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_long}** \n:vs:\n**${jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_long}**`)
     .addField("Zeitplan:", `Splatfest start: ${format.asString('dd.MM hh:mm', splatfeststart)} Uhr\nSplatfest ende: ${format.asString('dd.MM hh:mm', splatfestend)} Uhr\nErgebniss show of: ${format.asString('dd.MM hh:mm', splatfestresult)} Uhr`)
     .addField(`Splatfest-Map:`, `${jsonlang.stages[json.eu.festivals[0].special_stage.id].name}`)
@@ -76,4 +78,29 @@ var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_sh
      })
 
     }, 30000)})
+
+    //Check Splatfest Votes
+    if (splatfestend > new Date()){
+       var friendlistcheck = setInterval(() => {
+        fetch(`https://app.splatoon2.nintendo.net/api/festivals/${json.eu.festivals[0].festival_id}/votes`, {headers: {"cookie": `iksm_session=${config.tokens.nintendo}; lang=de-DE;`}}).then(res => res.json())
+        .then(json => {
+            json.nickname_and_icons.forEach(async player => {
+                var member = await MEMBER.findOne({"more.nintendo": player.nsa_id})
+                if (!member) return;
+
+                if (json.votes.alpha.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098535385137152")
+                if (json.votes.bravo.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098613399191643")
+            })
+        })
+        }, 300000)
+        var postresults2 = schedule.scheduleJob(splatfestresult, function(){clearInterval(friendlistcheck)
+            client.guilds.get("585511241628516352").members.forEach(m => {
+                m.removeRoles(["714098535385137152", "714098613399191643"])
+            }
+            )
+        })
+    }
+
+
+
 })
