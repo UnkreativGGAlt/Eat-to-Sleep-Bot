@@ -56,9 +56,11 @@ var Splatfest = new channelMclass(
     //Post Splatfest Result
     
     var postresults = schedule.scheduleJob(splatfestresult, function(){setTimeout(() => {
-         var splatfestid = json.eu.festivals[0].festival_id
+        var apiDatanew = fetch('https://splatoon2.ink/data/festivals.json').then(res => res.json());
+        apiDatanew.then(function (jsonn) {
+         var splatfestid = jsonn.eu.festivals[0].festival_id
 
-        var splatfestresults = json.eu.results.find(s => s.festival_id === splatfestid)
+        var splatfestresults = jsonn.eu.results.find(s => s.festival_id === splatfestid)
 
         function prozentrechner(a ,b) {
             var Grundwert = a + b
@@ -77,20 +79,21 @@ var Standart_KampfB = prozentrechner(splatfestresults.rates.regular.bravo, splat
 var Profi_KampfA = prozentrechner(splatfestresults.rates.challenge.alpha, splatfestresults.rates.challenge.bravo)
 var Profi_KampfB = prozentrechner(splatfestresults.rates.challenge.bravo, splatfestresults.rates.challenge.alpha)
 
-var names = [jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_short, jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_short, "2", "3", jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_short, jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_short, "6", "7"]
+var names = [jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_short, jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.bravo_short, "2", "3", jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.bravo_short, jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_short, "6", "7"]
         client.channels.get("586177035278483466").send(
             new RichEmbed()
             .setTitle("DIE SPLATFEST ERGEBNISSE SIND DA!").setColor("RANDOM")
-            .setThumbnail("https://splatoon2.ink/assets/splatnet" + json.eu.festivals[0].images.panel)
+            .setThumbnail("https://splatoon2.ink/assets/splatnet" + jsonn.eu.festivals[0].images.panel)
             .setFooter("Klicke auf die dunklen Felder um sie sichbar zu machen", "https://cdn.wikimg.net/en/splatoonwiki/images/thumb/9/9a/S2_Splatfest_Logo.svg/233px-S2_Splatfest_Logo.svg.png")
             .setDescription("<:5010:604756017221468190>Die Ergebnisse des Splatfestes wurden mir gerade vom Miezrichter vorbeigebracht. Schauen wir mal wer gewonnen hat:")
-            .addField("Stimmen:", `${jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_short} >  ||${stimmenA} VS ${stimmenB}|| < ${jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_short}`)
-            .addField("Standart Kampf:", `${jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_short} >  ||${Standart_KampfA} VS ${Standart_KampfB}|| < ${jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_short}`)
-            .addField("Profi Kampf:", `${jsonlang.festivals[json.eu.festivals[0].festival_id].names.alpha_short} >  ||${Profi_KampfA} VS ${Profi_KampfB}|| < ${jsonlang.festivals[json.eu.festivals[0].festival_id].names.bravo_short}`)
+            .addField("Stimmen:", `${jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_short} >  ||${stimmenA} VS ${stimmenB}|| < ${jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.bravo_short}`)
+            .addField("Standart Kampf:", `${jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_short} >  ||${Standart_KampfA} VS ${Standart_KampfB}|| < ${jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.bravo_short}`)
+            .addField("Profi Kampf:", `${jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_short} >  ||${Profi_KampfA} VS ${Profi_KampfB}|| < ${jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.bravo_short}`)
             .addField("Splatfest Gewinner:", `UND DAS GEWINNERTEAM DES SPLATFESTS LAUTET\n ||**TEAM ${names[splatfestresults.summary.total]}**\nHERZLICHEN GLÜCKWUNSCH!\nSorry an alle von Team ${names[splatfestresults.summary.total + 4]}||`)
         )
 
      })
+    })
 
     }, 30000)
 
