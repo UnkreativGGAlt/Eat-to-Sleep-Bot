@@ -13,6 +13,7 @@ class EventChannel {
 
         var openchannels = schedule.scheduleJob(start, function(){
             client.guilds.get(server).createChannel(eventname, "category", client.guilds.get(server).channels.get(permcopie).permissionOverwrites).then(async categorie =>{
+               await categorie.overwritePermissions("413759870333091884", {"VIEW_CHANNEL": false, "SPEAK": false, "CONNECT": false, "SEND_MESSAGES": false})
                await categorie.setPosition(0)
                await categorie.guild.createChannel(chatname, "text").then(async c => {
                    await c.setParent(categorie)
