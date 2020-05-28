@@ -18,6 +18,7 @@ var tlink = "https://challonge.com/de/mu00qcaa"
 client.on("messageReactionAdd", (Reaction, User) => {
     if (Reaction.message.id !=  message || Reaction.emoji != reaction) return;
     Reaction.remove(User)
+    if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return;
     client.users.get("330380702505762817").send(User.tag + " Check in versuch\n" + User.id)
     var mostneedcall = `https://Dustin_DM:${config.tokens.challonge}@api.challonge.com/v1`
 

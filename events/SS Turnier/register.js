@@ -21,6 +21,7 @@ client.on("messageReactionAdd", (Reaction, User) => {
     if (Reaction.message.id != message) return;
     if (Reaction.emoji !=  reaction) return;
         Reaction.remove(User)
+        if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return;
 
     var teilnehmer = fetch(mostneedcall + `/tournaments/${config.tokens["challonge-id"]}/participants.json`, {
         method: 'get',

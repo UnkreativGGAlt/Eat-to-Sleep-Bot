@@ -8,6 +8,7 @@ const MEMBER = require("../models/MEMBER")
 
 client.on("voiceStateUpdate", async (olds, news) => {
 if (news.voiceChannel == null) return
+if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(x => x.id === news.user.id)) return news.setVoiceChannel(null);
 if (news.voiceChannel.name.endsWith("🔴") == false) return
 var Member = await MEMBER.findOne({"info.id": news.user.id})
 if (Member.more.ytvoice == true) return

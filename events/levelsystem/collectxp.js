@@ -9,6 +9,7 @@ const MEMBER = require("../../models/MEMBER")
 
 client.cooldown = []
 exports.messagexp = async function messagexp(message) {
+if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(x => x.id === message.author.id)) return;
     if (client.cooldown.find(x => x == message.member.id)) return;
     if (message.member.user.presence.status == "offline") return;
     client.cooldown.push(message.member.id)

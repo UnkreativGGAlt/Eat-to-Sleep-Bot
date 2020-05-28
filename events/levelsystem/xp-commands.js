@@ -20,6 +20,7 @@ client.on("message", async message => {
     
 
     if (message.content.startsWith(prefix)){
+    if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return;
     if (alias == "oldrank"){
     
     const applyText = (canvas, text) => {
