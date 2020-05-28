@@ -28,19 +28,18 @@ new RichEmbed() //Embed wish will be send in the Text Channel
 true, //xp x 2 > true or false
 )
 
-var Minecraft_Mittwoch = new channelMclass(
-"00 19 * * 3",
-"00 20 * * 3",
-"Minecraft Mittwoch",
-"Talk",
-"Minecraft Chat",
-new RichEmbed()
-        .setColor("#badc58")
-        .setThumbnail("https://gamepedia.cursecdn.com/minecraft_de_gamepedia/7/7c/Grasblock.png")
-        .setTitle("Minecraft Mittwoch").setDescription("Der heutige Minecraft Mittwocht auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
-        .addField("Infos:", "Start: 18:30 Uhr\nEnde: 19:30 Uhr")
-        .addField("Eure Teilnahme Geschenke:", "2* XP Boost in allen Minecraft Talks"),
-"585523787408212079",
-"585523787408212079",
-true
-)
+var SS = new channelMclass(
+        "00 17 * * 6", //start time
+        "45 18 * * 6", //end time
+        "Splatoon Samstag", //Event Name
+        "SS Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
+        "Squid Kid Channel", //Text Channel Name
+        new RichEmbed() //Embed wish will be send in the Text Channel 
+        .setColor("#ef3c79")
+        .setThumbnail("https://i.redd.it/zb1uvh5oypz11.png")
+        .setTitle("Splatoon Samsatg").setDescription("Trefft euch im Talk und unterhaltet euch darüber was ihr heute machen wollt(Standard, Private, Salmonrun, Liga). Es ist hilfreich wenn ihr eure Freundescodes in <#713748611493527593> schreibt.")
+        .addField("Eure Teilnahme Geschenke:", "2* XP Boost in Talks"),
+        "585523787408212079", //Copie Permission from this Categorie ID
+        null,  //Send Members back to this Categorie ID
+        true, //xp x 2 > true or false
+        )
