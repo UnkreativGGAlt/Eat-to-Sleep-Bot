@@ -85,10 +85,11 @@ client.on("message", (message) => {
     let args = messageArray.slice(1);
     
     if (message.author.bot) return;
-    if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return message.reply("Du kannst aktuell leider keine Commands benutzen");
     if (message.channel.type == "dm") return;
     if (message.content.startsWith(prefix) == false) return require("./events/levelsystem/collectxp").messagexp(message);
     if (!client.commands.has(alias)) return;
+    if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return message.reply("Du kannst aktuell leider keine Commands benutzen");
+
     
 
     try {
