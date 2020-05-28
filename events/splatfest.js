@@ -49,7 +49,7 @@ var Splatfest = new channelMclass(
     .addField(`Splatfest-Map:`, `${jsonlang.stages[json.eu.festivals[0].special_stage.id].name}`)
     ,
     "585523787408212079", //Copie Permission from this Categorie ID
-    "597176048811245579",  //Send Members back to this Categorie ID
+    null,  //Send Members back to this Categorie ID
     false, //xp x 2 > true or false
     )
 
