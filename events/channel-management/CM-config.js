@@ -11,7 +11,7 @@ const { RichEmbed } = require('discord.js')
 
 var channelMclass = require("../channel-management/ChannelM-class")
 
-var MMK = new channelMclass(
+var Monday_Mario_Kart = new channelMclass(
 "30 18 * * 1", //start time
 "30 19 * * 1", //end time
 "Monday Mario Kart", //Event Name
@@ -27,6 +27,23 @@ new RichEmbed() //Embed wish will be send in the Text Channel
 "585523787408212079",  //Send Members back to this Categorie ID
 true, //xp x 2 > true or false
 )
+
+var Minecraft_Mittwoch = new channelMclass(
+        "00 19 * * 3",
+        "00 20 * * 3",
+        "Minecraft Mittwoch",
+        "Talk",
+        "Minecraft Chat",
+        new RichEmbed()
+                .setColor("#badc58")
+                .setThumbnail("https://gamepedia.cursecdn.com/minecraft_de_gamepedia/7/7c/Grasblock.png")
+                .setTitle("Minecraft Mittwoch").setDescription("Der heutige Minecraft Mittwocht auf Eat, Sleep, Nintendo, Repeat hat nun begonnen")
+                .addField("Infos:", "Start: 18:30 Uhr\nEnde: 19:30 Uhr")
+                .addField("Eure Teilnahme Geschenke:", "2* XP Boost in allen Minecraft Talks"),
+        "585523787408212079",
+        "585523787408212079",
+        true
+        ) 
 
 var Splatoon_Staurday = new channelMclass(
         "00 17 * * 6", //start time
