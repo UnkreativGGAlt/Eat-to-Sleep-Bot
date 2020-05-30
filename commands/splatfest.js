@@ -40,7 +40,9 @@ apiData.then(function (json) {
                 request.continue({ headers });
               });
             
-            await page.goto("https://app.splatoon2.nintendo.net/records/festival/" + json.eu.festivals[0].festival_id, {
+              var festival_id = json.eu.festivals[0].festival_id
+              if (args[0]){festival_id = args[0]}
+            await page.goto("https://app.splatoon2.nintendo.net/records/festival/" + festival_id, {
                 waitUntil: 'networkidle0', // Wait until the network is idle
             });
             var screenshot = await page.screenshot();
