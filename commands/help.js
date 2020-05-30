@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'help',
 	description: 'Zeigt alle normalen Commands an',
-    usage: `help [@member#1234]` ,
+    usage: `help [command]` ,
 	execute (message, args) {
 
         const { client, config} = require('../index')
