@@ -9,7 +9,7 @@ module.exports = {
         const colour = require("../colours.json")
 
         if (!args[0]){
-            message.channel.send(new RichEmbed().setTitle(client.user.username + " Command List").setDescription(client.commands.map(cmd => cmd.name).join(", ") + `, und die Basic Musik Commands`).setFooter(`Du willst mehr Info? ${config.prefix}help [command]`).setColor("#39FF14"))
+            message.channel.send(new RichEmbed().setTitle(client.user.username + " Command List").setDescription(client.commands.map(cmd => cmd.name).join(", ")).setFooter(`Du willst mehr Info? ${config.prefix}help [command]`).setColor("#39FF14"))
         }
         else {
            if(client.commands.has(args[0].toLowerCase())){
