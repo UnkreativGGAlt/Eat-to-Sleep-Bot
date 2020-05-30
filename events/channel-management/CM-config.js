@@ -28,11 +28,11 @@ new RichEmbed() //Embed wish will be send in the Text Channel
 true, //xp x 2 > true or false
 )
 
-var SS = new channelMclass(
+var Splatoon_Staurday = new channelMclass(
         "00 17 * * 6", //start time
         "45 18 * * 6", //end time
         "Splatoon Samstag", //Event Name
-        "SS Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
+        "Splatoon Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
         "Squid Kid Channel", //Text Channel Name
         new RichEmbed() //Embed wish will be send in the Text Channel 
         .setColor("#ef3c79")
