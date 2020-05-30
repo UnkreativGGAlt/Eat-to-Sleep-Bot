@@ -30,7 +30,7 @@ true, //xp x 2 > true or false
 
 var Splatoon_Staurday = new channelMclass(
         "00 17 * * 6", //start time
-        "45 18 * * 6", //end time
+        "15 18 * * 6", //end time
         "Splatoon Samstag", //Event Name
         "Splatoon Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
         "Squid Kid Channel", //Text Channel Name
