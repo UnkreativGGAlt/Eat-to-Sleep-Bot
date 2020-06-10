@@ -18,8 +18,7 @@ client.on("message",async message => {
     if (message.content.startsWith(prefix + "warn")){
         if(permissions.has("BAN_MEMBERS")){
             var badmemberid = args[0].replace("<@", "").replace(">", "").replace("!", "")
-            var warngrund = message.content.replace(`${prefix}warn ${args[0]} `, "")
-
+            var warngrund = message.content.replace(`${prefix}warn ${args[0]} `, "").replace("--ad", "").replace("--kick", "").replace("--bann", "")
             var memberdb = await MEMBER.find({"info.id": badmemberid})
             if (!message.guild.members.find(x => x.id === badmemberid)){
                 message.channel.send(new RichEmbed().setTitle("Fehler").setDescription("Ich konnte denn User auf diesem Server nicht finden").setColor(colour.rot))
@@ -36,29 +35,59 @@ client.on("message",async message => {
                newmember.safe()
                return;
             }
+            var embed_color = null
+            var type = null
+            //If ad warn
+            if ( message.content.includes("--ad") ){
+                memberdb[0].warns.push({type: "ad", from: message.member.id, description: warngrund})
+                await MEMBER.findOneAndUpdate({"info.id": badmemberid}, {"warns": memberdb[0].warns})
+                embed_color = "#8e24aa"
+                type = "AD"
+            }
+            //If kick warn
+            else if ( message.content.includes("--kick") ){
+                memberdb[0].warns.push({type: "kick", from: message.member.id, description: warngrund})
+                await MEMBER.findOneAndUpdate({"info.id": badmemberid}, {"warns": memberdb[0].warns})
+                message.guild.members.get(badmemberid).kick(warngrund)
+                embed_color = colour.rot
+                type = "KICK"
+            }
+            //If bann warn
+            else if ( message.content.includes("--bann") ){
+                memberdb[0].warns.push({type: "ban", from: message.member.id, description: warngrund})
+                await MEMBER.findOneAndUpdate({"info.id": badmemberid}, {"warns": memberdb[0].warns})
+                message.guild.members.get(badmemberid).ban(warngrund)
+                embed_color = colour.rot
+                type = "BAN"
+            }
+            //normal warn
+            else {
             memberdb[0].warns.push({type: "warn", from: message.member.id, description: warngrund})
             await MEMBER.findOneAndUpdate({"info.id": badmemberid}, {"warns": memberdb[0].warns})
+            embed_color = colour.gelb
+            type = "WARN"
+            }
             
             message.guild.channels.get("597165525319155749").send(new RichEmbed()
-            .setColor(colour.gelb)
+            .setColor(embed_color)
             .setTitle("CASE " + memberdb[0]["_id"])
             .addField("EXECUTOR", message.guild.members.get(message.author.id).user.tag, true)
             .addField("VICTIM", message.guild.members.get(badmemberid).user.tag, true)
-            .addField("TYPE", "WARN", true)
+            .addField("TYPE", type, true)
             .addField("DESCRIPTION", warngrund, true)
             )
 
             message.channel.send(new RichEmbed()
-            .setColor(colour.gelb)
+            .setColor(embed_color)
             .setTitle("Verwarnung gespeichert")
             .addField("VICTIM", message.guild.members.get(badmemberid).user.tag, true)
-            .addField("TYPE", "WARN", true)
+            .addField("TYPE", type, true)
             .addField("DESCRIPTION", warngrund, true)
             )
 
-            
         }
-    }
+        }
+    
 
     else if (message.content.includes('discord.gg/'||'discordapp.com/invite/')) {
         if (message.member.hasPermission("PRIORITY_SPEAKER") == false){
@@ -120,29 +149,3 @@ client.on("message",async message => {
         }}
 })
 
-client.on("guildBanAdd", async (guild, user) => {
-    if (guild.id == "585511241628516352" == false){
-        return;
-    }
-    guild.fetchBan(user).then(async ban => {
-        var memberdb = await MEMBER.find({"info.id": user.id})
-        var banreson = ban.reason
-
-        var embed = new RichEmbed()
-        .setColor(colour.rot)
-        .setTitle("CASE " + memberdb[0]["_id"])
-        .addField("EXECUTOR", "Discord API", true)
-        .addField("VICTIM", user.tag, true)
-        .addField("TYPE", "BAN", true)
-
-        if (banreson){embed.addField("DESCRIPTION", banreson, true)}
-
-            memberdb[0].warns.push({type: "ban", from: "Someone in Discord", description: banreson})            
-            await MEMBER.findOneAndUpdate({"info.id": user.id}, {"warns": memberdb[0].warns})
-
-        
-
-        guild.channels.get("597165525319155749").send(embed)
-
-    })
-})
