@@ -8,6 +8,9 @@ RUN \
   apt-get install -y google-chrome-stable && \
   rm -rf /var/lib/apt/lists/*s
 
+# Install FFMPEG
+RUN apt-get install -y ffmpeg
+
 
 # Create app directory
 WORKDIR /usr/src/app
