@@ -3,7 +3,6 @@ module.exports = {
 	description: 'Spielt Musik über den Bot ab',
   usage: `m (play <yt-link> | stop | skip)` ,
 	async execute(message, args) {
-    if (message.member.id != "330380702505762817") return message.reply("Sorry. Aktuell kann nur Dustin diesen Command benutzten. Er wird bald von 'Ehrenmenschen' und 'WG-Mitgliedern' benutzbar sein")
 
         const { client, config} = require('../index')
         const { RichEmbed } = require('discord.js')
