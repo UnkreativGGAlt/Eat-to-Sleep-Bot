@@ -11,6 +11,7 @@ const { RichEmbed } = require('discord.js')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.music = {}
 
 exports.client = client;
 exports.config = config;
