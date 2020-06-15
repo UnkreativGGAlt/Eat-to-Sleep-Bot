@@ -12,6 +12,7 @@ module.exports = {
 
         if (args[0] == "play"){
 
+
           if (!args[1]) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Du musst einen Youtube Link angeben"));
           if (message.member.voiceChannel == null) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Du befindest dich nicht in einem Voicechhannel"));
           
@@ -42,7 +43,11 @@ module.exports = {
           } else if (client.music[guildid].queue.length > 0){
             
             message.member.voiceChannel.join().then(d => {
-              client.music[guildid].dispatcher = d.playStream(ytdl(client.music[guildid].queue[0].URI, { filter: 'audioonly' }));
+              client.music[guildid].dispatcher = d.playStream(
+                ytdl(client.music[guildid].queue[0].URI, 
+                  //{requestOptions: { agent }}
+                  )
+                );
             
 
               client.music[guildid].dispatcher.on("end", async () => {
