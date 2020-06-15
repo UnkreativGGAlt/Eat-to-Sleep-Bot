@@ -3,7 +3,6 @@ const { RichEmbed } = require('discord.js')
 const colour = require("../../colours.json")
 const fs      = require("fs");
 var schedule = require('node-schedule');
-const Canvas = require('canvas');
 const Discord = require('discord.js');
 
 const MEMBER = require("../../models/MEMBER")

@@ -3,6 +3,13 @@ module.exports = {
 	description: 'Spielt Musik über den Bot ab',
   usage: `m (play <yt-link> | stop | skip | queue)` ,
 	async execute(message, args) {
+    const HttpsProxyAgent = require('https-proxy-agent');
+
+
+    const agent = HttpsProxyAgent({
+      ip: '178.63.41.235',
+      port: 4444
+    });
 
         const { client, config} = require('../index')
         const { RichEmbed } = require('discord.js')
@@ -45,7 +52,7 @@ module.exports = {
             message.member.voiceChannel.join().then(d => {
               client.music[guildid].dispatcher = d.playStream(
                 ytdl(client.music[guildid].queue[0].URI, 
-                  //{requestOptions: { agent }}
+                  {requestOptions: { agent }}
                   )
                 );
             
