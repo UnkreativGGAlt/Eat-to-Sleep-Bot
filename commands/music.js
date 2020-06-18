@@ -45,7 +45,7 @@ module.exports = {
             message.member.voiceChannel.join().then(d => {
               client.music[guildid].dispatcher = d.playStream(
                 ytdl(client.music[guildid].queue[0].URI, 
-                  {requestOptions: { agent }}
+                  //{requestOptions: { agent }}
                   )
                 );
             
