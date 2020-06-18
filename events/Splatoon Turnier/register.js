@@ -7,13 +7,13 @@ var schedule = require('node-schedule');
 var fetch = require('node-fetch');
 
 var server = "585511241628516352"
-var message = "697900901373050970"
-var role = "697901721535512586"
+var message = "723183825571545168"
+var role = "723184025979715604"
 var reaction = "✅"
-var Gamename = "Pokemon Schwert/Schild"
-var GameDatum = "18.04.2020"
-var GameTime = "16:30 Uhr"
-var tlink = "https://challonge.com/de/mu00qcaa"
+var Gamename = "Splatoon 2"
+var GameDatum = "27.Juni 2020"
+var GameTime = "17:00 Uhr"
+var tlink = "https://challonge.com/de/splatoon2esnr"
 
 client.on("messageReactionAdd", (Reaction, User) => {
     var mostneedcall = `https://Dustin_DM:${config.tokens.challonge}@api.challonge.com/v1`
@@ -21,7 +21,7 @@ client.on("messageReactionAdd", (Reaction, User) => {
     if (Reaction.message.id != message) return;
     if (Reaction.emoji !=  reaction) return;
         Reaction.remove(User)
-        if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return;
+        if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === User.id)) return;
 
     var teilnehmer = fetch(mostneedcall + `/tournaments/${config.tokens["challonge-id"]}/participants.json`, {
         method: 'get',

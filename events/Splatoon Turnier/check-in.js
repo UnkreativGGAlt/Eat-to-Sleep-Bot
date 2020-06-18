@@ -7,18 +7,13 @@ var schedule = require('node-schedule');
 const request = require("request");
 
 var server = "585511241628516352"
-var message = "697901596897443861"
+var message = "723187630539407366"
 var reaction = "✅"
-var Gamename = "Pokemon Schwert/Schild"
-var GameDatum = "18.04.2020"
-var GameTime = "16:30 Uhr"
-var tlink = "https://challonge.com/de/mu00qcaa"
-
 
 client.on("messageReactionAdd", (Reaction, User) => {
     if (Reaction.message.id !=  message || Reaction.emoji != reaction) return;
     Reaction.remove(User)
-    if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return;
+    if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === User.id)) return;
     client.users.get("330380702505762817").send(User.tag + " Check in versuch\n" + User.id)
     var mostneedcall = `https://Dustin_DM:${config.tokens.challonge}@api.challonge.com/v1`
 
@@ -44,7 +39,3 @@ client.on("messageReactionAdd", (Reaction, User) => {
 
 
 })
-
-
-
-//WENN FERTIG! UNBEDINGT DAS TURNIER ÄNDERN

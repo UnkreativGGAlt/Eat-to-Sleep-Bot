@@ -116,8 +116,8 @@ require("./events/Serverboosterlistener")
 require("./events/invitetracker")
 
 //Turnier
-require("./events/SS Turnier/register")
-require("./events/SS Turnier/check-in")
+require("./events/Splatoon Turnier/register")
+require("./events/Splatoon Turnier/check-in")
 
 //Levelsystem
  require("./events/levelsystem/collectxp")
