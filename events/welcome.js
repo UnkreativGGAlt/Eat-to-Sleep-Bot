@@ -33,7 +33,7 @@ client.on("guildMemberAdd",async (user) => {
         async function dosomethingforyourmonay(){
        await MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": undefined})}
         dosomethingforyourmonay()
-        user.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<@${user.id}` + "> ist gerade Eat, Sleep, Nintendo, Repeat beigetreten\n**Willkommen zurück^^**")
+        user.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<:rejoin:723487019241701477> **${user.user.tag}** ist gerade Eat, Sleep, Nintendo, Repeat beigetreten\n**Willkommen zurück^^**`)
             .setColor("RANDOM")
             .setThumbnail(user.user.displayAvatarURL))
             user.guild.members.get(user.id).addRole("585511864931188856")
@@ -60,7 +60,7 @@ client.on("messageReactionAdd",async (Reaction, User) => {
        
         .then(
             
-            Reaction.message.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<@${User.id}` + "> ist gerade Eat, Sleep, Nintendo, Repeat beigetreten")
+            Reaction.message.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<:join:723485426144378913> **${User.tag}**` + " ist gerade Eat, Sleep, Nintendo, Repeat beigetreten")
             .setColor("RANDOM")
             .setThumbnail(User.displayAvatarURL)).then(
                 welcomechannel.findOneAndDelete({"ChannelID": Reaction.message.channel.id})
@@ -83,7 +83,7 @@ client.on("guildMemberRemove", async (user) => {
     }
     if (user.guild.id != "585511241628516352") return;
     client.guilds.get(user.guild.id).
-    channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`${user.user.tag} hat gerade ${user.guild.name} verlassen`).setColor("RANDOM").setThumbnail(user.user.displayAvatarURL))
+    channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<:leafe:723485426169413686> **${user.user.tag}** hat gerade ${user.guild.name} verlassen`).setColor("RANDOM").setThumbnail(user.user.displayAvatarURL))
     
     await MEMBER.findOneAndUpdate({"info.id": user.user.id}, {"expire": Date.now()})
 })
