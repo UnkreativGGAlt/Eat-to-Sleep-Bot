@@ -71,7 +71,7 @@ module.exports = {
            var checkvotes = await VOTEDB.find({channel: message.channel.id, open: true, creator: message.author.id})
            if (checkvotes < 1) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("In diesem channel sind aktuell keine offenen Votes die du schließen könntest"))
            
-           var votes = await VOTEDB.findOneAndUpdate({channel: message.channel.id, open: true, creator: message.author.id}, {open: false})
+           var votes = await VOTEDB.findOneAndUpdate({channel: message.channel.id, open: true, creator: message.author.id}, {open: false, closedat: new Date()})
 
 
             const embed = new RichEmbed().setTitle("**📊Abstimmungs Ergebniss:** " + votes.q)

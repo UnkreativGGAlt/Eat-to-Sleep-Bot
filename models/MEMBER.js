@@ -8,7 +8,7 @@ const MemberSchema = mongoose.Schema({
     },
 
     ranks:{
-        rank: { type: Number, default: 0 },
+        rank: { type: Number, default: 1 },
         xp: { type: Number, default: 0 },
     },
     warns: { type: Array, default: [] },
