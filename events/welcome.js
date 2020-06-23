@@ -46,7 +46,7 @@ client.on("messageReactionAdd",async (Reaction, User) => {
     if (User.bot) return
     var channel = welcomechannel.findOne({"ChannelID": Reaction.message.channel.id})
 
-        var messages = Reaction.message.channel.fetchMessages({limit: 3}).then(m => Reaction.message.channel.bulkDelete(m))
+        var messages = Reaction.message.channel.fetchMessages({limit: 10}).then(m => Reaction.message.channel.bulkDelete(m))
 
         Reaction.message.channel.send(new RichEmbed().setColor("#55efc4").setTitle("**Wir bereiten deine Ankunft vor:**")
         .setDescription("Bitte warte einen kurzen Moment"))
