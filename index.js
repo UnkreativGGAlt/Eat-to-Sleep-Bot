@@ -87,7 +87,7 @@ client.on("message", (message) => {
     
     if (message.author.bot) return;
     if (message.channel.type == "dm") return;
-    if (message.content.startsWith(prefix) == false) return require("./events/levelsystem/collectxp").messagexp(message);
+    if (message.content.startsWith(prefix) == false) return require("./events/collectxp").messagexp(message);
     if (!client.commands.has(alias)) return;
     if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return message.reply("Du kannst aktuell leider keine Commands benutzen");
 
@@ -120,8 +120,7 @@ require("./events/Splatoon Turnier/register")
 require("./events/Splatoon Turnier/check-in")
 
 //Levelsystem
- require("./events/levelsystem/collectxp")
- require("./events/levelsystem/xp-commands")
+ require("./events/collectxp")
 
 //
 require("./events/channel-management/CM-config")
