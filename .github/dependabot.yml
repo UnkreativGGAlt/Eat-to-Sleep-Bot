@@ -22,4 +22,4 @@ updates:
       - "docker"
       - "dependencies"
     schedule:
-    interval: "daily"
+      interval: "daily"
