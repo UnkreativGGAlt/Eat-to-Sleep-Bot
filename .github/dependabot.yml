@@ -16,10 +16,10 @@ updates:
       - dependency-name: "discord.js"
 
 
-- package-ecosystem: "docker" # See documentation for possible values
-  directory: "/" # Location of package manifests
-  labels:
-    - "docker"
-    - "dependencies"
-  schedule:
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    labels:
+      - "docker"
+      - "dependencies"
+    schedule:
     interval: "daily"
