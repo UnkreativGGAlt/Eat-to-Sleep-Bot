@@ -11,6 +11,10 @@ const MemberSchema = mongoose.Schema({
         rank: { type: Number, default: 1 },
         xp: { type: Number, default: 0 },
     },
+    coins: {
+        amount: {type: Number, default: 300},
+        log: Array
+    },
     warns: { type: Array, default: [] },
     more: {
         ytvoice: {type: Boolean, default: false},
