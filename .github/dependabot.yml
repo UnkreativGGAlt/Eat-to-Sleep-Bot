@@ -7,5 +7,19 @@ version: 2
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
+    labels:
+      - "npm"
+      - "dependencies"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "discord.js"
+
+
+- package-ecosystem: "docker" # See documentation for possible values
+  directory: "/" # Location of package manifests
+  labels:
+    - "docker"
+    - "dependencies"
+  schedule:
+    interval: "daily"
