@@ -121,6 +121,7 @@ require("./events/Splatoon Turnier/check-in")
 
 //Levelsystem
  require("./events/collectxp")
+ require("./events/pushserver")
 
 //
 require("./events/channel-management/CM-config")

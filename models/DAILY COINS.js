@@ -5,4 +5,4 @@ const schema = mongoose.Schema({
     time: {type: Date, default: new Date()}
 })
 
-module.exports = mongoose.model("daily-coin", schema)
+module.exports = mongoose.model("daily_coin", schema)
