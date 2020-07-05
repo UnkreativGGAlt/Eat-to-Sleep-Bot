@@ -76,7 +76,7 @@ client.on("message", async message => {
             const newm = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
             const howmuch = parseInt(args[1])
 
-           if (oldm.id == newm.id) return message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").setDescription("Du kannst nicht an dich selber überweisen.")))                
+           if (oldm.id == newm.id) return message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").setDescription("Du kannst nicht an dich selber überweisen."))            
 
 
             var member = await MEMBER.find({"info.id": oldm.id})
