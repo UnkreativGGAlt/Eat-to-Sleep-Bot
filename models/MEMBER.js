@@ -13,7 +13,8 @@ const MemberSchema = mongoose.Schema({
     },
     coins: {
         amount: {type: Number, default: 300},
-        log: Array
+        log: Array,
+        purchases: {type: Array, default: []}
     },
     warns: { type: Array, default: [] },
     more: {

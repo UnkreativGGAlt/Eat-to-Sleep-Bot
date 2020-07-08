@@ -11,6 +11,7 @@ const { RichEmbed } = require('discord.js')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.shop_items = new Discord.Collection();
 client.music = {}
 
 exports.client = client;
@@ -27,6 +28,7 @@ mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: t
 
 client.on("ready", async () => {
 require("./events/splatfest")
+require("./events/shop-system")
     //Check for old Members
     var MEMBER = require("./models/MEMBER")
     var memberdata = await MEMBER.find()
