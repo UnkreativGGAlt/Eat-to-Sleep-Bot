@@ -27,6 +27,6 @@
     "puppeteer": "^5.0.0",
     "request": "^2.88.2",
     "util": "^0.12.3",
-    "ytdl-core": "^2.1.7"
+    "ytdl-core": "^3.1.2"
   }
 }
