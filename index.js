@@ -41,6 +41,8 @@ require("./events/shop-system")
     })
   
     client.user.setActivity(`Im back`, {type: "PLAYING"});
+console.log(`found ${client.commands.array().length} commands`)
+console.log(`found ${client.shop_items.array().length} shop items`)
 console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
 setInterval(function(){
 
@@ -77,7 +79,6 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
     client.commands.set(command.name, command);
-    console.log("Found an command => " + command.name)
 }
 
 client.on("message", (message) => {
