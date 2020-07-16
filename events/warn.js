@@ -18,7 +18,7 @@ client.on("message",async message => {
     if (message.content.startsWith(prefix + "warn")){
         if(permissions.has("BAN_MEMBERS")){
             var badmemberid = args[0].replace("<@", "").replace(">", "").replace("!", "")
-            var warngrund = message.content.replace(`${prefix}warn ${args[0]} `, "").replace("--ad", "").replace("--kick", "").replace("--bann", "")
+            var warngrund = message.content.replace(`${prefix}warn ${args[0]} `, "").replace("--ad", "").replace("--kick", "").replace("--bann", "").replace("--ban", "")
             var memberdb = await MEMBER.find({"info.id": badmemberid})
             if (!message.guild.members.find(x => x.id === badmemberid)){
                 message.channel.send(new RichEmbed().setTitle("Fehler").setDescription("Ich konnte denn User auf diesem Server nicht finden").setColor(colour.rot))
