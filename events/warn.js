@@ -53,7 +53,7 @@ client.on("message",async message => {
                 type = "KICK"
             }
             //If bann warn
-            else if ( message.content.includes("--bann") ){
+            else if ( message.content.includes("--bann") || message.content.includes("--ban") ){
                 memberdb[0].warns.push({type: "ban", from: message.member.id, description: warngrund})
                 await MEMBER.findOneAndUpdate({"info.id": badmemberid}, {"warns": memberdb[0].warns})
                 message.guild.members.get(badmemberid).ban(warngrund)
