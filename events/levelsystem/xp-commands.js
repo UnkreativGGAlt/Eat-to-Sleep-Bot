@@ -27,7 +27,7 @@ client.on("message", async message => {
             var what = args[1]
             var zahl = parseInt(args[3])
             var userid = args[0].replace("<@", "").replace(">", "").replace("!", "")
-            
+           
 
             if (message.channel.guild.members.find(x => x.id === userid)){
                 if(operation == "+" || operation == "-"){
@@ -75,6 +75,9 @@ client.on("message", async message => {
             const oldm = message.author
             const newm = client.users.get(args[0].replace("<@", "").replace(">", "").replace("!", ""))
             const howmuch = parseInt(args[1])
+
+           if (oldm.id == newm.id) return message.channel.send(new RichEmbed().setColor(colour.rot).setTitle("Die Eat Sleep Bank hat geantwortet").setDescription("Du kannst nicht an dich selber überweisen."))            
+
 
             var member = await MEMBER.find({"info.id": oldm.id})
 
