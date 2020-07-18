@@ -1,5 +1,3 @@
-const { amount } = require('../events/Shop/test');
-
 module.exports = {
 	name: 'buy',
         description: 'Kaufe ein Items aus dem Eat, Sleep, Shop',

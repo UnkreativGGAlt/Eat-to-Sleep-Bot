@@ -1,5 +1,3 @@
-const { amount } = require('../events/Shop/test');
-
 module.exports = {
 	name: 'pickacard',
         description: 'Mit diesem Command kannst du um eine beliebige Anzahl an Münzen spielen und diese verdoppen oder verlieren. Du bekommst 2 Karten, Davon eine ein Ass und zwei Flops, Wenn du denn Ass ziehst wird dein Gewinn um 150% erhöht. Wenn du einen Flopp ziehst verlierst du deinen Einsatz.',
