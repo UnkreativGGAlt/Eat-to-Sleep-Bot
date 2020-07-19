@@ -149,7 +149,7 @@ client.on("ready", () => {
             .addField("Zeiten", `Start: ${unixtotimeconverter(Salmonrunstart)}\nEnde: ${unixtotimeconverter(Salmonrunend)}`, true)
             .addField("Map", `${getGermanName(SalmonrunMap)}`, true)
             .addField("Waffen", `${getemote(weapons["1id"])} ${weapons["1"]}\n${getemote(weapons["2id"])} ${weapons["2"]}\n${getemote(weapons["3id"])} ${weapons["3"]}\n${getemote(weapons["4id"])} ${weapons["4"]}\n`, true)
-            .addField("Belohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seid: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
+            .addField("Belohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seit: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
             .setThumbnail("https://splatoon2.ink/assets/splatnet" + SalmonrunGear["Picturelink"])
             
             }
@@ -160,7 +160,7 @@ client.on("ready", () => {
             .addField("Zeiten", `Start: ${unixtotimeconverter(Salmonrunstart)}\nEnde: ${unixtotimeconverter(Salmonrunend)}`, true)
             .addField("Map", `${getGermanName(SalmonrunMap)}`, true)
             .addField("Waffen", `${getemote(weapons["1id"])} ${weapons["1"]}\n${getemote(weapons["2id"])} ${weapons["2"]}\n${getemote(weapons["3id"])} ${weapons["3"]}\n${getemote(weapons["4id"])} ${weapons["4"]}\n`, true)
-            .addField("Belohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seid: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
+            .addField("Belohnung", `Name: ${SalmonrunGear["Name"]}\nVerfügbar seit: ${unixtotimeconverter(SalmonrunGear["Verfügbarbis"])}`, true)
             .setThumbnail("https://splatoon2.ink/assets/splatnet" + SalmonrunGear["Picturelink"])
             
             
