@@ -21,7 +21,7 @@ module.exports = {
         top10.forEach(u => {
                 var name = "";
                 if (client.users.get(u.info.id)) name = client.users.get(u.info.id).tag
-                else if (client.guilds.get("585511241628516352").members.get(u.info.id)) name = client.users.get(u.info.id).tag
+                if (client.guilds.get("585511241628516352").members.get(u.info.id)) name = client.users.get(u.info.id).tag
                 else name = u.info.name + " `(Server verlassen)`"
                 
         if (rankdata.indexOf(u) == 0){name = "🥇" + name}
