@@ -56,7 +56,6 @@ client.on("messageReactionAdd",async (Reaction, User) => {
                 id: User.id,
                 name: User.tag
             },
-            coins: {log: [{t: {type: SVGFESpecularLightingElement, default: "Startkapital"}, d: {type: Date, default: new Date()}, v: {type: String, default: "+"}, a: {type: Number, default: 300}}]}
         }).save()
        
         .then(
