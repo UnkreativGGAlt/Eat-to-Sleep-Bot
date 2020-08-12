@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'coins',
 	description: 'Gibt dir eine übersicht über deine Finanzen auf Eat, Sleep, Nintendo, Repeat',
-    usage: `coins` ,
+    usage: `coins [@user#1234]` ,
 	async execute(message, args) {
        
 
