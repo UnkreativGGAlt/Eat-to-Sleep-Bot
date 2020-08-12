@@ -1,6 +1,3 @@
-const MEMBER = require('../models/MEMBER');
-const { findByIdAndUpdate } = require('../models/DAILY COINS');
-
 module.exports = {
 	name: 'daily',
 	description: 'Gibt dir aller 24 Stunden 150 Coins',
