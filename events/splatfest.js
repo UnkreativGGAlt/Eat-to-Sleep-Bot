@@ -102,17 +102,33 @@ var names = [jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_s
     //Check Splatfest Votes
     if (splatfestresult > new Date()){
         var check = true
-        var hfgh = schedule.scheduleJob("*/5 * * * *",async function(){
+        var hfgh = schedule.scheduleJob("*/1 * * * *",async function(){
             if (check == false) return;
         fetch(`https://app.splatoon2.nintendo.net/api/festivals/${json.eu.festivals[0].festival_id}/votes`, {headers: {"cookie": `iksm_session=${config.tokens.nintendo}; lang=de-DE;`}}).then(res => res.json())
         .then(json => {
-            json.nickname_and_icons.forEach(async player => {
-                var member = await MEMBER.findOne({"more.nintendo": player.nsa_id})
+            // json.nickname_and_icons.forEach(async player => {
+            //     var member = await MEMBER.findOne({"more.nintendo": player.nsa_id})
+            //     if (!member) return;
+
+            //     if (json.votes.alpha.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098535385137152")
+            //     if (json.votes.bravo.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098613399191643")
+            // })
+            json.votes.alpha.forEach(async player_nsaid => {
+                var member = await MEMBER.findOne({"more.nintendo": player_nsaid})
                 if (!member) return;
 
                 if (json.votes.alpha.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098535385137152")
                 if (json.votes.bravo.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098613399191643")
             })
+
+            json.votes.bravo.forEach(async player_nsaid => {
+                var member = await MEMBER.findOne({"more.nintendo": player_nsaid})
+                if (!member) return;
+
+                if (json.votes.alpha.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098535385137152")
+                if (json.votes.bravo.find(x => x === member.more.nintendo)) client.guilds.get("585511241628516352").members.get(member.info.id).addRole("714098613399191643")
+            })
+
         })
         })
         var postresults2 = schedule.scheduleJob(splatfestresult, function(){
