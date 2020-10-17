@@ -32,7 +32,7 @@ var Splatoon_Staurday = new channelMclass(
         "00 17 * * 6", //start time
         "15 18 * * 6", //end time
         "Splatoon Samstag", //Event Name
-        "Splatoon Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
+       "Splatoon Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
         "Squid Kid Channel", //Text Channel Name
         new RichEmbed() //Embed wish will be send in the Text Channel 
         .setColor("#ef3c79")
@@ -42,4 +42,22 @@ var Splatoon_Staurday = new channelMclass(
         "585523787408212079", //Copie Permission from this Categorie ID
         null,  //Send Members back to this Categorie ID
         true, //xp x 2 > true or false
-        )
+ )
+
+
+var Among_Us_Donnerstag = new channelMclass(
+"30 19 * * 4", //start time
+"0 21 * * 4", //end time
+"Among Us Donnerstag", //Event Name
+"Spaceship", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
+"Among Us Infos", //Text Channel Name
+new RichEmbed() //Embed wish will be send in the Text Channel 
+.setColor("#9e0e0e")
+.setThumbnail("https://vignette.wikia.nocookie.net/among-us-wiki/images/a/a6/1_red.png/revision/latest/top-crop/width/360/height/450?cb=20200912125145")
+.setTitle("Among Us Donnerstag").setDescription("emergency meeting! Alle sofort in den Talk und mitspielen")
+.addField("Eure Teilnahme Geschenke:", "2* XP Boost in Spaceship Talks")
+.addField("Achtet bitte auf folgendes:", "Während einer Runde müssen sich alle im Talk muten! Es darf nur geredet werden wenn eine Leiche gefunden wurde oder ein emergency meeting ausgerufen wird. Danach muss sich jeder wieder muten. Wenn du von einem Imposter getötet wurdest darfst du dich erst wieder entmuten wenn die Runde vorbei ist. Aber das wichtigste: Have funn!"),
+"585523787408212079", //Copie Permission from this Categorie ID
+"585523787408212079",  //Send Members back to this Categorie ID
+true, //xp x 2 > true or false
+)
