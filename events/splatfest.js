@@ -102,7 +102,7 @@ var names = [jsonlang.festivals[jsonn.eu.festivals[0].festival_id].names.alpha_s
     //Check Splatfest Votes
     if (splatfestresult > new Date()){
         var check = true
-        var hfgh = schedule.scheduleJob("*/1 * * * *",async function(){
+        var hfgh = schedule.scheduleJob("*/5 * * * *",async function(){
             if (check == false) return;
         fetch(`https://app.splatoon2.nintendo.net/api/festivals/${json.eu.festivals[0].festival_id}/votes`, {headers: {"cookie": `iksm_session=${config.tokens.nintendo}; lang=de-DE;`}}).then(res => res.json())
         .then(json => {
