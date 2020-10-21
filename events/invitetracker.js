@@ -1,6 +1,5 @@
 const { client, config} = require('../index.js')
 const { RichEmbed } = require('discord.js')
-const mongoose = require("mongoose")
 var schedule = require('node-schedule');
 
 const invites = {};

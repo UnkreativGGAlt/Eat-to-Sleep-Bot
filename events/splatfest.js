@@ -4,9 +4,6 @@ const { client, config,} = require("../index")
 var format = require('date-format');
 const { RichEmbed } = require('discord.js')
 
-const MEMBER = require("../models/MEMBER")
-
-
 var apiData = fetch('https://splatoon2.ink/data/festivals.json').then(res => res.json());
 apiData.then(function (json) {
 var splatfeststart = new Date( json.eu.festivals[0].times.start * 1000)
@@ -19,9 +16,6 @@ function componentToHex(c) {
     return hex.length == 1 ? "0" + hex : hex;
   }
   
-  function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-  }
 
 var traslatehelp = fetch('https://splatoon2.ink/data/locale/de.json').then(res => res.json());
 traslatehelp.then(function (jsonlang) {
