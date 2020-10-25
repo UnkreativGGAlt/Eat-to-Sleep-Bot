@@ -1,8 +1,6 @@
 const { client, config,} = require("../index")
 const { RichEmbed, MessageReaction } = require('discord.js')
 const StarboardDB = require("../models/STARBOARDS")
-const { db } = require("../models/STARBOARDS")
-const { messagexp } = require("./levelsystem/collectxp")
 
 
 var starsrequiered = 3,
