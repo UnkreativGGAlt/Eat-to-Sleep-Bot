@@ -15,7 +15,7 @@ class EventChannel {
             client.guilds.get(server).createChannel(eventname, "category", client.guilds.get(server).channels.get(permcopie).permissionOverwrites).then(async categorie =>{
                
               client.guilds.get(server).roles.get("712830005452865566").members.forEach(async (m) => {
-               await categorie.overwritePermissions(m.id, {"VIEW_CHANNEL": true, "SPEAK": false, "CONNECT": false, "SEND_MESSAGES": false})
+               await categorie.overwritePermissions(m.id, {"VIEW_CHANNEL": false, "SPEAK": false, "CONNECT": false, "SEND_MESSAGES": false})
               })
 
                

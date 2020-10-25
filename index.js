@@ -117,6 +117,7 @@ require("./events/React-to-older-Messages")
 require("./events/vote")
 require("./events/Serverboosterlistener")
 require("./events/invitetracker")
+require("./events/⭐starboard")
 
 
 //Levelsystem
