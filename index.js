@@ -45,11 +45,8 @@ console.log(`found ${client.commands.array().length} commands`)
 console.log(`found ${client.shop_items.array().length} shop items`)
 console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
 setInterval(function(){
-
-    fs.readFile("./data/gamechange.txt", function(err, buf) {
-        var Check = buf.toString()
         
-    if (Check.startsWith("true")){
+
 let statuses = [
     `Codet by ${client.users.get("330380702505762817").tag}`,
     client.guilds.get("585511241628516352").roles.get("585511864931188856").members.size + " Members on " + client.guilds.get("585511241628516352").name,
@@ -64,8 +61,8 @@ let statuses = [
 ]
 
 let status = statuses[Math.floor(Math.random() * statuses.length)];
-client.user.setActivity(status, {type: "PLAYING"});}
-    })
+client.user.setActivity(status, {type: "PLAYING"});
+   
 
 }, 30000)
 
