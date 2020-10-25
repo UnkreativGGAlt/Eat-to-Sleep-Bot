@@ -1,36 +1,40 @@
 const { client, config} = require('../index.js')
 const { RichEmbed } = require('discord.js')
-var schedule = require('node-schedule');
-const Main = require('../index.js')
-var fs = require(`fs`);
-const mongoose = require("mongoose")
+
 //Channel Model
 const welcomechannel = require("../models/WELCOMECHANNEL")
 const MEMBER = require("../models/MEMBER")
 
+
 client.on("guildMemberAdd",async (user) => {
+
     if (user.user.bot) return user.addRole("587375374967767054")
     var MemberfromDB = await MEMBER.find({"info.id": user.id})
+
     //New Member
     if (MemberfromDB.length == 0){
+
     user.guild.createChannel(user.displayName, "text", [
 		{id: user.guild.defaultRole.id,deny: ['VIEW_CHANNEL'],},
 		{id: user.id, allow: ['VIEW_CHANNEL'], deny: ["SEND_MESSAGES"],},
-    ],).then(async channel => {
+    ],).
+    then(async channel => {
+
         channel.setParent("585860916512423967")
             //fetch rules
             var rules = ""
-           var firstmsg = channel.send(new RichEmbed().setColor("#0984e3").setTitle("Willkommen " + user.displayName).setDescription(`Willkommen auf ${user.guild.name} ^^. Hier dreht sich alles um Nintendo Switch Games.`))
-           var rulemsg = channel.send(new RichEmbed().setColor("#00cec9").setTitle("Schau dir mal die Regeln an.").setDescription("```Einen Moment bitte. Ich lade die Regeln herunter... ^^```"))
-           var acceptrules = channel.send(new RichEmbed().setColor("#00b894").setTitle("Ende des Tutorials:").setDescription("Alles okay soweit? Dann bist du hiermit am Ende des Tutorials angelangt. Jetzt musst du nur noch auf das ✅ drücken um auf das nächste Level zu kommen und um die Regeln zu akzeptieren")).then(m => m.react("✅"))
-           var dbchannel = new welcomechannel({"ChannelID": channel.id, "MemberID": user.id}).save() 
-           user.guild.channels.get("585859881123184645").fetchMessage("596431765359296522").then(m => rules = m.content.replace("Discord Nutzervereinbarung", "[Discord Nutzervereinbarung](https://discordapp.com/terms)"))
+            var rulemsg = channel.send(new RichEmbed().setColor("#00cec9").setTitle("Schau dir mal die Regeln an.").setDescription("```Einen Moment bitte. Ich lade die Regeln herunter... ^^```"))
+
+
+            user.guild.channels.get("585859881123184645").fetchMessage("596431765359296522").then(m => rules = m.content.replace("Discord Nutzervereinbarung", "[Discord Nutzervereinbarung](https://discordapp.com/terms)"))
             rulemsg.then(m => m.edit(new RichEmbed().setColor("#00cec9").setTitle("Schau dir mal die Regeln an.").setDescription(rules)))
     })
 }
     //Rejoined Member
     else {
+
         async function dosomethingforyourmonay(){
+
        await MEMBER.findOneAndUpdate({"info.id": user.id}, {"expire": undefined})}
         dosomethingforyourmonay()
         user.guild.channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`<:rejoin:723487019241701477> **${user.user.tag}** ist gerade Eat, Sleep, Nintendo, Repeat beigetreten\n**Willkommen zurück^^**`)
@@ -51,11 +55,12 @@ client.on("messageReactionAdd",async (Reaction, User) => {
         Reaction.message.channel.send(new RichEmbed().setColor("#55efc4").setTitle("**Wir bereiten deine Ankunft vor:**")
         .setDescription("Bitte warte einen kurzen Moment"))
 
-        var newmember = new MEMBER({
+        
+        new MEMBER({
             info:{
                 id: User.id,
                 name: User.tag
-            }
+            },
         }).save()
        
         .then(

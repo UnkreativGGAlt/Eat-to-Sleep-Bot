@@ -8,8 +8,13 @@ const MemberSchema = mongoose.Schema({
     },
 
     ranks:{
-        rank: { type: Number, default: 0 },
+        rank: { type: Number, default: 1 },
         xp: { type: Number, default: 0 },
+    },
+    coins: {
+        amount: {type: Number, default: 300},
+        log: Array,
+        purchases: {type: Array, default: []}
     },
     warns: { type: Array, default: [] },
     more: {

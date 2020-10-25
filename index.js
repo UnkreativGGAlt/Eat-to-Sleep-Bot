@@ -11,6 +11,7 @@ const { RichEmbed } = require('discord.js')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.shop_items = new Discord.Collection();
 client.music = {}
 
 exports.client = client;
@@ -27,6 +28,7 @@ mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: t
 
 client.on("ready", async () => {
 require("./events/splatfest")
+require("./events/shop-system")
     //Check for old Members
     var MEMBER = require("./models/MEMBER")
     var memberdata = await MEMBER.find()
@@ -39,6 +41,8 @@ require("./events/splatfest")
     })
   
     client.user.setActivity(`Im back`, {type: "PLAYING"});
+console.log(`found ${client.commands.array().length} commands`)
+console.log(`found ${client.shop_items.array().length} shop items`)
 console.log(`\x1b[32m${client.user.tag}\x1b[33m is now online\x1b[37m`)
 setInterval(function(){
 
@@ -75,7 +79,6 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
     client.commands.set(command.name, command);
-    console.log("Found an command => " + command.name)
 }
 
 client.on("message", (message) => {
@@ -87,7 +90,7 @@ client.on("message", (message) => {
     
     if (message.author.bot) return;
     if (message.channel.type == "dm") return;
-    if (message.content.startsWith(prefix) == false) return require("./events/levelsystem/collectxp").messagexp(message);
+    if (message.content.startsWith(prefix) == false) return require("./events/collectxp").messagexp(message);
     if (!client.commands.has(alias)) return;
     if (client.guilds.get("585511241628516352").roles.get("712830005452865566").members.find(m => m.id === message.author.id)) return message.reply("Du kannst aktuell leider keine Commands benutzen");
 
@@ -116,13 +119,10 @@ require("./events/Serverboosterlistener")
 require("./events/invitetracker")
 require("./events/⭐starboard")
 
-//Turnier
-require("./events/Splatoon Turnier/register")
-require("./events/Splatoon Turnier/check-in")
 
 //Levelsystem
- require("./events/levelsystem/collectxp")
- require("./events/levelsystem/xp-commands")
+ require("./events/collectxp")
+ require("./events/pushserver")
 
 //
 require("./events/channel-management/CM-config")

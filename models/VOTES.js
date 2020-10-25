@@ -7,7 +7,8 @@ const schema = mongoose.Schema({
     creator: String,
     channel: String,
     message: String,
-    open: {type: Boolean, default: true}
+    open: {type: Boolean, default: true},
+    closedat: Date
 })
 
 module.exports = mongoose.model("vote", schema)
