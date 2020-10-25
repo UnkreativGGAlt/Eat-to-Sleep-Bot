@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'pickacard',
-        description: 'Mit diesem Command kannst du um eine beliebige Anzahl an Münzen spielen und diese verdoppen oder verlieren. Du bekommst 2 Karten, Davon eine ein Ass und zwei Flops, Wenn du denn Ass ziehst wird dein Gewinn um 150% erhöht. Wenn du einen Flopp ziehst verlierst du deinen Einsatz.',
+        description: 'Mit diesem Command kannst du um eine beliebige Anzahl an Münzen spielen und diese verdoppen oder verlieren. Du bekommst 2 Karten, Davon ist eine ein Ass und die anderen beiden sind zwei Flops, Wenn du denn Ass ziehst wird dein Gewinn um 150% erhöht. Wenn du einen Flopp ziehst verlierst du deinen Einsatz.',
         usage: `pickacard <einsatzt>`,
 	async execute(message, args) {
 
