@@ -13,6 +13,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.shop_items = new Discord.Collection();
 client.music = {}
+var items = []
 
 exports.client = client;
 exports.config = config;
@@ -78,6 +79,19 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+const itemFiles = fs.readdirSync("./events/shop").filter(file => file.endsWith('.js'));
+for (const file of itemFiles) {
+	const item = require("./events/shop/" + file);
+
+    client.shop_items.set(item.id, item);
+    items.push({name: item.name, id: item.id, des: item.description, a: item.amount})
+}
+
+items = items.sort(function(a, b){
+    return a.id - b.id;
+});
+
+
 client.on("message", (message) => {
    
     let prefix = config.prefix;
@@ -102,6 +116,7 @@ client.on("message", (message) => {
 
 })
 
+exports.items = items;
 
 
 
