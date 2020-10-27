@@ -23,9 +23,11 @@ client.on("guildMemberAdd",async (user) => {
         channel.setParent("585860916512423967")
             //fetch rules
             var rules = ""
-            var rulemsg = channel.send(new RichEmbed().setColor("#00cec9").setTitle("Schau dir mal die Regeln an.").setDescription("```Einen Moment bitte. Ich lade die Regeln herunter... ^^```"))
-
-
+           
+           var firstmsg = channel.send(new RichEmbed().setColor("#0984e3").setTitle("Willkommen " + user.displayName).setDescription(`Willkommen auf ${user.guild.name} ^^. Hier dreht sich alles um Nintendo Switch Games.`))
+           var rulemsg = channel.send(new RichEmbed().setColor("#00cec9").setTitle("Schau dir mal die Regeln an.").setDescription("```Einen Moment bitte. Ich lade die Regeln herunter... ^^```"))
+           var acceptrules = channel.send(new RichEmbed().setColor("#00b894").setTitle("Ende des Tutorials:").setDescription("Alles okay soweit? Dann bist du hiermit am Ende des Tutorials angelangt. Jetzt musst du nur noch auf das ✅ drücken um auf das nächste Level zu kommen und um die Regeln zu akzeptieren")).then(m => m.react("✅"))
+           
             user.guild.channels.get("585859881123184645").fetchMessage("596431765359296522").then(m => rules = m.content.replace("Discord Nutzervereinbarung", "[Discord Nutzervereinbarung](https://discordapp.com/terms)"))
             rulemsg.then(m => m.edit(new RichEmbed().setColor("#00cec9").setTitle("Schau dir mal die Regeln an.").setDescription(rules)))
     })
