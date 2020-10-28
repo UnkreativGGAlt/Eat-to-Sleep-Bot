@@ -20,7 +20,8 @@ exports.config = config;
 
 
 //Database connection
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const { setTimeout } = require("timers");
 mongoose.connect(config.tokens.db,{ useUnifiedTopology: true, useNewUrlParser: true }, () => {
     console.log("Database connection active!")
     mongoose.set('useFindAndModify', false);
@@ -33,14 +34,21 @@ require("./events/shop-system")
     //Check for old Members
     var MEMBER = require("./models/MEMBER")
     var memberdata = await MEMBER.find()
-    memberdata.forEach(async m => {
-        if (m.expire){}
-        else if (client.guilds.get("585511241628516352").members.find(mm => m.info.id === mm.id)){}
-        else {await MEMBER.findOneAndUpdate({"info.id": m.info.id}, {"expire": Date.now()}).then()
-        channels.find(x => x.name === "willkommen").send(new RichEmbed().setDescription(`${m.info.name} hat uns heimlich verlassen als ich nicht hingeschaut habe\n\`Puh... Das wird mir bestimmt vom Gehalt abgezogen\``).setColor("RANDOM").setThumbnail(m.picture))
-    }
-    })
-  
+    
+        memberdata.forEach(async mdb => {
+            //member already left
+            if (mdb.expire && mdb.expire != null) return;
+            //member is still in server
+            if (client.guilds.get("585511241628516352").fetchMembers().then(r => r.members.array().find(mm => mdb.info.id === mm.user.id))) return;
+            //member is not in server anymore
+            else {
+            console.log("\x1b[31m" + mdb.info.name + " has left the Server without my notice");
+                await MEMBER.findOneAndUpdate({"info.id": mdb.info.id}, {"expire": Date.now()}).then()
+        }
+        })
+
+        
+
     client.user.setActivity(`Im back`, {type: "PLAYING"});
 console.log(`found ${client.commands.array().length} commands`)
 console.log(`found ${client.shop_items.array().length} shop items`)
