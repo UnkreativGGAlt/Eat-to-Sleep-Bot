@@ -29,7 +29,9 @@ module.exports = {
             return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Du hast den Command leider falsch benutzt. Bitte gib einen User und einen gültigen Betrag in Zahlen an"))
         }
 
-        var payingmember = await dbdata.findOne({"info.id": message.member.id})
+        if (user == message.member.id) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Du kannst keine Coins an dich selbst weitergeben"))
+        if (1 > amount) return message.channel.send(new RichEmbed().setColor(colour.rot).setDescription("Der Betrag muss größer als 0 sein"))
+            var payingmember = await dbdata.findOne({"info.id": message.member.id})
         var payedmember = await dbdata.findOne({"info.id": user})
 
         amount = Math.round(amount)
