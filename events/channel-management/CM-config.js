@@ -28,23 +28,6 @@ new RichEmbed() //Embed wish will be send in the Text Channel
 true, //xp x 2 > true or false
 )
 
-var Splatoon_Staurday = new channelMclass(
-        "00 17 * * 6", //start time
-        "15 18 * * 6", //end time
-        "Splatoon Samstag", //Event Name
-       "Splatoon Talk", // Talk Name ">>Talk<< 1", ">>Talk<< 2"
-        "Squid Kid Channel", //Text Channel Name
-        new RichEmbed() //Embed wish will be send in the Text Channel 
-        .setColor("#ef3c79")
-        .setThumbnail("https://i.redd.it/zb1uvh5oypz11.png")
-        .setTitle("Splatoon Samsatg").setDescription("Trefft euch im Talk und unterhaltet euch darüber was ihr heute machen wollt(Standard, Private, Salmonrun, Liga). Es ist hilfreich wenn ihr eure Freundescodes in <#713748611493527593> schreibt.")
-        .addField("Eure Teilnahme Geschenke:", "2* XP Boost in Talks"),
-        "585523787408212079", //Copie Permission from this Categorie ID
-        null,  //Send Members back to this Categorie ID
-        true, //xp x 2 > true or false
- )
-
-
 var Among_Us_Donnerstag = new channelMclass(
 "30 19 * * 4", //start time
 "0 21 * * 4", //end time
