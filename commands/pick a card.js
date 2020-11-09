@@ -49,7 +49,7 @@ module.exports = {
                         await dbdata.findOneAndUpdate({"info.id": message.member.id}, {"coins.amount": memberdb.coins.amount + einsatz * 1.5})
                         msg.edit(new RichEmbed().setColor("#f1c40f").setTitle(`Du hast das Ass gezogen. Dein Einsatz von **${einsatz}**<:EatSleepCoin:725823305008939058> wurde auf **${einsatz * 1.5}** erhöht`))
                 }
-                else {        await dbdata.findOneAndUpdate({"info.id": message.member.id}, {"coins.amount": memberdb.coins.amount - einsatz})
+                else {        await dbdata.findOneAndUpdate({"info.id": message.member.id}, {"coins.amount": memberdb.coins.amount + einsatz})
                 msg.edit(new RichEmbed().setColor("#34495e").setTitle(`Du hast einen Flop gezogen. Du hast deinen Einsatz von **${einsatz}**<:EatSleepCoin:725823305008939058> verloren`))
                 }
         })
